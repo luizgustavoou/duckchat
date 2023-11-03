@@ -1,4 +1,5 @@
 import CardFriend, { Friend } from "./CardFriend";
+import Chat from "./Chat";
 
 export default function Home() {
   const friends: Friend[] = [
@@ -23,7 +24,9 @@ export default function Home() {
           ))}
         </div>
 
-        <div className="text-white flex-1 bg-gray-800 p-5"></div>
+        <div className="text-white flex bg-gray-800 p-5 w-full">
+          <Chat />
+        </div>
       </div>
     </div>
   );
