@@ -15,14 +15,16 @@ export default function Home() {
   ];
 
   return (
-    <div className="flex min-h-screen">
-      <div className="flex flex-col bg-secondary-foreground  text-white gap-6 min-w-[16%]">
-        {friends.map((friend) => (
-          <CardFriend friend={friend}></CardFriend>
-        ))}
-      </div>
+    <div className="flex min-h-screen p-6">
+      <div className="flex-1 flex bg-gray-900 ">
+        <div className="flex flex-col  text-white gap-6 min-w-[16%]">
+          {friends.map((friend) => (
+            <CardFriend friend={friend}></CardFriend>
+          ))}
+        </div>
 
-      <div className="text-white flex-1"></div>
+        <div className="text-white flex-1 bg-gray-800 p-5"></div>
+      </div>
     </div>
   );
 }
