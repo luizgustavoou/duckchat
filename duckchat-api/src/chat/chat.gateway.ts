@@ -25,6 +25,20 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       content: data
     });
 
+    this.server.to("room1").emit("onMessage", {
+      msg: "New Message 2",
+      content: data
+    })
+
+
+  }
+
+  @SubscribeMessage("subscribe")
+  handleSubscribe(@MessageBody('to') to: string, @ConnectedSocket() client: Socket) {
+    client.join(to);
+
+    console.log(`Cliente ${client.id} inscrito na sala ${to}`);
+
 
   }
 }
