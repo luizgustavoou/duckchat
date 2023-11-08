@@ -23,12 +23,14 @@ export class UsersService {
 
   async findAll() {
     const users = await this.usersRepository.find();
-    console.log({ users })
-
     return users;
   }
 
-  async findOne(id: number) {
+  async findOneByUsername(username: string) {
+    return await this.usersRepository.findOneBy({ username });
+  }
+
+  async findOneById(id: number) {
     return await this.usersRepository.findOneBy({ id });
   }
 

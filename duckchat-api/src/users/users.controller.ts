@@ -19,12 +19,11 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+    return this.usersService.findOneById(+id);
   }
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    console.log("CU!")
     return this.usersService.update(+id, updateUserDto);
   }
 
