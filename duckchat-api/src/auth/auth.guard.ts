@@ -2,14 +2,23 @@ import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from
 import { JwtService } from '@nestjs/jwt';
 import { Observable } from 'rxjs';
 import { jwtConstants } from './constants';
+import { Reflector } from '@nestjs/core';
+import { IS_PUBLIC_KEY } from 'src/decorators/public.decorator';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService) { }
+  constructor(private jwtService: JwtService, private reflector: Reflector) { }
 
   async canActivate(
     context: ExecutionContext,
   ): Promise<boolean> {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+
+    if (isPublic) return true;
 
     const request = context.switchToHttp().getRequest();
 
@@ -39,5 +48,3 @@ export class AuthGuard implements CanActivate {
     return type === 'Bearer' ? token : undefined;
   }
 }
-
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjQsInVzZXJuYW1lIjoibHVpemd1c3Rhdm9vdSIsImZpcnN0TmFtZSI6Ikx1aXoiLCJsYXN0TmFtZSI6IlVtYmVsaW5vIiwiYXZhdGFyVVJMIjoidXJsIiwiaWF0IjoxNjk5NjUyOTQ2LCJleHAiOjE2OTk2NTMwMDZ9.yugpXlwxJiu3IUwrpGF4xjHRHeqFSPXmjA1Eda2abNs
