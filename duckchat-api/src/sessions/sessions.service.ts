@@ -29,6 +29,7 @@ export class SessionsService {
     return await this.sessionsRepository.findOneBy({ id });
   }
 
+
   async findOneByUserIdAndRefreshToken(userId: number, refreshToken: string) {
     const session = await this.sessionsRepository.findOne({ where: { refreshToken, user: { id: userId } } });
 

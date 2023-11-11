@@ -9,7 +9,7 @@ import { AuthGuard } from './auth.guard';
 import { SessionsModule } from 'src/sessions/sessions.module';
 
 @Module({
-  imports: [SessionsModule, UsersModule, JwtModule.register({ global: true, secret: jwtConstants.secret, signOptions: { expiresIn: "60s" } })],
+  imports: [SessionsModule, UsersModule, JwtModule.register({ global: true, secret: jwtConstants.secret, })],
   controllers: [AuthController,],
   providers: [AuthService,
     {

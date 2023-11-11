@@ -22,7 +22,7 @@ export class AuthService {
 
         const payload = { sub: user.id, username: user.username, firstName: user.firstName, lastName: user.lastName, avatarURL: user.avatarURL };
 
-        const access_token = await this.jwtService.signAsync(payload);
+        const access_token = await this.jwtService.signAsync(payload, { expiresIn: "60s" });
         const refresh_token = await this.jwtService.signAsync(payload, { expiresIn: "24h" });
 
         this.sessionsService.create({ accessToken: access_token, refreshToken: refresh_token, userId: user.id });
@@ -47,7 +47,6 @@ export class AuthService {
         const session = await this.sessionsService.findOneByUserIdAndRefreshToken(refreshDto.userId, refreshDto.refresh_token);
 
         if (!session) throw new UnauthorizedException();
-
 
         const payload = { sub: session.user.id, username: session.user.username, firstName: session.user.firstName, lastName: session.user.lastName, avatarURL: session.user.avatarURL };
 

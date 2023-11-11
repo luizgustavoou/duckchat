@@ -1,5 +1,5 @@
 import { Session } from "src/sessions/entities/session.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -20,5 +20,8 @@ export class User {
 
     @Column()
     avatarURL: string;
+
+    @OneToMany(() => Session, (session) => session.user)
+    sessions: Session[]
 
 }

@@ -1,5 +1,5 @@
 import { User } from "src/users/entities/user.entity";
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 
 @Entity()
@@ -13,7 +13,6 @@ export class Session {
     @Column()
     refreshToken: string;
 
-    @OneToOne(() => User, { eager: true })
-    @JoinColumn()
+    @ManyToOne(() => User, (user) => user.sessions, { eager: true })
     user: User;
 }
