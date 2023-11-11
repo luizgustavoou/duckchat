@@ -11,16 +11,18 @@ export class SessionsService {
   private sessionsRepository: Repository<Session>) { }
 
   async create(createSessionDto: CreateSessionDto) {
-    const session = await this.sessionsRepository.save(createSessionDto);
-    return session;
+    const { userId, ...session } = createSessionDto;
+
+    const newSession = await this.sessionsRepository.save({ ...session, user: { id: userId } });
+    return newSession;
   }
 
   async findAll() {
-    // const sessions = await this.sessionsRepository.find({ relations: ['user'], select: { user: { id: true } } });
-    const sessions = await this.sessionsRepository.find();
+    // const newSession = await this.sessionsRepository.find({ relations: ['user'], select: { user: { id: true } } });
+    const newSession = await this.sessionsRepository.find();
 
 
-    return sessions;
+    return newSession;
   }
 
   async findOneById(id: string) {
@@ -29,13 +31,17 @@ export class SessionsService {
   }
 
   async update(id: string, updateSessionDto: UpdateSessionDto) {
-    const session = await this.sessionsRepository.update(id, updateSessionDto);
+    const newSession = await this.sessionsRepository.update(id, updateSessionDto);
 
-    return session;
+    return newSession;
 
   }
 
   async remove(id: string) {
     await this.sessionsRepository.delete(id);
+  }
+
+  async removeAll() {
+    await this.sessionsRepository.clear()
   }
 }

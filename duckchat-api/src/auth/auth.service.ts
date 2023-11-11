@@ -2,10 +2,11 @@ import { ConflictException, HttpException, HttpStatus, Injectable, NotFoundExcep
 import { UsersService } from '../users/users.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { JwtService } from '@nestjs/jwt';
+import { SessionsService } from '../sessions/sessions.service';
 
 @Injectable()
 export class AuthService {
-    constructor(private usersService: UsersService, private jwtService: JwtService) { }
+    constructor(private usersService: UsersService, private jwtService: JwtService, private sessionsService: SessionsService) { }
 
     async validateUser(username: string, pass: string) {
 
@@ -21,9 +22,15 @@ export class AuthService {
         const payload = { sub: user.id, username: user.username, firstName: user.firstName, lastName: user.lastName, avatarURL: user.avatarURL };
 
         const access_token = await this.jwtService.signAsync(payload);
+        const refresh_token = await this.jwtService.signAsync(payload, { expiresIn: "24h" });
+
+        this.sessionsService.create({ accessToken: access_token, refreshToken: refresh_token, userId: user.id });
+
+        console.log(user.id);
 
         return {
-            access_token
+            access_token,
+            refresh_token
         };
     }
 
