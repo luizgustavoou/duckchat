@@ -13,6 +13,6 @@ export class Session {
     @Column()
     refreshToken: string;
 
-    @ManyToOne(() => User, (user) => user.sessions, { eager: true })
+    @ManyToOne(() => User, (user) => user.sessions, { eager: true, onDelete: "CASCADE" })
     user: User;
 }
