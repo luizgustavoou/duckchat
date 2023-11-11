@@ -18,7 +18,6 @@ export class UsersService {
 
 
   async create(createUserDto: CreateUserDto) {
-
     return this.usersRepository.save(createUserDto);
 
   }

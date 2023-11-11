@@ -1,6 +1,6 @@
 import { ConflictException, HttpException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { SignOutDto } from './dto/sign-out.dto';
+import { SignUpDto } from './dto/sign-up.dto';
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
@@ -27,12 +27,12 @@ export class AuthService {
         };
     }
 
-    async signOut(signOutDto: SignOutDto) {
-        const result = await this.usersService.findOneByUsername(signOutDto.username);
+    async signUp(signUpDto: SignUpDto) {
+        const result = await this.usersService.findOneByUsername(signUpDto.username);
 
         if (result) throw new ConflictException("Campo username já existe");
 
-        const user = await this.usersService.create(signOutDto);
+        const user = await this.usersService.create(signUpDto);
 
         return user;
     }

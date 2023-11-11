@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'process';
 import { User } from './users/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { SessionsModule } from './sessions/sessions.module';
 
 @Module({
   imports: [UsersModule, TypeOrmModule.forRoot({
@@ -18,7 +19,7 @@ import { AuthModule } from './auth/auth.module';
     database: 'dbDuck',
     entities: [__dirname + '/**/*.entity{.js,.ts}'],
     synchronize: true,
-  }), AuthModule],
+  }), AuthModule, SessionsModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -1,6 +1,6 @@
 import { Controller, Post, HttpCode, HttpStatus, Body } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignOutDto } from './dto/sign-out.dto';
+import { SignUpDto } from './dto/sign-up.dto';
 import { Public } from 'src/decorators/public.decorator';
 
 
@@ -18,8 +18,8 @@ export class AuthController {
 
 
     @Post("signup")
-    signOut(@Body() signOutDto: SignOutDto) {
-        return this.authService.signOut(signOutDto);
+    signOut(@Body() signUpDto: SignUpDto) {
+        return this.authService.signUp(signUpDto);
 
     }
 }

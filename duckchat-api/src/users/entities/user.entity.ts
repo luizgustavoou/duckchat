@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Session } from "src/sessions/entities/session.entity";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -19,4 +20,9 @@ export class User {
 
     @Column()
     avatarURL: string;
+
+
+    @OneToOne(() => Session)
+    // @JoinColumn()
+    session: Session
 }
