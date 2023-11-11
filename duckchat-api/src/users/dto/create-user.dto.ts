@@ -1,3 +1,5 @@
+import { User } from "../entities/user.entity";
+
 export class CreateUserDto {
     username: string;
     password: string;
@@ -5,3 +7,4 @@ export class CreateUserDto {
     lastName: string;
     avatarURL: string;
 }
+

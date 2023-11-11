@@ -5,6 +5,7 @@ import { JwtService } from '@nestjs/jwt';
 import { SessionsService } from '../sessions/sessions.service';
 import { RefreshDto } from './dto/refresh.dto';
 import { User } from 'src/users/entities/user.entity';
+import { UserProfile } from 'src/users/types/userProfile';
 
 @Injectable()
 export class AuthService {
@@ -17,11 +18,15 @@ export class AuthService {
     async signIn(username: string, pass: string): Promise<any> {
         const user = await this.usersService.findOneByUsername(username);
 
+        const { password, sessions, ...userProfile } = user;
+
         if (!user) throw new NotFoundException("Usuário não encontrado")
 
-        if (user.password !== pass) throw new UnauthorizedException("Senha incorreta");
+        if (password !== pass) throw new UnauthorizedException("Senha incorreta");
 
-        const { accessToken, refreshToken } = await this.getTokens(user);
+
+        const { } = user;
+        const { accessToken, refreshToken } = await this.getTokens(userProfile);
 
 
         this.sessionsService.create({ accessToken: accessToken, refreshToken: refreshToken, userId: user.id });
@@ -46,7 +51,9 @@ export class AuthService {
         if (!session) throw new UnauthorizedException("Sessão não encontrada");
 
 
-        const { accessToken, refreshToken } = await this.getTokens(session.user);
+        const { password, sessions, ...userProfile } = session.user;
+
+        const { accessToken, refreshToken } = await this.getTokens(userProfile);
 
         await this.sessionsService.update(session.id, { accessToken, refreshToken });
 
@@ -57,7 +64,7 @@ export class AuthService {
 
     }
 
-    private async getTokens(user: User) {
+    private async getTokens(user: UserProfile) {
         const payload = { sub: user.id, username: user.username, firstName: user.firstName, lastName: user.lastName, avatarURL: user.avatarURL };
 
 
