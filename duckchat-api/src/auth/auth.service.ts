@@ -1,9 +1,10 @@
-import { ConflictException, HttpException, HttpStatus, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { JwtService } from '@nestjs/jwt';
 import { SessionsService } from '../sessions/sessions.service';
 import { RefreshDto } from './dto/refresh.dto';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -18,19 +19,15 @@ export class AuthService {
 
         if (!user) throw new NotFoundException("Usuário não encontrado")
 
-        if (user.password !== pass) throw new UnauthorizedException();
+        if (user.password !== pass) throw new UnauthorizedException("Senha incorreta");
 
-        const payload = { sub: user.id, username: user.username, firstName: user.firstName, lastName: user.lastName, avatarURL: user.avatarURL };
+        const { accessToken, refreshToken } = await this.getTokens(user);
 
-        const access_token = await this.jwtService.signAsync(payload, { expiresIn: "60s" });
-        const refresh_token = await this.jwtService.signAsync(payload, { expiresIn: "24h" });
 
-        this.sessionsService.create({ accessToken: access_token, refreshToken: refresh_token, userId: user.id });
+        this.sessionsService.create({ accessToken: accessToken, refreshToken: refreshToken, userId: user.id });
 
-        return {
-            access_token,
-            refresh_token
-        };
+        return { accessToken, refreshToken };
+
     }
 
     async signUp(signUpDto: SignUpDto) {
@@ -46,19 +43,27 @@ export class AuthService {
     async refreshTokens(refreshDto: RefreshDto) {
         const session = await this.sessionsService.findOneByUserIdAndRefreshToken(refreshDto.userId, refreshDto.refresh_token);
 
-        if (!session) throw new UnauthorizedException();
+        if (!session) throw new UnauthorizedException("Sessão não encontrada");
 
-        const payload = { sub: session.user.id, username: session.user.username, firstName: session.user.firstName, lastName: session.user.lastName, avatarURL: session.user.avatarURL };
 
-        const access_token = await this.jwtService.signAsync(payload);
-        const refresh_token = await this.jwtService.signAsync(payload, { expiresIn: "24h" });
+        const { accessToken, refreshToken } = await this.getTokens(session.user);
 
-        await this.sessionsService.update(session.id, { accessToken: access_token, refreshToken: refresh_token });
+        await this.sessionsService.update(session.id, { accessToken, refreshToken });
 
         return {
-            access_token,
-            refresh_token
+            access_token: accessToken,
+            refresh_token: refreshToken
         };
+
+    }
+
+    private async getTokens(user: User) {
+        const payload = { sub: user.id, username: user.username, firstName: user.firstName, lastName: user.lastName, avatarURL: user.avatarURL };
+
+
+        const [accessToken, refreshToken] = await Promise.all([await this.jwtService.signAsync(payload, { expiresIn: "60s" }), await this.jwtService.signAsync(payload, { expiresIn: "24h" })]);
+
+        return { accessToken, refreshToken };
 
     }
 }
