@@ -21,8 +21,4 @@ export class User {
     @Column()
     avatarURL: string;
 
-
-    @OneToOne(() => Session)
-    // @JoinColumn()
-    session: Session
 }

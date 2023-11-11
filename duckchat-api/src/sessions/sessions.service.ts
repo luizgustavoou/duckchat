@@ -16,7 +16,9 @@ export class SessionsService {
   }
 
   async findAll() {
+    // const sessions = await this.sessionsRepository.find({ relations: ['user'], select: { user: { id: true } } });
     const sessions = await this.sessionsRepository.find();
+
 
     return sessions;
   }
