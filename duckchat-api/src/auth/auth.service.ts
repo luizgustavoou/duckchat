@@ -26,8 +26,6 @@ export class AuthService {
 
         this.sessionsService.create({ accessToken: access_token, refreshToken: refresh_token, userId: user.id });
 
-        console.log(user.id);
-
         return {
             access_token,
             refresh_token
