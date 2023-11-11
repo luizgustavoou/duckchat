@@ -12,10 +12,10 @@ import { SessionsModule } from 'src/sessions/sessions.module';
   imports: [SessionsModule, UsersModule, JwtModule.register({ global: true, secret: jwtConstants.secret, signOptions: { expiresIn: "60s" } })],
   controllers: [AuthController,],
   providers: [AuthService,
-    // {
-    //   provide: APP_GUARD,
-    //   useClass: AuthGuard
-    // }
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard
+    }
   ]
 })
 export class AuthModule { }

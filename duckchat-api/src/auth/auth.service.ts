@@ -3,6 +3,7 @@ import { UsersService } from '../users/users.service';
 import { SignUpDto } from './dto/sign-up.dto';
 import { JwtService } from '@nestjs/jwt';
 import { SessionsService } from '../sessions/sessions.service';
+import { RefreshDto } from './dto/refresh.dto';
 
 @Injectable()
 export class AuthService {
@@ -40,5 +41,25 @@ export class AuthService {
         const user = await this.usersService.create(signUpDto);
 
         return user;
+    }
+
+    async refreshTokens(refreshDto: RefreshDto) {
+        const session = await this.sessionsService.findOneByUserIdAndRefreshToken(refreshDto.userId, refreshDto.refresh_token);
+
+        if (!session) throw new UnauthorizedException();
+
+
+        const payload = { sub: session.user.id, username: session.user.username, firstName: session.user.firstName, lastName: session.user.lastName, avatarURL: session.user.avatarURL };
+
+        const access_token = await this.jwtService.signAsync(payload);
+        const refresh_token = await this.jwtService.signAsync(payload, { expiresIn: "24h" });
+
+        await this.sessionsService.update(session.id, { accessToken: access_token, refreshToken: refresh_token });
+
+        return {
+            access_token,
+            refresh_token
+        };
+
     }
 }

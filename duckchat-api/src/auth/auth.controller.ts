@@ -21,10 +21,10 @@ export class AuthController {
     async signOut(@Body() signUpDto: SignUpDto) {
         return await this.authService.signUp(signUpDto);
     }
-    
+
     @Post("refresh")
     async refresh(@Body() body: RefreshDto) {
-        console.log({ body })
-        return "hello.";
+        return await this.authService.refreshTokens(body);
+
     }
 }
