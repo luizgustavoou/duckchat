@@ -10,7 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { SessionsModule } from './sessions/sessions.module';
 
 @Module({
-  imports: [UsersModule, TypeOrmModule.forRoot({
+  imports: [ChatModule, UsersModule, TypeOrmModule.forRoot({
     type: 'mysql',
     host: 'localhost',
     port: 3306,
