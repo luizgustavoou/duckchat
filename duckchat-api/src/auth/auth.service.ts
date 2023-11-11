@@ -18,9 +18,9 @@ export class AuthService {
     async signIn(username: string, pass: string): Promise<any> {
         const user = await this.usersService.findOneByUsername(username);
 
-        const { password, sessions, ...userProfile } = user;
-
         if (!user) throw new NotFoundException("Usuário não encontrado")
+
+        const { password, sessions, ...userProfile } = user;
 
         if (password !== pass) throw new UnauthorizedException("Senha incorreta");
 
