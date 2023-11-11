@@ -24,10 +24,7 @@ export class AuthService {
 
         if (password !== pass) throw new UnauthorizedException("Senha incorreta");
 
-
-        const { } = user;
         const { accessToken, refreshToken } = await this.getTokens(userProfile);
-
 
         this.sessionsService.create({ accessToken: accessToken, refreshToken: refreshToken, userId: user.id });
 
