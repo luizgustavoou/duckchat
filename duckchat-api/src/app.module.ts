@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { ChatModule } from './chat/chat.module';
+import { ChatModuleTeste } from './chatTeste/chat.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { config } from 'process';
 import { User } from './users/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { SessionsModule } from './sessions/sessions.module';
+import { ChatModule } from './chat/chat.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [ChatModule, UsersModule, TypeOrmModule.forRoot({
@@ -19,7 +21,7 @@ import { SessionsModule } from './sessions/sessions.module';
     database: 'dbDuck',
     entities: [__dirname + '/**/*.entity{.js,.ts}'],
     synchronize: true,
-  }), AuthModule, SessionsModule],
+  }), AuthModule, SessionsModule, MessageModule],
   controllers: [AppController],
   providers: [AppService],
 })

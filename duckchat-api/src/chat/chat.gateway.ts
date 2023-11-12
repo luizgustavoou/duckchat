@@ -1,44 +1,34 @@
-import { ConnectedSocket, MessageBody, OnGatewayConnection, OnGatewayDisconnect, SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
-import { Socket, Server } from 'socket.io';
+import { WebSocketGateway, SubscribeMessage, MessageBody } from '@nestjs/websockets';
+import { ChatService } from './chat.service';
+import { CreateChatDto } from './dto/create-chat.dto';
+import { UpdateChatDto } from './dto/update-chat.dto';
 
 @WebSocketGateway()
-export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
+export class ChatGateway {
+  constructor(private readonly chatService: ChatService) {}
 
-  @WebSocketServer()
-  server: Server;
-
-  handleDisconnect(client: any) {
-    // implement...
+  @SubscribeMessage('createChat')
+  create(@MessageBody() createChatDto: CreateChatDto) {
+    return this.chatService.create(createChatDto);
   }
 
-  handleConnection(client: any, ...args: any[]) {
-    console.log(`Client connected: ${client.id}`)
-
-
-    // implement...
+  @SubscribeMessage('findAllChat')
+  findAll() {
+    return this.chatService.findAll();
   }
 
-  @SubscribeMessage('message')
-  handleEvent(@MessageBody() data: any, @ConnectedSocket() client: Socket) {
-    this.server.emit("onMessage", {
-      msg: "New Message",
-      content: data
-    });
-
-    this.server.to("room1").emit("onMessage", {
-      msg: "New Message 2",
-      content: data
-    })
-
-
+  @SubscribeMessage('findOneChat')
+  findOne(@MessageBody() id: number) {
+    return this.chatService.findOne(id);
   }
 
-  @SubscribeMessage("subscribe")
-  handleSubscribe(@MessageBody('to') to: string, @ConnectedSocket() client: Socket) {
-    client.join(to);
+  @SubscribeMessage('updateChat')
+  update(@MessageBody() updateChatDto: UpdateChatDto) {
+    return this.chatService.update(updateChatDto.id, updateChatDto);
+  }
 
-    console.log(`Cliente ${client.id} inscrito na sala ${to}`);
-
-
+  @SubscribeMessage('removeChat')
+  remove(@MessageBody() id: number) {
+    return this.chatService.remove(id);
   }
 }
