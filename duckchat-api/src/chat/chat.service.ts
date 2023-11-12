@@ -12,15 +12,15 @@ export class ChatService {
     return `This action returns all chat`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} chat`;
   }
 
-  update(id: number, updateChatDto: UpdateChatDto) {
+  update(id: string, updateChatDto: UpdateChatDto) {
     return `This action updates a #${id} chat`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} chat`;
   }
 }

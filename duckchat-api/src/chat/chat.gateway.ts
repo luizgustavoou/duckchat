@@ -5,7 +5,7 @@ import { UpdateChatDto } from './dto/update-chat.dto';
 
 @WebSocketGateway()
 export class ChatGateway {
-  constructor(private readonly chatService: ChatService) {}
+  constructor(private readonly chatService: ChatService) { }
 
   @SubscribeMessage('createChat')
   create(@MessageBody() createChatDto: CreateChatDto) {
@@ -18,7 +18,7 @@ export class ChatGateway {
   }
 
   @SubscribeMessage('findOneChat')
-  findOne(@MessageBody() id: number) {
+  findOne(@MessageBody() id: string) {
     return this.chatService.findOne(id);
   }
 
@@ -28,7 +28,7 @@ export class ChatGateway {
   }
 
   @SubscribeMessage('removeChat')
-  remove(@MessageBody() id: number) {
+  remove(@MessageBody() id: string) {
     return this.chatService.remove(id);
   }
 }
