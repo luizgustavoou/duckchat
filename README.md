@@ -26,12 +26,10 @@ A aplicação consiste em uma cópia do Discord, trazendo funcionalidades básic
 # :wrench: Tecnologias utilizadas
 ## Back end
 * NestJS;
-* TypeOrm
 * MySQL
-* 
+  
 ## Front end
 * ReactJS
-* 
 <!--## Implantação em produção
 - Back end: Heroku
 - Front end web: Netlify
