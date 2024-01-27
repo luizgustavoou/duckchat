@@ -1,5 +1,12 @@
 import { Session } from 'src/sessions/entities/session.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -23,4 +30,8 @@ export class User {
 
   @OneToMany(() => Session, (session) => session.user)
   sessions: Session[];
+
+  @ManyToMany(() => User, (user) => user.friends)
+  @JoinTable()
+  friends: User[];
 }
