@@ -11,6 +11,9 @@ services:
       MYSQL_DATABASE: $MYSQL_DATABASE
     volumes:
       - ./data:/var/lib/mysql
+    networks:
+      - duckchat-network
+
   backend:
     container_name: duckchat-api
     build:
@@ -31,6 +34,9 @@ services:
       - ./duckchat-api:/usr/app
     depends_on:
       - mysql
+    networks:
+      - duckchat-network
+
   frontend:
     container_name: duckchat-ui
     build:
@@ -44,3 +50,5 @@ services:
       - ./duckchat-front:/usr/app
     depends_on:
       - backend
+    networks:
+      - duckchat-network
