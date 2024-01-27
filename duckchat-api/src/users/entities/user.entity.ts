@@ -1,16 +1,5 @@
-import { Chat } from 'src/chat/entities/chat.entity';
-import { Message } from 'src/message/entities/message.entity';
 import { Session } from 'src/sessions/entities/session.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
@@ -34,11 +23,4 @@ export class User {
 
   @OneToMany(() => Session, (session) => session.user)
   sessions: Session[];
-
-  @ManyToMany(() => Chat)
-  @JoinTable()
-  chats: Chat[];
-
-  @OneToMany(() => Message, (message) => message.user)
-  messages: Message[];
 }
