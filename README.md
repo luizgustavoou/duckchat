@@ -43,7 +43,7 @@ Pré-requisitos: npm / yarn e Docker instalado
 
 ```bash
 # clonar repositório
-git clone https://github.com/luizgustavoou/reactgram.git
+git clone https://github.com/luizgustavoou/duckchat.git
 
 # entrar na pasta do projeto front end web
 cd duckchat
