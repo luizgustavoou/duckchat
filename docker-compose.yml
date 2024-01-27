@@ -52,3 +52,7 @@ services:
       - backend
     networks:
       - duckchat-network
+
+networks:
+  duckchat-network:
+    driver: bridge
