@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  mysql:
+    container_name: duckchat-mysql
+    image: mysql
+    ports:
+      - $MYSQL_LOCAL_PORT:$MYSQL_DOCKER_PORT
+    environment:
+      MYSQL_ROOT_PASSWORD: $MYSQL_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQL_DATABASE
+    volumes:
+      - ./data:/var/lib/mysql
+  backend:
+    container_name: duckchat-api
+    build:
+      context: ./duckchat-api
+      dockerfile: Dockerfile
+    ports:
+      - $API_LOCAL_PORT:$API_DOCKER_PORT
+    environment:
+      - DB_HOST=$MYSQL_HOST
+      - DB_USER=$MYSQL_USER
+      - DB_DATABASE=$MYSQL_DATABASE
+      - DB_PASSWORD=$MYSQL_ROOT_PASSWORD
+      - DB_PORT=$MYSQL_DOCKER_PORT
+      - API_PORT=$API_DOCKER_PORT
+      - CLIENT_ORIGIN=$CLIENT_ORIGIN
+      - JWT_SECRET=$JWT_SECRET
+    volumes:
+      - ./duckchat-api:/usr/app
+    depends_on:
+      - mysql
+  frontend:
+    container_name: duckchat-ui
+    build:
+      context: ./duckchat-front
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_API_BASE_URL=$CLIENT_API_BASE_URL
+    ports:
+      - $UI_LOCAL_PORT:$UI_DOCKER_PORT
+    volumes:
+      - ./duckchat-front:/usr/app
+    depends_on:
+      - backend
