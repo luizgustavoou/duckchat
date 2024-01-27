@@ -7,10 +7,10 @@ export class Session {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @Column()
+    @Column("longtext")
     accessToken: string;
 
-    @Column()
+    @Column("longtext")
     refreshToken: string;
 
     @ManyToOne(() => User, (user) => user.sessions, { eager: true, onDelete: "CASCADE" })

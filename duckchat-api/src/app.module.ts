@@ -12,17 +12,24 @@ import { ChatModule } from './chat/chat.module';
 import { MessageModule } from './message/message.module';
 
 @Module({
-  imports: [ChatModule, UsersModule, TypeOrmModule.forRoot({
-    type: 'mysql',
-    host: 'localhost',
-    port: 3306,
-    username: 'root',
-    password: 'root',
-    database: 'dbDuck',
-    entities: [__dirname + '/**/*.entity{.js,.ts}'],
-    synchronize: true,
-  }), AuthModule, SessionsModule, MessageModule],
+  imports: [
+    ChatModule,
+    UsersModule,
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'duckchat-mysql',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'dbDuck',
+      entities: [__dirname + '/**/*.entity{.js,.ts}'],
+      synchronize: true,
+    }),
+    AuthModule,
+    SessionsModule,
+    MessageModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}
