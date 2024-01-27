@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "duckchat-api"
+		},
+		{
+			"path": "duckchat-front"
+		}
+	],
+	"settings": {}
+}
