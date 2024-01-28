@@ -9,9 +9,11 @@ import { Repository } from 'typeorm';
 import { UserFriends } from './entities/user_friends.entity';
 import { AddFriendDto } from './dto/add-friend.dto';
 import { UsersService } from '../users/users.service';
-import { FindAllFriendsOfUser } from './dto/find-all-friends-of-user.dto';
+import { FindAllByUserId } from './dto/find-all-by-userId';
 import { User } from 'src/users/entities/user.entity';
 import { findFriendshipByUsersId } from './dto/find-friendship-by-users-id.dto';
+import { RemoveByIdDto } from './dto/remove-by-id.dto';
+import { RemoveByUsersIdDto } from './dto/remove-by-usersId.dto';
 
 @Injectable()
 export class FriendshipService {
@@ -59,10 +61,8 @@ export class FriendshipService {
     return newFriendship;
   }
 
-  async findAllFriendsOfUser(
-    findAllFriendsOfUser: FindAllFriendsOfUser,
-  ): Promise<User[]> {
-    const { userId } = findAllFriendsOfUser;
+  async findAllByUserId(findAllByUserId: FindAllByUserId): Promise<User[]> {
+    const { userId } = findAllByUserId;
 
     const user = await this.usersService.findOneById(userId);
 
@@ -101,5 +101,32 @@ export class FriendshipService {
     });
 
     return friendship;
+  }
+
+  async removeById(removeByIdDto: RemoveByIdDto) {
+    const { id } = removeByIdDto;
+
+    const friendship = await this.userFriendsRepository.findOneBy({ id });
+
+    if (!friendship) {
+      throw new NotFoundException('Amizade não encontrada.');
+    }
+
+    await this.userFriendsRepository.delete(id);
+  }
+
+  async removeByUsersId(removeByUsersIdDto: RemoveByUsersIdDto) {
+    const { user1Id, user2Id } = removeByUsersIdDto;
+
+    const friendship = await this.findFriendshipByUsersId({
+      user1Id: user1Id,
+      user2Id: user2Id,
+    });
+
+    if (friendship.length === 0) {
+      throw new NotFoundException('Amizade não encontrada.');
+    }
+
+    await this.userFriendsRepository.remove(friendship);
   }
 }
