@@ -80,6 +80,11 @@ export class FriendshipService {
         messages: true,
       },
       where: [{ user1: { id: userId } }, { user2: { id: userId } }],
+      order: {
+        messages: {
+          createdAt: 'ASC',
+        },
+      },
     });
 
     const friends = friendships.map((friendship) => {

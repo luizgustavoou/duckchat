@@ -1,7 +1,14 @@
 import { UserFriends } from 'src/friendship/entities/user_friends.entity';
 import { Message } from 'src/message/entities/message.entity';
 import { Session } from 'src/sessions/entities/session.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 
 @Entity()
 export class User {
@@ -22,6 +29,12 @@ export class User {
 
   @Column()
   avatarURL: string;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 
   @OneToMany(() => Session, (session) => session.user)
   sessions: Session[];

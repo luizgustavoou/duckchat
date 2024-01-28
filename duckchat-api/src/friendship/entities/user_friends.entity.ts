@@ -4,6 +4,8 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
   OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { User } from '../../users/entities/user.entity';
 import { Message } from '../../message/entities/message.entity';
@@ -12,6 +14,12 @@ import { Message } from '../../message/entities/message.entity';
 export class UserFriends {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   // @Column()
   // user1Id: string;
