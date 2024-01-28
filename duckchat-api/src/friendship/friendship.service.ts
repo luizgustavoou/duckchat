@@ -131,18 +131,18 @@ export class FriendshipService {
     await this.userFriendsRepository.delete(id);
   }
 
-  async removeByUsersId(removeByUsersIdDto: RemoveByUsersIdDto) {
-    const { user1Id, user2Id } = removeByUsersIdDto;
+  // async removeByUsersId(removeByUsersIdDto: RemoveByUsersIdDto) {
+  //   const { user1Id, user2Id } = removeByUsersIdDto;
 
-    const friendships = await this.findFriendshipByUsersId({
-      user1Id: user1Id,
-      user2Id: user2Id,
-    });
+  //   const friendships = await this.findFriendshipByUsersId({
+  //     user1Id: user1Id,
+  //     user2Id: user2Id,
+  //   });
 
-    if (friendships.length === 0) {
-      throw new NotFoundException('Amizade não encontrada.');
-    }
+  //   if (friendships.length === 0) {
+  //     throw new NotFoundException('Amizade não encontrada.');
+  //   }
 
-    await this.userFriendsRepository.remove(friendships);
-  }
+  //   await this.userFriendsRepository.remove(friendships);
+  // }
 }

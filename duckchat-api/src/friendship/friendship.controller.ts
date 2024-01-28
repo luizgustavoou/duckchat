@@ -24,13 +24,13 @@ export class FriendshipController {
     return await this.friendshipService.removeById({ id });
   }
 
-  @Delete('user/:id')
-  async removeByUsersId(@Req() req: Request, @Param('id') id: string) {
-    const { sub } = (<any>req).user;
+  // @Delete('user/:id')
+  // async removeByUsersId(@Req() req: Request, @Param('id') id: string) {
+  //   const { sub } = (<any>req).user;
 
-    return await this.friendshipService.removeByUsersId({
-      user1Id: sub,
-      user2Id: id,
-    });
-  }
+  //   return await this.friendshipService.removeByUsersId({
+  //     user1Id: sub,
+  //     user2Id: id,
+  //   });
+  // }
 }
