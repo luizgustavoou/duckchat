@@ -135,4 +135,6 @@ export class FriendshipService {
 
     await this.userFriendsRepository.remove(friendships);
   }
+
+  
 }
