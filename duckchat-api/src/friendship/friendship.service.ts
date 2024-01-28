@@ -80,11 +80,11 @@ export class FriendshipService {
         messages: true,
       },
       where: [{ user1: { id: userId } }, { user2: { id: userId } }],
-      order: {
-        messages: {
-          createdAt: 'ASC',
-        },
-      },
+      // order: {
+      //   messages: {
+      //     createdAt: 'ASC',
+      //   },
+      // },
     });
 
     // TODO: Ver se precisa mostrar as mensagens. Acho que a rota de mensagens que vai ser responsavel.
@@ -97,7 +97,8 @@ export class FriendshipService {
         friend = friendship.user2;
       }
 
-      return { id: friendship.id, friend, messages: friendship.messages };
+      return { id: friendship.id, friend };
+      // return { id: friendship.id, friend, messages: friendship.messages };
     });
 
     return friends;
