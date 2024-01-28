@@ -7,6 +7,7 @@ import { Message } from './entities/message.entity';
 import { FriendshipService } from '../friendship/friendship.service';
 import { UsersService } from 'src/users/users.service';
 import { FindAllByFriendshipIdDto } from './dto/find-all-by-friendshipId.dto';
+import { ChatGateway } from '../chat/chat.gateway';
 
 @Injectable()
 export class MessageService {
@@ -15,6 +16,7 @@ export class MessageService {
     private messageRepository: Repository<Message>,
     private friendshipService: FriendshipService,
     private usersService: UsersService,
+    private ghatGateway: ChatGateway,
   ) {}
 
   async create(createMessageDto: CreateMessageDto, userId: string) {
@@ -35,6 +37,13 @@ export class MessageService {
       content,
       userFriends: friendship,
       user: user,
+    });
+
+    this.ghatGateway.emitMessageToFriendship(friendshipId, {
+      id: message.id,
+      content: message.content,
+      createdAt: message.createdAt,
+      updatedAt: message.updatedAt,
     });
 
     return message;
