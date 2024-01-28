@@ -9,7 +9,7 @@ export class FriendshipController {
   async addFriend(@Param('id') friendId: string, @Req() req: Request) {
     const { sub } = (<any>req).user;
 
-    return await this.friendshipService.addFriend({ userId: sub, friendId });
+    return await this.friendshipService.create({ userId: sub, friendId });
   }
 
   @Get()

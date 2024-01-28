@@ -7,7 +7,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserFriends } from './entities/user_friends.entity';
-import { AddFriendDto } from './dto/add-friend.dto';
+import { CreteFriendshipDto } from './dto/create-friendship.dto';
 import { UsersService } from '../users/users.service';
 import { FindAllByUserId } from './dto/find-all-by-userId';
 import { User } from 'src/users/entities/user.entity';
@@ -23,8 +23,8 @@ export class FriendshipService {
     private readonly usersService: UsersService,
   ) {}
 
-  async addFriend(addFriendDto: AddFriendDto) {
-    const { friendId, userId } = addFriendDto;
+  async create(creteFriendshipDto: CreteFriendshipDto) {
+    const { friendId, userId } = creteFriendshipDto;
 
     if (friendId === userId) {
       throw new BadRequestException(
@@ -44,12 +44,12 @@ export class FriendshipService {
       throw new NotFoundException('Usuário a ser adicionado não encontrado');
     }
 
-    const friendship = await this.findFriendshipByUsersId({
+    const friendships = await this.findFriendshipByUsersId({
       user1Id: user1.id,
       user2Id: user2.id,
     });
 
-    if (friendship.length > 0) {
+    if (friendships.length > 0) {
       throw new ConflictException('Usuário a ser adicionado já é seu amigo.');
     }
 
@@ -61,7 +61,7 @@ export class FriendshipService {
     return newFriendship;
   }
 
-  async findAllByUserId(findAllByUserId: FindAllByUserId): Promise<User[]> {
+  async findAllByUserId(findAllByUserId: FindAllByUserId) {
     const { userId } = findAllByUserId;
 
     const user = await this.usersService.findOneById(userId);
@@ -70,7 +70,7 @@ export class FriendshipService {
       throw new NotFoundException('Usuário não encontrado');
     }
 
-    const friends = await this.userFriendsRepository.find({
+    const friendships = await this.userFriendsRepository.find({
       relations: {
         user1: true,
         user2: true,
@@ -79,13 +79,19 @@ export class FriendshipService {
       where: [{ user1: { id: userId } }, { user2: { id: userId } }],
     });
 
-    const friendsFormatted = friends.map((friend) => {
-      if (friend.user1.id != userId) return friend.user1;
+    const friends = friendships.map((friendship) => {
+      let friend: User;
 
-      return friend.user2;
+      if (friendship.user1.id != userId) {
+        friend = friendship.user1;
+      } else {
+        friend = friendship.user2;
+      }
+
+      return { id: friend.id, friend, messages: friendship.messages };
     });
 
-    return friendsFormatted;
+    return friends;
   }
 
   async findFriendshipByUsersId(
@@ -93,14 +99,14 @@ export class FriendshipService {
   ) {
     const { user1Id, user2Id } = findFriendshipByUsersId;
 
-    const friendship = await this.userFriendsRepository.find({
+    const friendships = await this.userFriendsRepository.find({
       where: [
         { user1: { id: user1Id }, user2: { id: user2Id } },
         { user1: { id: user2Id }, user2: { id: user1Id } },
       ],
     });
 
-    return friendship;
+    return friendships;
   }
 
   async removeById(removeByIdDto: RemoveByIdDto) {
@@ -118,15 +124,15 @@ export class FriendshipService {
   async removeByUsersId(removeByUsersIdDto: RemoveByUsersIdDto) {
     const { user1Id, user2Id } = removeByUsersIdDto;
 
-    const friendship = await this.findFriendshipByUsersId({
+    const friendships = await this.findFriendshipByUsersId({
       user1Id: user1Id,
       user2Id: user2Id,
     });
 
-    if (friendship.length === 0) {
+    if (friendships.length === 0) {
       throw new NotFoundException('Amizade não encontrada.');
     }
 
-    await this.userFriendsRepository.remove(friendship);
+    await this.userFriendsRepository.remove(friendships);
   }
 }
