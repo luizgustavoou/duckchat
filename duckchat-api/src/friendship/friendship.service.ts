@@ -60,6 +60,9 @@ export class FriendshipService {
 
     return newFriendship;
   }
+  async findOneById(id: string) {
+    return await this.userFriendsRepository.findOneBy({ id });
+  }
 
   async findAllByUserId(findAllByUserId: FindAllByUserId) {
     const { userId } = findAllByUserId;
@@ -135,6 +138,4 @@ export class FriendshipService {
 
     await this.userFriendsRepository.remove(friendships);
   }
-
-  
 }

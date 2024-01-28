@@ -27,7 +27,7 @@ export class MessageController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.messageService.findOne(id);
+    return this.messageService.findOneById(id);
   }
 
   @Patch(':id')
