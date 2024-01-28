@@ -9,7 +9,6 @@ import { Public } from 'src/decorators/public.decorator';
 export class AuthController {
     constructor(private authService: AuthService) { }
 
-
     @HttpCode(HttpStatus.OK)
     @Post("signin")
     async signIn(@Body() signInDto: Record<string, any>) {

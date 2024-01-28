@@ -13,11 +13,11 @@ export class UserFriends {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
-  user1Id: string;
+  // @Column()
+  // user1Id: string;
 
-  @Column()
-  user2Id: string;
+  // @Column()
+  // user2Id: string;
 
   @OneToMany(() => Message, (message) => message.userFriends)
   messages: Message[];
