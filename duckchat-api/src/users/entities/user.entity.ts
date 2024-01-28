@@ -1,17 +1,11 @@
+import { UserFriends } from 'src/UserFriends.entity';
 import { Session } from 'src/sessions/entities/session.entity';
-import {
-  Column,
-  Entity,
-  JoinTable,
-  ManyToMany,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: number;
+  id: string;
 
   @Column()
   username: string;
@@ -31,7 +25,9 @@ export class User {
   @OneToMany(() => Session, (session) => session.user)
   sessions: Session[];
 
-  @ManyToMany(() => User, (user) => user.friends)
-  @JoinTable()
-  friends: User[];
+  @OneToMany(() => UserFriends, (userFriends) => userFriends.user1)
+  userToUser1: UserFriends[];
+
+  @OneToMany(() => UserFriends, (userFriends) => userFriends.user2)
+  userToUser2: UserFriends[];
 }

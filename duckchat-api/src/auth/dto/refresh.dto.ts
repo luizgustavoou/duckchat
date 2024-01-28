@@ -1,4 +1,4 @@
 export class RefreshDto {
-    userId: number;
+    userId: string;
     refresh_token: string;
 }

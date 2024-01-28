@@ -12,15 +12,15 @@ export class MessageService {
     return `This action returns all message`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} message`;
   }
 
-  update(id: number, updateMessageDto: UpdateMessageDto) {
+  update(id: string, updateMessageDto: UpdateMessageDto) {
     return `This action updates a #${id} message`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} message`;
   }
 }

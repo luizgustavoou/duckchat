@@ -19,6 +19,7 @@ import { MessageModule } from './message/message.module';
       database: process.env.DB_DATABASE,
       entities: [__dirname + '/**/*.entity{.js,.ts}'],
       synchronize: true,
+      autoLoadEntities: true,
     }),
     AuthModule,
     SessionsModule,
