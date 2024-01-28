@@ -5,8 +5,8 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
-import { User } from './users/entities/user.entity';
-import { Message } from './message/entities/message.entity';
+import { User } from '../../users/entities/user.entity';
+import { Message } from '../../message/entities/message.entity';
 
 @Entity()
 export class UserFriends {
