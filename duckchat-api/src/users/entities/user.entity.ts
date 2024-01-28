@@ -1,4 +1,4 @@
-import { UserFriends } from 'src/friends/entities/user_friends.entity';
+import { UserFriends } from 'src/friendship/entities/user_friends.entity';
 import { Session } from 'src/sessions/entities/session.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 

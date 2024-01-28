@@ -14,7 +14,7 @@ import { User } from 'src/users/entities/user.entity';
 import { findFriendshipByUsersId } from './dto/find-friendship-by-users-id.dto';
 
 @Injectable()
-export class FriendsService {
+export class FriendshipService {
   constructor(
     @InjectRepository(UserFriends)
     private userFriendsRepository: Repository<UserFriends>,
