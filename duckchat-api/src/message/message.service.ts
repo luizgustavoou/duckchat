@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from './entities/message.entity';
 import { FriendshipService } from '../friendship/friendship.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class MessageService {
@@ -12,12 +13,18 @@ export class MessageService {
     @InjectRepository(Message)
     private messageRepository: Repository<Message>,
     private friendshipService: FriendshipService,
+    private usersService: UsersService,
   ) {}
 
   async create(createMessageDto: CreateMessageDto, userId: string) {
     const { content, friendshipId } = createMessageDto;
 
     const friendship = await this.friendshipService.findOneById(friendshipId);
+    const user = await this.usersService.findOneById(userId);
+
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrada.');
+    }
 
     if (!friendship) {
       throw new NotFoundException('Amizade não encontrada.');
@@ -26,6 +33,7 @@ export class MessageService {
     const message = await this.messageRepository.save({
       content,
       userFriends: friendship,
+      user: user,
     });
 
     return message;

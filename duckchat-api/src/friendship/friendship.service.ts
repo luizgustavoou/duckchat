@@ -91,7 +91,7 @@ export class FriendshipService {
         friend = friendship.user2;
       }
 
-      return { id: friend.id, friend, messages: friendship.messages };
+      return { id: friendship.id, friend, messages: friendship.messages };
     });
 
     return friends;
