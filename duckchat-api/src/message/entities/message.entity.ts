@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { UserFriends } from 'src/user_friends.entity';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class Message {
@@ -7,4 +8,7 @@ export class Message {
 
   @Column()
   content: string;
+
+  @ManyToOne(() => UserFriends, (userFriends) => userFriends.messages)
+  userFriends: UserFriends;
 }
