@@ -6,7 +6,7 @@ export class FriendshipController {
   constructor(private readonly friendshipService: FriendshipService) {}
 
   @Post(':id')
-  async addFriend(@Param('id') friendId: string, @Req() req: Request) {
+  async create(@Param('id') friendId: string, @Req() req: Request) {
     const { sub } = (<any>req).user;
 
     return await this.friendshipService.create({ userId: sub, friendId });
