@@ -12,9 +12,6 @@ export class UserFriends {
   @Column()
   user2Id: string;
 
-  @Column()
-  nivelDeAmizade: number;
-
   @ManyToOne(() => User, (user) => user.userToUser1)
   user1: User;
 
