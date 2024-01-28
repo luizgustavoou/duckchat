@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ConflictException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -9,6 +10,7 @@ import { UserFriends } from './entities/user_friends.entity';
 import { AddFriendDto } from './dto/add-friend.dto';
 import { UsersService } from '../users/users.service';
 import { FindAllFriendsOfUser } from './dto/find-all-friends-of-user.dto';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class FriendsService {
@@ -25,8 +27,6 @@ export class FriendsService {
 
     const user2 = await this.usersService.findOneById(friendId);
 
-    console.log({ user1, user2 });
-
     if (!user1) {
       throw new NotFoundException('Usuário não encontrado');
     }
@@ -41,12 +41,28 @@ export class FriendsService {
       );
     }
 
-    const friendship = await this.userFriendsRepository.save({ user1, user2 });
+    const friendship = await this.userFriendsRepository.find({
+      where: [
+        { user1: { id: user1.id }, user2: { id: user2.id } },
+        { user1: { id: user2.id }, user2: { id: user1.id } },
+      ],
+    });
 
-    return friendship;
+    if (friendship.length > 0) {
+      throw new ConflictException('Usuário a ser adicionado já é seu amigo.');
+    }
+
+    const newFriendship = await this.userFriendsRepository.save({
+      user1,
+      user2,
+    });
+
+    return newFriendship;
   }
 
-  async findAllFriendsOfUser(findAllFriendsOfUser: FindAllFriendsOfUser) {
+  async findAllFriendsOfUser(
+    findAllFriendsOfUser: FindAllFriendsOfUser,
+  ): Promise<User[]> {
     const { userId } = findAllFriendsOfUser;
 
     const user = await this.usersService.findOneById(userId);
@@ -64,6 +80,12 @@ export class FriendsService {
       where: [{ user1: { id: userId } }, { user2: { id: userId } }],
     });
 
-    return friends;
+    const friendsFormatted = friends.map((friend) => {
+      if (friend.user1.id != userId) return friend.user1;
+
+      return friend.user2;
+    });
+
+    return friendsFormatted;
   }
 }
