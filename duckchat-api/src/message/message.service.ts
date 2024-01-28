@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from './entities/message.entity';
 import { FriendshipService } from '../friendship/friendship.service';
 import { UsersService } from 'src/users/users.service';
+import { FindAllByFriendshipIdDto } from './dto/find-all-by-friendshipId.dto';
 
 @Injectable()
 export class MessageService {
@@ -40,7 +41,22 @@ export class MessageService {
   }
 
   async findAll() {
-    const messages = await this.messageRepository.find();
+    const messages = await this.messageRepository.find({
+      order: { createdAt: 'ASC' },
+    });
+    return messages;
+  }
+
+  async findAllByFriendshipId(
+    findAllByFriendshipIdDto: FindAllByFriendshipIdDto,
+  ) {
+    const { friendshipId } = findAllByFriendshipIdDto;
+
+    const messages = await this.messageRepository.find({
+      where: { userFriends: { id: friendshipId } },
+      order: { createdAt: 'ASC' },
+    });
+
     return messages;
   }
 

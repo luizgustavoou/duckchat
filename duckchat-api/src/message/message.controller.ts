@@ -17,11 +17,14 @@ export class MessageController {
   constructor(private readonly messageService: MessageService) {}
 
   @Post()
-  create(@Req() req: Request, @Body() createMessageDto: CreateMessageDto) {
+  async create(
+    @Req() req: Request,
+    @Body() createMessageDto: CreateMessageDto,
+  ) {
     const { sub: userId } = (<any>req).user;
     const { content, friendshipId } = createMessageDto;
 
-    return this.messageService.create({ content, friendshipId }, userId);
+    return await this.messageService.create({ content, friendshipId }, userId);
   }
 
   @Get()
@@ -29,18 +32,28 @@ export class MessageController {
     return this.messageService.findAll();
   }
 
+  @Get('friendship/:id')
+  async findAllByFriendshipId(@Param('id') id: string) {
+    return await this.messageService.findAllByFriendshipId({
+      friendshipId: id,
+    });
+  }
+
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.messageService.findOneById(id);
+  async findOne(@Param('id') id: string) {
+    return await this.messageService.findOneById(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMessageDto: UpdateMessageDto) {
-    return this.messageService.update(id, updateMessageDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateMessageDto: UpdateMessageDto,
+  ) {
+    return await this.messageService.update(id, updateMessageDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.messageService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.messageService.remove(id);
   }
 }

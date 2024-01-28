@@ -87,6 +87,7 @@ export class FriendshipService {
       },
     });
 
+    // TODO: Ver se precisa mostrar as mensagens. Acho que a rota de mensagens que vai ser responsavel.
     const friends = friendships.map((friendship) => {
       let friend: User;
 
