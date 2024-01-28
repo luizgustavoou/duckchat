@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { CreateMessageDto } from './dto/create-message.dto';
@@ -16,8 +17,11 @@ export class MessageController {
   constructor(private readonly messageService: MessageService) {}
 
   @Post()
-  create(@Body() createMessageDto: CreateMessageDto) {
-    return this.messageService.create(createMessageDto);
+  create(@Req() req: Request, @Body() createMessageDto: CreateMessageDto) {
+    const { sub: userId } = (<any>req).user;
+    const { content, friendshipId } = createMessageDto;
+
+    return this.messageService.create({ content, friendshipId }, userId);
   }
 
   @Get()

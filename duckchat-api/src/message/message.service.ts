@@ -14,7 +14,7 @@ export class MessageService {
     private friendshipService: FriendshipService,
   ) {}
 
-  async create(createMessageDto: CreateMessageDto) {
+  async create(createMessageDto: CreateMessageDto, userId: string) {
     const { content, friendshipId } = createMessageDto;
 
     const friendship = await this.friendshipService.findOneById(friendshipId);
