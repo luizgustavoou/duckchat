@@ -31,10 +31,10 @@ export class User {
   avatarURL: string;
 
   @CreateDateColumn()
-  created_at: Date;
+  createdAt: Date;
 
   @UpdateDateColumn()
-  updated_at: Date;
+  updatedAt: Date;
 
   @OneToMany(() => Session, (session) => session.user)
   sessions: Session[];
