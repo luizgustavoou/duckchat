@@ -198,7 +198,7 @@ export default function Chat() {
 
       <Textarea
         className="resize-none bg-slate-600 focus-visible:ring-transparent"
-        placeholder={`Comversar com ${chatName}`}
+        placeholder={`Conversar com ${friendship.friend.firstName}`}
       />
     </div>
   );
