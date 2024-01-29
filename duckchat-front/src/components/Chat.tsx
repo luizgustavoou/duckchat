@@ -159,8 +159,6 @@ export default function Chat() {
     },
   ];
 
-  const chatName = "Luiz Gustavo";
-
   return (
     <div className="flex-1 flex flex-col gap-2">
       <div className="flex gap-2 items-center">
@@ -175,22 +173,25 @@ export default function Chat() {
       </div>
 
       <div className="flex-1">
-        {messages.map((messsage) => (
-          <div className="flex py-3 px-4 items-center gap-2 hover:bg-slate-600 cursor-pointer">
+        {messages.map((message) => (
+          <div
+            className="flex py-3 px-4 items-center gap-2 hover:bg-slate-600 cursor-pointer"
+            key={message.id}
+          >
             <Avatar>
               <AvatarImage
                 className="w-12 rounded-full"
-                src={messsage.user.avatarURL}
+                src={message.user.avatarURL}
               />
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <div>
-              <span className="mr-1">{messsage.user.firstName}</span>
+              <span className="mr-1">{message.user.firstName}</span>
               <span className="text-sm text-muted-foreground">
-                {messsage.createdAt}
+                {message.createdAt}
               </span>
 
-              <p>{messsage.content}</p>
+              <p>{message.content}</p>
             </div>
           </div>
         ))}
