@@ -51,6 +51,9 @@ export class MessageService {
 
   async findAll() {
     const messages = await this.messageRepository.find({
+      relations: {
+        user: true,
+      },
       order: { createdAt: 'ASC' },
     });
     return messages;
@@ -62,6 +65,9 @@ export class MessageService {
     const { friendshipId } = findAllByFriendshipIdDto;
 
     const messages = await this.messageRepository.find({
+      relations: {
+        user: true,
+      },
       where: { userFriends: { id: friendshipId } },
       order: { createdAt: 'ASC' },
     });
