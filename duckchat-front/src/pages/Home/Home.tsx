@@ -17,7 +17,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col  text-white gap-6">
+      <div className="flex flex-col text-white gap-6">
         {friends.map((friend) => (
           <CardFriend friend={friend}></CardFriend>
         ))}

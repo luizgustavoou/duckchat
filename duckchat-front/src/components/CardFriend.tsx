@@ -12,7 +12,7 @@ interface CardFriendProps {
 
 export default function CardFriend(props: CardFriendProps) {
   return (
-    <div className="flex py-3 px-4 items-center space-x-4 hover:bg-slate-600 cursor-pointer">
+    <div className="flex gap-3 py-3 px-4 items-center hover:bg-slate-600 cursor-pointer">
       <>
         <Avatar>
           <AvatarImage className="w-12 rounded-full" src={props.friend.image} />
