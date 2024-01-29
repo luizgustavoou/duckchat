@@ -17,13 +17,13 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col  text-white gap-6 min-w-[16%]">
+      <div className="flex flex-col  text-white gap-6">
         {friends.map((friend) => (
           <CardFriend friend={friend}></CardFriend>
         ))}
       </div>
 
-      <div className="text-white flex bg-gray-800 p-5 w-full">
+      <div className="flex-1 text-white flex bg-gray-800 p-5">
         <Chat />
       </div>
     </>
