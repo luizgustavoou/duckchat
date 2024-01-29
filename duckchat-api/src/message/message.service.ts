@@ -41,6 +41,16 @@ export class MessageService {
 
     this.ghatGateway.emitMessageToFriendship(friendshipId, {
       id: message.id,
+      user: {
+        id: message.user.id,
+        username: message.user.username,
+        password: message.user.password,
+        firstName: message.user.firstName,
+        lastName: message.user.lastName,
+        avatarURL: message.user.avatarURL,
+        created_at: message.user.created_at,
+        updated_at: message.user.updated_at,
+      },
       content: message.content,
       createdAt: message.createdAt,
       updatedAt: message.updatedAt,

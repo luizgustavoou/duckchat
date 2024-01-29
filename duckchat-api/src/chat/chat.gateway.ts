@@ -7,6 +7,7 @@ import {
 } from '@nestjs/websockets';
 
 import { Socket, Server } from 'socket.io';
+import { User } from 'src/users/entities/user.entity';
 
 @WebSocketGateway()
 export class ChatGateway {
@@ -18,6 +19,16 @@ export class ChatGateway {
     content: {
       id: string;
       content: string;
+      user: {
+        id: string;
+        username: string;
+        password: string;
+        firstName: string;
+        lastName: string;
+        avatarURL: string;
+        created_at: Date;
+        updated_at: Date;
+      };
       createdAt: Date;
       updatedAt: Date;
     },
