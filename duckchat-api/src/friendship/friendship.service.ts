@@ -58,7 +58,7 @@ export class FriendshipService {
       user2,
     });
 
-    return newFriendship;
+    return { id: newFriendship.id, friend: newFriendship.user2 };
   }
   async findOneById(id: string) {
     return await this.userFriendsRepository.findOneBy({ id });

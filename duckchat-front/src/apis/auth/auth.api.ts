@@ -1,10 +1,9 @@
-import axios from "axios";
 import { ISignin } from "../../../interfaces/ISignin";
 import { ISignup } from "../../../interfaces/ISignup";
 
 import { IAuthResponse } from "./models/IAuthResponse";
 import { IUserResponse } from "./models/IUserResponse";
-import { axiosInstance, baseURL } from "@/utils/config";
+import { axiosInstance } from "@/utils/config";
 
 export interface IAuthApi {
   signin(data: ISignin): Promise<IAuthResponse>;

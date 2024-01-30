@@ -2,8 +2,6 @@ import { IFriendship } from "@/entities/IFriendship";
 import CardFriend from "../../components/CardFriend";
 import Chat from "../../components/Chat";
 import { useEffect } from "react";
-import { authApi } from "@/apis";
-import { authRepository } from "@/repositories";
 import { authService } from "@/services";
 
 export default function Home() {
