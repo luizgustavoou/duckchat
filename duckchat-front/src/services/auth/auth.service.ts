@@ -31,6 +31,9 @@ export class AuthServiceImpl implements IAuthService {
     try {
       const res = await this.authRepository.signin(signinData);
 
+      this.storageService.setItem("accessToken", res.accessToken);
+      this.storageService.setItem("refreshToken", res.refreshToken);
+      
       return res;
     } catch (error) {
       throw error;

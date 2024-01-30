@@ -2,6 +2,8 @@ export interface IStorageService {
   setItem(key: string, value: string): void;
 
   getItem(key: string): string | null;
+
+  removeItem(key: string): void;
 }
 
 export class StorageServiceImpl implements IStorageService {
@@ -11,5 +13,9 @@ export class StorageServiceImpl implements IStorageService {
 
   getItem(key: string): string | null {
     return localStorage.getItem(key);
+  }
+
+  removeItem(key: string): void {
+    localStorage.removeItem(key);
   }
 }
