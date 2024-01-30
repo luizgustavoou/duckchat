@@ -175,7 +175,7 @@ export default function Chat() {
       <div className="flex-1">
         {messages.map((message) => (
           <div
-            className="flex py-3 px-4 items-center gap-2 hover:bg-slate-600 cursor-pointer"
+            className="flex py-3 px-4 items-center gap-2 hover:bg-accent cursor-pointer"
             key={message.id}
           >
             <Avatar>

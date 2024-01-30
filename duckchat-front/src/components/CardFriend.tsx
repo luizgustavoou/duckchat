@@ -7,7 +7,7 @@ interface ICardFriendProps {
 
 export default function CardFriend({ friendship }: ICardFriendProps) {
   return (
-    <div className="flex gap-3 py-3 px-4 items-center hover:bg-slate-600 cursor-pointer">
+    <div className="flex gap-3 py-3 px-4 items-center hover:bg-accent cursor-pointer">
       <>
         <Avatar>
           <AvatarImage
