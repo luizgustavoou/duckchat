@@ -6,9 +6,9 @@ import { IAuthRepository } from "@/repositories/auth/auth.repository";
 import { IStorageService } from "../storage/storage.service";
 
 export interface IAuthService {
-  signin(signinData: ISignin): Promise<IAuth>;
+  signin(data: ISignin): Promise<IAuth>;
 
-  signup(signupData: ISignup): Promise<IUser>;
+  signup(data: ISignup): Promise<IUser>;
 }
 
 export class AuthServiceImpl implements IAuthService {
@@ -17,9 +17,9 @@ export class AuthServiceImpl implements IAuthService {
     private storageService: IStorageService
   ) {}
 
-  async signup(signupData: ISignup): Promise<IUser> {
+  async signup(data: ISignup): Promise<IUser> {
     try {
-      const res = await this.authRepository.signup(signupData);
+      const res = await this.authRepository.signup(data);
 
       return res;
     } catch (error) {
@@ -27,13 +27,13 @@ export class AuthServiceImpl implements IAuthService {
     }
   }
 
-  async signin(signinData: ISignin): Promise<IAuth> {
+  async signin(data: ISignin): Promise<IAuth> {
     try {
-      const res = await this.authRepository.signin(signinData);
+      const res = await this.authRepository.signin(data);
 
       this.storageService.setItem("accessToken", res.accessToken);
       this.storageService.setItem("refreshToken", res.refreshToken);
-      
+
       return res;
     } catch (error) {
       throw error;
