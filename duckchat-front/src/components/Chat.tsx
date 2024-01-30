@@ -2,6 +2,7 @@ import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
 import { Textarea } from "./ui/textarea";
 import { IFriendship } from "@/entities/IFriendship";
 import { IMessage } from "@/entities/IMessage";
+import { Separator } from "@radix-ui/react-separator";
 
 export default function Chat() {
   const friendship: IFriendship = {
