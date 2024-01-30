@@ -1,9 +1,6 @@
 import { IFriendship } from "@/entities/IFriendship";
 import CardFriend from "../../components/CardFriend";
 import Chat from "../../components/Chat";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@radix-ui/react-separator";
-import { baseURL } from "@/utils/config";
 import { useEffect } from "react";
 import { authApi } from "@/apis";
 

@@ -7,8 +7,7 @@ import {
 import Home from "./pages/Home/Home";
 import { RoutesPath } from "./utils/routes-path";
 import Signin from "./pages/Signin/Signin";
-import Signout from "./pages/Signout/Signout";
-import { Button } from "./components/ui/button";
+import Signup from "./pages/Signup/Signup";
 
 function App() {
   return (
@@ -18,7 +17,7 @@ function App() {
           <Routes>
             <Route path={RoutesPath.ROOT} element={<Home />} />
             <Route path={RoutesPath.SIGNIN} element={<Signin />} />
-            <Route path={RoutesPath.SIGNOUT} element={<Signout />} />
+            <Route path={RoutesPath.SIGNUP} element={<Signup />} />
           </Routes>
         </div>
       </div>
