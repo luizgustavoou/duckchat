@@ -2,6 +2,7 @@ import { IAuth } from "@/entities/IAuth";
 import { ISignin } from "../../../interfaces/ISignin";
 import { ISignup } from "../../../interfaces/ISignup";
 import { IUser } from "@/entities/IUser";
+import { IAuthApi } from "@/apis/auth/auth.api";
 
 export interface IAuthRepository {
   signin(signinData: ISignin): Promise<IAuth>;
@@ -10,11 +11,31 @@ export interface IAuthRepository {
 }
 
 export class AuthRepositoryImpl implements IAuthRepository {
-  signup(signupData: ISignup): Promise<IUser> {
-    throw new Error("Method not implemented.");
+  constructor(private authApi: IAuthApi) {}
+
+  async signup(signupData: ISignup): Promise<IUser> {
+    const res = await this.authApi.signup(signupData);
+
+    const newRes: IUser = {
+      id: res.id,
+      username: res.username,
+      password: res.password,
+      firstName: res.firstName,
+      lastName: res.lastName,
+      avatarURL: res.avatarURL,
+    };
+
+    return newRes;
   }
 
-  signin(signinData: ISignin): Promise<IAuth> {
-    throw new Error("Method not implemented.");
+  async signin(signinData: ISignin): Promise<IAuth> {
+    const res = await this.authApi.signin(signinData);
+
+    const newRes: IAuth = {
+      accessToken: res.accessToken,
+      refreshToken: res.refreshToken,
+    };
+
+    return newRes;signinData
   }
 }
