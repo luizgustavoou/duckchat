@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseURL } from "./config";
+// ler: https://blog.theashishmaurya.me/handling-jwt-access-and-refresh-token-using-axios-in-react-app
 
 export const api = axios.create({
   baseURL,
@@ -7,7 +8,7 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("accessToken");
 
     console.log(token);
     if (token) {
@@ -19,4 +20,9 @@ api.interceptors.request.use(
   (error) => {
     return Promise.reject(error);
   }
+);
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {}
 );
