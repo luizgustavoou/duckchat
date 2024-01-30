@@ -1,6 +1,7 @@
 import { IFriendship } from "@/entities/IFriendship";
 import CardFriend from "../../components/CardFriend";
 import Chat from "../../components/Chat";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const friendships: IFriendship[] = [
@@ -36,7 +37,7 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="flex-1 text-white flex bg-gray-800 p-5">
+      <div className="flex-1 text-white flex  p-5">
         <Chat />
       </div>
     </>
