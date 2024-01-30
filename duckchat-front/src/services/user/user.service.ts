@@ -1,6 +1,6 @@
 import { IFriendship } from "@/entities/IFriendship";
 import { IAddFriend } from "../../../interfaces/IAddFriend";
-import { IUserApi } from "@/apis/user/user.api";
+import { IUserRepository } from "@/repositories/user/user.repository";
 
 export interface IUserService {
   getAllFriendsOfUser(): Promise<IFriendship[]>;
@@ -8,11 +8,11 @@ export interface IUserService {
 }
 
 export class UserServiceImpl implements IUserService {
-  constructor(private userApi: IUserApi) {}
+  constructor(private userRepository: IUserRepository) {}
 
   async getAllFriendsOfUser(): Promise<IFriendship[]> {
     try {
-      const res = await this.userApi.getAllFriendsOfUser();
+      const res = await this.userRepository.getAllFriendsOfUser();
 
       return res;
     } catch (error) {
@@ -22,7 +22,7 @@ export class UserServiceImpl implements IUserService {
 
   async addFriend(addFriendData: IAddFriend) {
     try {
-      const res = await this.userApi.addFriend(addFriendData);
+      const res = await this.userRepository.addFriend(addFriendData);
 
       return res;
     } catch (error) {

@@ -22,6 +22,7 @@ export interface IMessageService {
 
 export class MessageServiceImpl implements IMessageService {
   constructor(private messageRepository: IMessageRepository) {}
+  
   async updateMessage(data: IUpdateMessage): Promise<{
     raw: any;
     affected?: number | undefined;
