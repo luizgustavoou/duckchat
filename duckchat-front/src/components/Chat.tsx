@@ -175,7 +175,7 @@ export default function Chat() {
       <div className="flex-1">
         {messages.map((message) => (
           <div
-            className="flex py-3 px-4 items-center gap-2 hover:bg-accent cursor-pointer"
+            className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"
             key={message.id}
           >
             <Avatar>
@@ -198,7 +198,7 @@ export default function Chat() {
       </div>
 
       <Textarea
-        className="resize-none bg-slate-600 focus-visible:ring-transparent"
+        className="resize-none bg-input focus-visible:ring-transparent"
         placeholder={`Conversar com ${friendship.friend.firstName}`}
       />
     </div>

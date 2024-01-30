@@ -2,6 +2,7 @@ import { IFriendship } from "@/entities/IFriendship";
 import CardFriend from "../../components/CardFriend";
 import Chat from "../../components/Chat";
 import { Button } from "@/components/ui/button";
+import { Separator } from "@radix-ui/react-separator";
 
 export default function Home() {
   const friendships: IFriendship[] = [
@@ -31,7 +32,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col text-white gap-6">
+      <div className="flex flex-col text-white gap-6 border-r-2">
         {friendships.map((friendship) => (
           <CardFriend friendship={friendship} key={friendship.id}></CardFriend>
         ))}
