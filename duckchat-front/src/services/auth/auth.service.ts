@@ -3,6 +3,7 @@ import { ISignin } from "../../../interfaces/ISignin";
 import { ISignup } from "../../../interfaces/ISignup";
 import { IUser } from "@/entities/IUser";
 import { IAuthRepository } from "@/repositories/auth/auth.repository";
+import { IStorageService } from "../storage/storage.service";
 
 export interface IAuthService {
   signin(signinData: ISignin): Promise<IAuth>;
@@ -11,7 +12,10 @@ export interface IAuthService {
 }
 
 export class AuthServiceImpl implements IAuthService {
-  constructor(private authRepository: IAuthRepository) {}
+  constructor(
+    private authRepository: IAuthRepository,
+    private storageService: IStorageService
+  ) {}
 
   async signup(signupData: ISignup): Promise<IUser> {
     try {
