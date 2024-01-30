@@ -3,6 +3,9 @@ import CardFriend from "../../components/CardFriend";
 import Chat from "../../components/Chat";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@radix-ui/react-separator";
+import { baseURL } from "@/utils/config";
+import { useEffect } from "react";
+import { authApi } from "@/apis";
 
 export default function Home() {
   const friendships: IFriendship[] = [
@@ -29,6 +32,14 @@ export default function Home() {
       },
     },
   ];
+  useEffect(() => {
+    const teste = async () => {
+      const res = await authApi.signin({ username: "caio", password: "123" });
+      console.log(res);
+    };
+
+    teste();
+  }, []);
 
   return (
     <>

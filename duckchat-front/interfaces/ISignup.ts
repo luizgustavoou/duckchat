@@ -1,4 +1,4 @@
-export interface ISignout {
+export interface ISignup {
   username: string;
   password: string;
   firstName: string;

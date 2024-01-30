@@ -1,21 +1,37 @@
+import axios from "axios";
 import { ISignin } from "../../../interfaces/ISignin";
-import { ISignout } from "../../../interfaces/ISignout";
+import { ISignup } from "../../../interfaces/ISignup";
 
 import { IAuthResponse } from "./models/IAuthResponse";
 import { IUserResponse } from "./models/IUserResponse";
+import { baseURL } from "@/utils/config";
 
 export interface IAuthApi {
   signin(data: ISignin): Promise<IAuthResponse>;
 
-  signout(data: ISignout): Promise<IUserResponse>;
+  signup(data: ISignup): Promise<IUserResponse>;
 }
 
 export class AuthApiImpl implements IAuthApi {
-  signout(data: ISignout): Promise<IUserResponse> {
-    throw new Error("Method not implemented.");
+  async signup(signupData: ISignup): Promise<IUserResponse> {
+    const res = await axios.post<IUserResponse>(
+      `${baseURL}/auth/signup`,
+      signupData
+    );
+
+    const data = res.data;
+
+    return data;
   }
 
-  signin(data: ISignin): Promise<IAuthResponse> {
-    throw new Error("Method not implemented.");
+  async signin(signinData: ISignin): Promise<IAuthResponse> {
+    const res = await axios.post<IAuthResponse>(
+      `${baseURL}/auth/signin`,
+      signinData
+    );
+
+    const data = res.data;
+
+    return data;
   }
 }

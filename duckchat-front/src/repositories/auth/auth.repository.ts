@@ -1,20 +1,20 @@
 import { IAuth } from "@/entities/IAuth";
 import { ISignin } from "../../../interfaces/ISignin";
-import { ISignout } from "../../../interfaces/ISignout";
+import { ISignup } from "../../../interfaces/ISignup";
 import { IUser } from "@/entities/IUser";
 
 export interface IAuthRepository {
-  signin(data: ISignin): Promise<IAuth>;
+  signin(signinData: ISignin): Promise<IAuth>;
 
-  signout(data: ISignout): Promise<IUser>;
+  signup(signupData: ISignup): Promise<IUser>;
 }
 
 export class AuthRepositoryImpl implements IAuthRepository {
-  signout(data: ISignout): Promise<IUser> {
+  signup(signupData: ISignup): Promise<IUser> {
     throw new Error("Method not implemented.");
   }
 
-  signin(data: ISignin): Promise<IAuth> {
+  signin(signinData: ISignin): Promise<IAuth> {
     throw new Error("Method not implemented.");
   }
 }

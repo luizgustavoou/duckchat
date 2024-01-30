@@ -5,7 +5,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import { RoutesPath } from "./utils/routes_path";
+import { RoutesPath } from "./utils/routes-path";
 import Signin from "./pages/Signin/Signin";
 import Signout from "./pages/Signout/Signout";
 import { Button } from "./components/ui/button";
