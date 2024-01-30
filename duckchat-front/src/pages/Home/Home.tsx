@@ -4,6 +4,7 @@ import Chat from "../../components/Chat";
 import { useEffect } from "react";
 import { authApi } from "@/apis";
 import { authRepository } from "@/repositories";
+import { authService } from "@/services";
 
 export default function Home() {
   const friendships: IFriendship[] = [
@@ -32,7 +33,7 @@ export default function Home() {
   ];
   useEffect(() => {
     const teste = async () => {
-      const res = await authRepository.signin({
+      const res = await authService.signin({
         username: "caio",
         password: "123",
       });

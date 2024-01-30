@@ -2,6 +2,7 @@ import { IAuth } from "@/entities/IAuth";
 import { ISignin } from "../../../interfaces/ISignin";
 import { ISignup } from "../../../interfaces/ISignup";
 import { IUser } from "@/entities/IUser";
+import { IAuthRepository } from "@/repositories/auth/auth.repository";
 
 export interface IAuthService {
   signin(signinData: ISignin): Promise<IAuth>;
@@ -10,11 +11,25 @@ export interface IAuthService {
 }
 
 export class AuthServiceImpl implements IAuthService {
-  signup(signupData: ISignup): Promise<IUser> {
-    throw new Error("Method not implemented.");
+  constructor(private authRepository: IAuthRepository) {}
+
+  async signup(signupData: ISignup): Promise<IUser> {
+    try {
+      const res = await this.authRepository.signup(signupData);
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
   }
 
-  signin(signinData: ISignin): Promise<IAuth> {
-    throw new Error("Method not implemen ted.");
+  async signin(signinData: ISignin): Promise<IAuth> {
+    try {
+      const res = await this.authRepository.signin(signinData);
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
   }
 }
