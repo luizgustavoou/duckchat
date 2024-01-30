@@ -2,9 +2,18 @@ import { IMessageApi } from "@/apis/message/message.api";
 import { IMessage } from "@/entities/IMessage";
 import { IGetAllMessagesOfFriendship } from "interfaces/IGetAllMessagesOfFriendship";
 import { ISendMessage } from "interfaces/ISendMessage";
+import { IUpdateMessage } from "interfaces/IUpdateMessage";
 
 export interface IMessageRepository {
   sendMessage(sendMessageData: ISendMessage): Promise<IMessage>;
+
+  updateMessage(data: IUpdateMessage): Promise<{
+    raw: any;
+    affected?: number;
+    generatedMaps: {
+      [key: string]: any;
+    }[];
+  }>;
 
   getAllMessagesOfFriendship(
     data: IGetAllMessagesOfFriendship
@@ -13,6 +22,17 @@ export interface IMessageRepository {
 
 export class MessageRepositoryImpl implements IMessageRepository {
   constructor(private messageApi: IMessageApi) {}
+  async updateMessage(
+    data: IUpdateMessage
+  ): Promise<{
+    raw: any;
+    affected?: number | undefined;
+    generatedMaps: { [key: string]: any }[];
+  }> {
+    const res = await this.messageApi.updateMessage(data);
+
+    return res;
+  }
 
   async getAllMessagesOfFriendship(
     data: IGetAllMessagesOfFriendship

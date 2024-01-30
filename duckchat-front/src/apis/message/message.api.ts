@@ -2,9 +2,9 @@ import { api } from "@/utils/api";
 import { ISendMessage } from "../../../interfaces/ISendMessage";
 import { IMessageResponse } from "./models/IMessageResponse";
 import { IGetAllMessagesOfFriendship } from "../../../interfaces/IGetAllMessagesOfFriendship";
-
+import { IUpdateMessage } from "../../../interfaces/IUpdateMessage";
 export interface IMessageApi {
-  sendMessage(sendMessageData: ISendMessage): Promise<
+  sendMessage(data: ISendMessage): Promise<
     IMessageResponse & {
       userFriends: {
         id: string;
@@ -14,12 +14,36 @@ export interface IMessageApi {
     }
   >;
 
+  updateMessage(data: IUpdateMessage): Promise<{
+    raw: any;
+    affected?: number;
+    generatedMaps: {
+      [key: string]: any;
+    }[];
+  }>;
+
   getAllMessagesOfFriendship(
     data: IGetAllMessagesOfFriendship
   ): Promise<IMessageResponse[]>;
 }
 
 export class MessageApiImpl implements IMessageApi {
+  async updateMessage(data: IUpdateMessage): Promise<{
+    raw: any;
+    affected?: number | undefined;
+    generatedMaps: { [key: string]: any }[];
+  }> {
+    const { messageId, content } = data;
+
+    const res = await api.patch<{
+      raw: any;
+      affected?: number | undefined;
+      generatedMaps: { [key: string]: any }[];
+    }>(`/message/${messageId}`, { content });
+
+    return res.data;
+  }
+
   async getAllMessagesOfFriendship(
     data: IGetAllMessagesOfFriendship
   ): Promise<IMessageResponse[]> {

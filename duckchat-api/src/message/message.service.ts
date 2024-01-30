@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { UpdateMessageDto } from './dto/update-message.dto';
-import { Repository } from 'typeorm';
+import { Repository, UpdateResult } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Message } from './entities/message.entity';
 import { FriendshipService } from '../friendship/friendship.service';
@@ -90,7 +90,7 @@ export class MessageService {
   }
 
   async update(id: string, updateMessageDto: UpdateMessageDto) {
-    const user = await this.messageRepository.update(id, updateMessageDto);
+    const user: UpdateResult = await this.messageRepository.update(id, updateMessageDto);
 
     return user;
   }
