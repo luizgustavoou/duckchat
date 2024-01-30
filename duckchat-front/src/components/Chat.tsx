@@ -3,8 +3,16 @@ import { Textarea } from "./ui/textarea";
 import { IFriendship } from "@/entities/IFriendship";
 import { IMessage } from "@/entities/IMessage";
 import { Separator } from "@radix-ui/react-separator";
+import { Button } from "./ui/button";
+import { ChevronRightIcon } from "lucide-react";
+import { FormEvent } from "react";
 
 export default function Chat() {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    console.log("Handle send message!");
+  };
   const friendship: IFriendship = {
     id: "952f2ea2-a997-44ac-92ec-50217bafc6d7",
     friend: {
@@ -198,10 +206,17 @@ export default function Chat() {
         ))}
       </div>
 
-      <Textarea
-        className="resize-none bg-input focus-visible:ring-transparent"
-        placeholder={`Conversar com ${friendship.friend.firstName}`}
-      />
+      <div>
+        <form className="flex items-center gap-1" onSubmit={handleSubmit}>
+          <Textarea
+            className="resize-none bg-input focus-visible:ring-transparent"
+            placeholder={`Conversar com ${friendship.friend.firstName}`}
+          />
+          <Button size="icon">
+            <ChevronRightIcon className="h-4 w-4" />
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }
