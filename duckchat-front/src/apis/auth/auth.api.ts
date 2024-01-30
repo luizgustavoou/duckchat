@@ -4,7 +4,7 @@ import { ISignup } from "../../../interfaces/ISignup";
 
 import { IAuthResponse } from "./models/IAuthResponse";
 import { IUserResponse } from "./models/IUserResponse";
-import { baseURL } from "@/utils/config";
+import { axiosInstance, baseURL } from "@/utils/config";
 
 export interface IAuthApi {
   signin(data: ISignin): Promise<IAuthResponse>;
@@ -14,8 +14,8 @@ export interface IAuthApi {
 
 export class AuthApiImpl implements IAuthApi {
   async signup(signupData: ISignup): Promise<IUserResponse> {
-    const res = await axios.post<IUserResponse>(
-      `${baseURL}/auth/signup`,
+    const res = await axiosInstance.post<IUserResponse>(
+      "/auth/signup",
       signupData
     );
 
@@ -25,8 +25,8 @@ export class AuthApiImpl implements IAuthApi {
   }
 
   async signin(signinData: ISignin): Promise<IAuthResponse> {
-    const res = await axios.post<IAuthResponse>(
-      `${baseURL}/auth/signin`,
+    const res = await axiosInstance.post<IAuthResponse>(
+      "/auth/signin",
       signinData
     );
 
