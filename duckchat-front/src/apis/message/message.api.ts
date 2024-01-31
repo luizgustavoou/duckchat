@@ -1,8 +1,8 @@
 import { api } from "@/utils/api";
-import { ISendMessage } from "../../../interfaces/ISendMessage";
+import { ISendMessage } from "../../interfaces/ISendMessage";
 import { IMessageResponse } from "./models/IMessageResponse";
-import { IGetAllMessagesOfFriendship } from "../../../interfaces/IGetAllMessagesOfFriendship";
-import { IUpdateMessage } from "../../../interfaces/IUpdateMessage";
+import { IGetAllMessagesOfFriendship } from "../../interfaces/IGetAllMessagesOfFriendship";
+import { IUpdateMessage } from "../../interfaces/IUpdateMessage";
 export interface IMessageApi {
   sendMessage(data: ISendMessage): Promise<
     IMessageResponse & {

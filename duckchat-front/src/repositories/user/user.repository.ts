@@ -1,7 +1,7 @@
 import { IFriendship } from "@/entities/IFriendship";
-import { IAddFriend } from "../../../interfaces/IAddFriend";
+import { IAddFriend } from "../../interfaces/IAddFriend";
 import { IUserApi } from "@/apis/user/user.api";
-import { IUpdateProfile } from "interfaces/IUpdateProfile";
+import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 
 export interface IUserRepository {
   updateProfile(data: IUpdateProfile): Promise<{
@@ -20,9 +20,7 @@ export interface IUserRepository {
 export class UserRepositoryImpl implements IUserRepository {
   constructor(private userApi: IUserApi) {}
 
-  async updateProfile(
-    data: IUpdateProfile
-  ): Promise<{
+  async updateProfile(data: IUpdateProfile): Promise<{
     raw: any;
     affected?: number | undefined;
     generatedMaps: { [key: string]: any }[];

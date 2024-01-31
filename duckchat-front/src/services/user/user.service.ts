@@ -1,7 +1,7 @@
 import { IFriendship } from "@/entities/IFriendship";
-import { IAddFriend } from "../../../interfaces/IAddFriend";
+import { IAddFriend } from "../../interfaces/IAddFriend";
 import { IUserRepository } from "@/repositories/user/user.repository";
-import { IUpdateProfile } from "interfaces/IUpdateProfile";
+import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 
 export interface IUserService {
   updateProfile(data: IUpdateProfile): Promise<{

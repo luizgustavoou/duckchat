@@ -1,8 +1,8 @@
 import { IMessage } from "@/entities/IMessage";
 import { IMessageRepository } from "@/repositories/message/message.repository";
-import { IGetAllMessagesOfFriendship } from "interfaces/IGetAllMessagesOfFriendship";
-import { ISendMessage } from "interfaces/ISendMessage";
-import { IUpdateMessage } from "interfaces/IUpdateMessage";
+import { IGetAllMessagesOfFriendship } from "@/interfaces/IGetAllMessagesOfFriendship";
+import { ISendMessage } from "@/interfaces/ISendMessage";
+import { IUpdateMessage } from "@/interfaces/IUpdateMessage";
 
 export interface IMessageService {
   sendMessage(sendMessageData: ISendMessage): Promise<IMessage>;
@@ -22,7 +22,7 @@ export interface IMessageService {
 
 export class MessageServiceImpl implements IMessageService {
   constructor(private messageRepository: IMessageRepository) {}
-  
+
   async updateMessage(data: IUpdateMessage): Promise<{
     raw: any;
     affected?: number | undefined;

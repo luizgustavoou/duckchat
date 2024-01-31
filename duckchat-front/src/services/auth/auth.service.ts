@@ -1,6 +1,6 @@
 import { IAuth } from "@/entities/IAuth";
-import { ISignin } from "../../../interfaces/ISignin";
-import { ISignup } from "../../../interfaces/ISignup";
+import { ISignin } from "../../interfaces/ISignin";
+import { ISignup } from "../../interfaces/ISignup";
 import { IUser } from "@/entities/IUser";
 import { IAuthRepository } from "@/repositories/auth/auth.repository";
 import { IStorageService } from "../storage/storage.service";

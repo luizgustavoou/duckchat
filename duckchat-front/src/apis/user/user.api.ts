@@ -1,7 +1,7 @@
 import { api } from "@/utils/api";
-import { IAddFriend } from "../../../interfaces/IAddFriend";
+import { IAddFriend } from "../../interfaces/IAddFriend";
 import { IFriendshipResponse } from "./models/IFriendshipResponse";
-import { IUpdateProfile } from "../../../interfaces/IUpdateProfile";
+import { IUpdateProfile } from "../../interfaces/IUpdateProfile";
 
 export interface IUserApi {
   updateProfile(data: IUpdateProfile): Promise<{
@@ -18,9 +18,7 @@ export interface IUserApi {
 }
 
 export class UserApiImpl implements IUserApi {
-  async updateProfile(
-    data: IUpdateProfile
-  ): Promise<{
+  async updateProfile(data: IUpdateProfile): Promise<{
     raw: any;
     affected?: number | undefined;
     generatedMaps: { [key: string]: any }[];

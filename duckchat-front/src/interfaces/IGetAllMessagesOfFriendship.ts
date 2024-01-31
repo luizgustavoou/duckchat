@@ -1,3 +1,3 @@
 export interface IGetAllMessagesOfFriendship {
-  friendshipId;
+  friendshipId: string;
 }

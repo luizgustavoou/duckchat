@@ -1,6 +1,6 @@
 import { api } from "@/utils/api";
-import { ISignin } from "../../../interfaces/ISignin";
-import { ISignup } from "../../../interfaces/ISignup";
+import { ISignin } from "../../interfaces/ISignin";
+import { ISignup } from "../../interfaces/ISignup";
 
 import { IAuthResponse } from "./models/IAuthResponse";
 import { IUserResponse } from "./models/IUserResponse";
