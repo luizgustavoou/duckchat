@@ -14,8 +14,8 @@ import {
 import { Input } from "@/components/ui/input";
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  username: z.string().min(3, {
+    message: "O username deve ter pelo menos 3 caracteres",
   }),
   password: z.string(),
 });
