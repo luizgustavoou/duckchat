@@ -169,7 +169,7 @@ export default function Chat() {
 
   return (
     <div className="flex-1 flex flex-col gap-2">
-      <div className="flex gap-2 items-center">
+      <div className="flex gap-2 items-center border-b-2 pb-2">
         <Avatar>
           <AvatarImage
             className="w-12 rounded-full"
@@ -180,7 +180,7 @@ export default function Chat() {
         <p>{`${friendship.friend.firstName} ${friendship.friend.lastName}`}</p>
       </div>
 
-      <div className="flex-1">
+      <div className="flex-1 ">
         {messages.map((message) => (
           <div
             className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"

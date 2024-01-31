@@ -49,7 +49,7 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="flex-1 text-white flex  p-5">
+      <div className="flex-1 text-white flex p-5">
         <Chat />
       </div>
     </>
