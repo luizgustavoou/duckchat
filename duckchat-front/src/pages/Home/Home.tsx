@@ -1,6 +1,6 @@
 import { IFriendship } from "@/entities/IFriendship";
 import CardFriend from "../../components/CardFriend";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { userService } from "@/services";
 import { Outlet } from "react-router-dom";
 import { useAppNavigate } from "@/hooks/useNavigate";
@@ -28,6 +28,20 @@ export default function Home() {
     getAllFriendsOfUser();
   }, []);
 
+  const isSelected = useCallback(
+    (friendshio: IFriendship) => {
+      return currentFriendship?.id === friendshio.id;
+    },
+    [currentFriendship]
+  );
+
+  // const isSelected = useMemo(
+  //   () => (friendshio: IFriendship) => {
+  //     return currentFriendship?.id === friendshio.id;
+  //   },
+  //   [currentFriendship]
+  // );
+
   const handleFriendshipClick = (friendshipId: IFriendship) => {
     setCurrentFriendship(friendshipId);
   };
@@ -39,6 +53,7 @@ export default function Home() {
           <CardFriend
             friendship={friendship}
             key={friendship.id}
+            isSelected={isSelected}
             handleFriendshipClick={handleFriendshipClick}
           ></CardFriend>
         ))}
