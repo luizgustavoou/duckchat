@@ -1,18 +1,10 @@
 import { IFriendship } from "@/entities/IFriendship";
 import CardFriend from "../../components/CardFriend";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { userService } from "@/services";
-import { Outlet } from "react-router-dom";
-import { useAppNavigate } from "@/hooks/useNavigate";
 import Chat from "@/components/Chat";
 
 export default function Home() {
-  const navigate = useAppNavigate();
-
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-
   const [friendships, setFriendships] = useState<IFriendship[]>([]);
   const [currentFriendship, setCurrentFriendship] =
     useState<IFriendship | null>(null);

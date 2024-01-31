@@ -15,7 +15,11 @@ export interface ChatProps {
 }
 
 export default function Chat({ friendship }: ChatProps) {
-  const connection = useRef<Socket | null>(null);
+  const { ws, close, connect, addEventListener, emit } = useWebsocket(
+    "ws://localhost:3000"
+  );
+
+  // const connection = useRef<Socket | null>(null);
   const navigate = useAppNavigate();
 
   const [messages, setMessages] = useState<IMessage[]>([]);
@@ -27,19 +31,11 @@ export default function Chat({ friendship }: ChatProps) {
   };
 
   useEffect(() => {
-    const socket = io("ws://localhost:3000");
-
-    socket.on("newMessage", (data: IMessage) => {
-      console.log(data);
-    });
-
-    connection.current = socket;
-
-    return () => {
-      console.log("Desconectando websocket!");
-      connection.current?.disconnect();
-    };
-  }, []);
+    if (!ws.current?.connected)
+      addEventListener("newMessage", (data: IMessage) => {
+        console.log(data);
+      });
+  }, [ws.current?.connected]);
 
   useEffect(() => {
     const getAllMessagesOfFriendship = async () => {
@@ -52,19 +48,15 @@ export default function Chat({ friendship }: ChatProps) {
 
     getAllMessagesOfFriendship();
 
-    connection.current?.emit("enter_room", friendship.id);
+    emit("enter_room", friendship.id);
 
     return () => {
-      connection.current?.emit("leave_room", friendship.id);
+      emit("leave_room", friendship.id);
     };
   }, [friendship]);
 
-  const handleLogout = () => {
-    navigate("/signin");
-  };
   return (
     <div className="flex-1 flex flex-col gap-2">
-      <Button onClick={handleLogout}>Sair</Button>
       <div className="flex gap-2 items-center border-b-2 pb-2">
         <Avatar>
           <AvatarImage

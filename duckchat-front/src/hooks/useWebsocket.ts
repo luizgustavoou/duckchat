@@ -1,62 +1,68 @@
-import { useEffect, useState } from "react";
+import { IMessage } from "@/entities/IMessage";
+import { useEffect, useRef } from "react";
 import { Socket, io } from "socket.io-client";
 
 export const useWebsocket = (url: string) => {
-  const [status, setStatus] = useState<
-    "OPEN" | "CONNECTING" | "CLOSED" | "CONNECTING_ERROR"
-  >();
+  const ws = useRef<Socket | null>(null);
 
-  const [socket, setSocket] = useState<Socket | null>(io(url));
+  useEffect(() => {
+    const socket = io(url || "ws://localhost:3000");
 
-  socket?.on("connect", () => {
-    setStatus("OPEN");
-    console.log("Sucesseful connection WS");
-  });
+    ws.current = socket;
 
-  // setStatus("CONNECTING");
+    socket.on("connect", () => console.log("Conectado ao Websocket"));
+    socket.on("disconnect", () => console.log("Desconectado ao Websocket"));
 
-  socket?.on("disconnect", (reason) => {});
-
-  socket?.on("error", (error) => {
-    console.error("erro:", { error });
-  });
-
-  socket?.on("connect_error", (error) => {
-    setStatus("CONNECTING_ERROR");
-
-    console.log("CONNECT_ERROR");
-    console.error(error);
-    // setTimeout(() => {
-    //     socket.connect();
-    // }, 1000);
-  });
-
-  socket?.on("unauthorized_connection", () => {});
-
-  const connect = () => {
-    socket?.connect();
-  };
-
-  const close = () => {
-    socket?.close();
-  };
+    return () => {
+      ws.current?.disconnect();
+    };
+  }, []);
 
   const addEventListener = async (
     event: string,
     callback: (args: any) => void
   ) => {
-    socket?.on(event, callback);
+    ws.current?.on(event, callback);
+  };
+
+  const emit = (event: string, data: unknown) => {
+    ws.current?.emit(event, data);
+  };
+
+  const connect = () => {
+    ws.current?.connect();
+  };
+
+  const close = () => {
+    ws.current?.close();
   };
 
   // useEffect(() => {
-  //   const newSocket = io(url);
-  //   setSocket(newSocket);
+  //   const socket = io(url);
+
+  //   ws.current = socket;
 
   //   return () => {
-  //     console.log("Websocket disconectado");
-  //     socket && socket.disconnect();
+  //     console.log("Desconectando websocket!");
+  //     ws.current?.disconnect();
   //   };
-  // }, [url]);
+  // }, []);
 
-  return { socket, status, connect, close, addEventListener };
+  // const connect = () => {
+  //   ws.current?.connect();
+  // };
+
+  // const close = () => {
+  //   ws.current?.close();
+  // };
+
+  // console.log(1)
+  // const addEventListener = async (
+  //   event: string,
+  //   callback: (args: any) => void
+  // ) => {
+  //   ws.current?.on(event, callback);
+  // };
+
+  return { ws, addEventListener, emit, close, connect };
 };
