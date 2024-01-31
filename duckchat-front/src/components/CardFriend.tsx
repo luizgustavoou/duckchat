@@ -12,7 +12,7 @@ export default function CardFriend({
 }: ICardFriendProps) {
   return (
     <div
-      className="flex gap-3 py-3 px-4 items-center hover:bg-accent/50 cursor-pointer"
+      className="flex gap-3 py-5 px-4 items-center hover:bg-accent/50 cursor-pointer"
       onClick={(_) => handleFriendshipClick(friendship)}
     >
       <>

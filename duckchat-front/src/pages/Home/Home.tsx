@@ -34,7 +34,7 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-col text-white gap-6 border-r-2">
+      <div className="flex flex-col text-white  border-r-2 ">
         {friendships.map((friendship) => (
           <CardFriend
             friendship={friendship}
