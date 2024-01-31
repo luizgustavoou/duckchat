@@ -6,18 +6,16 @@ import { Button } from "./ui/button";
 import { ChevronRightIcon } from "lucide-react";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { messageService } from "@/services";
-import { Socket, io } from "socket.io-client";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import { useAppNavigate } from "@/hooks/useNavigate";
+import { wsURL } from "@/utils/config";
 
 export interface ChatProps {
   friendship: IFriendship;
 }
 
 export default function Chat({ friendship }: ChatProps) {
-  const { ws, close, connect, addEventListener, emit } = useWebsocket(
-    "ws://localhost:3000"
-  );
+  const { ws, addEventListener, emit } = useWebsocket(wsURL);
 
   // const connection = useRef<Socket | null>(null);
   const navigate = useAppNavigate();

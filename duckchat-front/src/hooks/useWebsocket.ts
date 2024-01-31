@@ -1,4 +1,3 @@
-import { IMessage } from "@/entities/IMessage";
 import { useEffect, useRef } from "react";
 import { Socket, io } from "socket.io-client";
 
@@ -6,7 +5,7 @@ export const useWebsocket = (url: string) => {
   const ws = useRef<Socket | null>(null);
 
   useEffect(() => {
-    const socket = io(url || "ws://localhost:3000");
+    const socket = io(url);
 
     ws.current = socket;
 
@@ -14,7 +13,7 @@ export const useWebsocket = (url: string) => {
     socket.on("disconnect", () => console.log("Desconectado ao Websocket"));
 
     return () => {
-      ws.current?.disconnect();
+      close();
     };
   }, []);
 
@@ -34,35 +33,8 @@ export const useWebsocket = (url: string) => {
   };
 
   const close = () => {
-    ws.current?.close();
+    ws.current?.disconnect();
   };
 
-  // useEffect(() => {
-  //   const socket = io(url);
-
-  //   ws.current = socket;
-
-  //   return () => {
-  //     console.log("Desconectando websocket!");
-  //     ws.current?.disconnect();
-  //   };
-  // }, []);
-
-  // const connect = () => {
-  //   ws.current?.connect();
-  // };
-
-  // const close = () => {
-  //   ws.current?.close();
-  // };
-
-  // console.log(1)
-  // const addEventListener = async (
-  //   event: string,
-  //   callback: (args: any) => void
-  // ) => {
-  //   ws.current?.on(event, callback);
-  // };
-
-  return { ws, addEventListener, emit, close, connect };
+  return { ws, addEventListener, emit };
 };
