@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { userService } from "@/services";
 import { Outlet } from "react-router-dom";
 import { useAppNavigate } from "@/hooks/useNavigate";
+import Chat from "@/components/Chat";
 
 export default function Home() {
   const navigate = useAppNavigate();
@@ -13,19 +14,22 @@ export default function Home() {
   >("idle");
 
   const [friendships, setFriendships] = useState<IFriendship[]>([]);
+  const [currentFriendship, setCurrentFriendship] =
+    useState<IFriendship | null>(null);
 
   useEffect(() => {
     const getAllFriendsOfUser = async () => {
       const res = await userService.getAllFriendsOfUser();
 
+      console.log(res);
       setFriendships(res);
     };
 
     getAllFriendsOfUser();
   }, []);
 
-  const handleFriendshipClick = (friendshipId: string) => {
-    navigate(friendshipId);
+  const handleFriendshipClick = (friendshipId: IFriendship) => {
+    setCurrentFriendship(friendshipId);
   };
 
   return (
@@ -41,7 +45,8 @@ export default function Home() {
       </div>
 
       <div className="flex-1 text-white flex p-5">
-        <Outlet />
+        {/* <Outlet /> */}
+        {currentFriendship && <Chat friendship={currentFriendship} />}
       </div>
     </>
   );

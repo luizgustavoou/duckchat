@@ -17,7 +17,7 @@ function App() {
         <div className="flex-1 flex bg-muted/60  text-card-foreground rounded-xl border">
           <Routes>
             <Route path={RoutesPath.ROOT} element={<Home />}>
-              <Route path="/:id" element={<Chat />}/>
+              {/* <Route path="/:id" element={<Chat />}/> */}
             </Route>
             <Route path={RoutesPath.SIGNIN} element={<Signin />} />
             <Route path={RoutesPath.SIGNUP} element={<Signup />} />

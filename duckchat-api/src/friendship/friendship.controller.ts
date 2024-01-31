@@ -19,6 +19,13 @@ export class FriendshipController {
     return await this.friendshipService.findAllByUserId({ userId: sub });
   }
 
+  @Get(':id')
+  async findOne(@Req() req: Request, @Param('id') id: string) {
+    const { sub } = (<any>req).user;
+
+    return this.friendshipService.findOneById(id);
+  }
+
   @Delete(':id')
   async removeById(@Param('id') id: string) {
     return await this.friendshipService.removeById({ id });

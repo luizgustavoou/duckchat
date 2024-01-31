@@ -3,7 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 interface ICardFriendProps {
   friendship: IFriendship;
-  handleFriendshipClick: (friendId: string) => void;
+  handleFriendshipClick: (friendship: IFriendship) => void;
 }
 
 export default function CardFriend({
@@ -13,7 +13,7 @@ export default function CardFriend({
   return (
     <div
       className="flex gap-3 py-3 px-4 items-center hover:bg-accent/50 cursor-pointer"
-      onClick={(_) => handleFriendshipClick(friendship.id)}
+      onClick={(_) => handleFriendshipClick(friendship)}
     >
       <>
         <Avatar>
