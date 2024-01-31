@@ -7,8 +7,8 @@ import { ChevronRightIcon } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { messageService } from "@/services";
 import { useWebsocket } from "@/hooks/useWebsocket";
-import { useAppNavigate } from "@/hooks/useNavigate";
 import { wsURL } from "@/utils/config";
+import { Separator } from "@radix-ui/react-separator";
 
 export interface ChatProps {
   friendship: IFriendship;
@@ -16,9 +16,6 @@ export interface ChatProps {
 
 export default function Chat({ friendship }: ChatProps) {
   const { ws, addEventListener, emit } = useWebsocket(wsURL);
-
-  // const connection = useRef<Socket | null>(null);
-  const navigate = useAppNavigate();
 
   const [messages, setMessages] = useState<IMessage[]>([]);
 
@@ -66,28 +63,31 @@ export default function Chat({ friendship }: ChatProps) {
         <p>{`${friendship.friend.firstName} ${friendship.friend.lastName}`}</p>
       </div>
 
-      <div className="flex-1">
+      <div className="flex-1 overflow-auto">
         {messages.map((message) => (
-          <div
-            className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"
-            key={message.id}
-          >
-            <Avatar>
-              <AvatarImage
-                className="w-12 rounded-full"
-                src={message.user.avatarURL}
-              />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <div>
-              <span className="mr-1">{message.user.firstName}</span>
-              <span className="text-sm text-muted-foreground">
-                {message.createdAt}
-              </span>
+          <>
+            <div
+              className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"
+              key={message.id}
+            >
+              <Avatar>
+                <AvatarImage
+                  className="w-12 rounded-full"
+                  src={message.user.avatarURL}
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div>
+                <span className="mr-1">{message.user.firstName}</span>
+                <span className="text-sm text-muted-foreground">
+                  {message.createdAt}
+                </span>
 
-              <p>{message.content}</p>
+                <p>{message.content}</p>
+              </div>
             </div>
-          </div>
+            <Separator className="my-2" />
+          </>
         ))}
       </div>
 

@@ -39,8 +39,8 @@ export default function Home() {
   };
 
   return (
-    <>
-      <div className="flex flex-col text-white  border-r-2 ">
+    <div className="flex-1 flex max-h-screen">
+      <div className="flex flex-col  border-r-2 ">
         {friendships.map((friendship) => (
           <CardFriend
             friendship={friendship}
@@ -51,10 +51,10 @@ export default function Home() {
         ))}
       </div>
 
-      <div className="flex-1 text-white flex p-5">
+      <div className="flex-1 flex p-5 ">
         {/* <Outlet /> */}
         {currentFriendship && <Chat friendship={currentFriendship} />}
       </div>
-    </>
+    </div>
   );
 }

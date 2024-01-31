@@ -8,17 +8,18 @@ import Home from "./pages/Home/Home";
 import { RoutesPath } from "./utils/routes-path";
 import Signin from "./pages/Signin/Signin";
 import Signup from "./pages/Signup/Signup";
-import Chat from "./components/Chat";
 
 function App() {
+  const tags = Array.from({ length: 50 }).map(
+    (_, i, a) => `v1.2.0-beta.${a.length - i}`
+  );
+
   return (
     <Router>
       <div className="flex min-h-screen m-0 p-6 ">
         <div className="flex-1 flex bg-muted/60  text-card-foreground rounded-xl border">
           <Routes>
-            <Route path={RoutesPath.ROOT} element={<Home />}>
-              {/* <Route path="/:id" element={<Chat />}/> */}
-            </Route>
+            <Route path={RoutesPath.ROOT} element={<Home />} />
             <Route path={RoutesPath.SIGNIN} element={<Signin />} />
             <Route path={RoutesPath.SIGNUP} element={<Signup />} />
           </Routes>
