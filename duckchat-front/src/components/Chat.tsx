@@ -6,10 +6,12 @@ import { Button } from "./ui/button";
 import { ChevronRightIcon } from "lucide-react";
 import { FormEvent, useEffect, useState } from "react";
 import { messageService } from "@/services";
+import { io } from "socket.io-client";
 
 export interface ChatProps {
   friendship: IFriendship;
 }
+
 export default function Chat({ friendship }: ChatProps) {
   const [messages, setMessages] = useState<IMessage[]>([]);
 
@@ -30,6 +32,16 @@ export default function Chat({ friendship }: ChatProps) {
 
     getAllMessagesOfFriendship();
   }, [friendship]);
+
+  useEffect(() => {
+    const socket = io("ws://localhost:3000");
+
+    socket.emit("enter_room", friendship.id);
+
+    socket.on("newMessage", (data: IMessage) => {
+      console.log(data);
+    });
+  }, []);
 
   return (
     <div className="flex-1 flex flex-col gap-2">
