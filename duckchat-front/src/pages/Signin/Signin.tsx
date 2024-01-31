@@ -12,6 +12,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useEffect } from "react";
+import { useAppNavigate } from "@/hooks/useNavigate";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -21,6 +23,8 @@ const formSchema = z.object({
 });
 
 function Signin() {
+  const navigate = useAppNavigate();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -31,6 +35,7 @@ function Signin() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    navigate("/");
   }
 
   return (
@@ -45,7 +50,11 @@ function Signin() {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="Username" {...field} />
+                    <Input
+                      placeholder="Username"
+                      {...field}
+                      autoComplete="current-username"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -58,7 +67,12 @@ function Signin() {
                 <FormItem>
                   <FormLabel>Senha</FormLabel>
                   <FormControl>
-                    <Input placeholder="Senha" {...field} type="password" />
+                    <Input
+                      placeholder="Senha"
+                      {...field}
+                      type="password"
+                      autoComplete="current-password"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
