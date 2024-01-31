@@ -9,7 +9,14 @@ export interface UserState {
 }
 
 const initialState: UserState = {
-  user: null,
+  user: {
+    id: "64f7485f-9083-409e-ba2d-67a37429a399",
+    username: "luizgustavoou",
+    password: "123",
+    firstName: "gugu delicia",
+    lastName: "Umbelino",
+    avatarURL: "testeurl",
+  },
 };
 
 export const userSlice = createSlice({

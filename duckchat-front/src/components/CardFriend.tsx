@@ -3,11 +3,18 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 interface ICardFriendProps {
   friendship: IFriendship;
+  handleFriendshipClick: (friendId: string) => void;
 }
 
-export default function CardFriend({ friendship }: ICardFriendProps) {
+export default function CardFriend({
+  friendship,
+  handleFriendshipClick,
+}: ICardFriendProps) {
   return (
-    <div className="flex gap-3 py-3 px-4 items-center hover:bg-accent/50 cursor-pointer">
+    <div
+      className="flex gap-3 py-3 px-4 items-center hover:bg-accent/50 cursor-pointer"
+      onClick={(_) => handleFriendshipClick(friendship.id)}
+    >
       <>
         <Avatar>
           <AvatarImage
