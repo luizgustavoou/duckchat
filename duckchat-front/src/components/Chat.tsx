@@ -4,7 +4,7 @@ import { IFriendship } from "@/entities/IFriendship";
 import { IMessage } from "@/entities/IMessage";
 import { Button } from "./ui/button";
 import { ChevronRightIcon } from "lucide-react";
-import { FormEvent, useEffect, useRef, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { messageService } from "@/services";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import { useAppNavigate } from "@/hooks/useNavigate";
@@ -31,7 +31,7 @@ export default function Chat({ friendship }: ChatProps) {
   useEffect(() => {
     if (!ws.current?.connected)
       addEventListener("newMessage", (data: IMessage) => {
-        console.log(data);
+        setMessages((messages) => [...messages, data]);
       });
   }, [ws.current?.connected]);
 
