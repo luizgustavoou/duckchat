@@ -1,0 +1,21 @@
+import { Skeleton } from "./ui/skeleton";
+
+function SkeletonCard() {
+  return (
+    <>
+      {Array(9)
+        .fill(1)
+        .map((_) => (
+          <div className="flex items-center space-x-4 p-2">
+            <Skeleton className="h-12 w-12 rounded-full" />
+            <div className="space-y-2">
+              <Skeleton className="h-4 w-[250px]" />
+              <Skeleton className="h-4 w-[200px]" />
+            </div>
+          </div>
+        ))}
+    </>
+  );
+}
+
+export default SkeletonCard;

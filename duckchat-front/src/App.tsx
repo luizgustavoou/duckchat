@@ -10,10 +10,6 @@ import Signin from "./pages/Signin/Signin";
 import Signup from "./pages/Signup/Signup";
 
 function App() {
-  const tags = Array.from({ length: 50 }).map(
-    (_, i, a) => `v1.2.0-beta.${a.length - i}`
-  );
-
   return (
     <Router>
       <div className="flex min-h-screen m-0 p-6 ">
