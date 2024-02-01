@@ -21,7 +21,17 @@ export const useWebsocket = (url: string) => {
     event: string,
     callback: (args: any) => void
   ) => {
+    // console.log("adicionado event listener!");
+
     ws.current?.on(event, callback);
+  };
+
+  const removeEventListener = async (
+    event: string,
+    callback: (args: any) => void
+  ) => {
+    // console.log("removido event listener!");
+    ws.current?.off(event, callback);
   };
 
   const emit = (event: string, data: unknown) => {
@@ -36,5 +46,5 @@ export const useWebsocket = (url: string) => {
     ws.current?.disconnect();
   };
 
-  return { ws, addEventListener, emit };
+  return { ws, addEventListener, removeEventListener, emit };
 };

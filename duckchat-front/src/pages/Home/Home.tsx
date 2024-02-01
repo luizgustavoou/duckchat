@@ -46,7 +46,7 @@ export default function Home() {
 
   return (
     <div className="flex-1 flex max-h-screen">
-      <div className="flex flex-col  border-r-2 ">
+      <div className="flex flex-col  border-r-2">
         {status === "loading" ? (
           <SkeletonCard />
         ) : (

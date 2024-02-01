@@ -4,7 +4,13 @@ import { IFriendship } from "@/entities/IFriendship";
 import { IMessage } from "@/entities/IMessage";
 import { Button } from "./ui/button";
 import { ChevronRightIcon } from "lucide-react";
-import { FormEvent, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { messageService } from "@/services";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import { wsURL } from "@/utils/config";
@@ -16,25 +22,46 @@ export interface ChatProps {
 }
 
 export default function Chat({ friendship }: ChatProps) {
+  const [message, setMessage] = useState<string>("");
+
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
 
-  const { ws, addEventListener, emit } = useWebsocket(wsURL);
+  const { ws, addEventListener, removeEventListener, emit } =
+    useWebsocket(wsURL);
 
   const [messages, setMessages] = useState<IMessage[]>([]);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    console.log("Handle send message!");
+    try {
+      messageService.sendMessage({
+        friendshipId: friendship.id,
+        content: message,
+      });
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setMessage("");
+    }
+  };
+
+  const handleNewMessage = useCallback((data: IMessage) => {
+    setMessages((messages) => [...messages, data]);
+  }, []);
+
+  const handleOnChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setMessage(e.target.value);
   };
 
   useEffect(() => {
-    if (!ws.current?.connected)
-      addEventListener("newMessage", (data: IMessage) => {
-        setMessages((messages) => [...messages, data]);
-      });
+    if (ws.current?.connected) addEventListener("newMessage", handleNewMessage);
+
+    return () => {
+      removeEventListener("newMessage", handleNewMessage);
+    };
   }, [ws.current?.connected]);
 
   useEffect(() => {
@@ -78,35 +105,30 @@ export default function Chat({ friendship }: ChatProps) {
 
       <div className="flex-1 overflow-auto">
         {status === "loading" ? (
-          <>
-            <SkeletonCard />
-          </>
+          <SkeletonCard />
         ) : (
           <>
             {messages.map((message) => (
-              <>
-                <div
-                  className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"
-                  key={message.id}
-                >
-                  <Avatar>
-                    <AvatarImage
-                      className="w-12 rounded-full"
-                      src={message.user.avatarURL}
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <span className="mr-1">{message.user.firstName}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {message.createdAt}
-                    </span>
+              <div
+                className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"
+                key={message.id}
+              >
+                <Avatar>
+                  <AvatarImage
+                    className="w-12 rounded-full"
+                    src={message.user.avatarURL}
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <div>
+                  <span className="mr-1">{message.user.firstName}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {message.createdAt}
+                  </span>
 
-                    <p>{message.content}</p>
-                  </div>
+                  <p>{message.content}</p>
                 </div>
-                <Separator className="my-2" />
-              </>
+              </div>
             ))}
           </>
         )}
@@ -115,6 +137,8 @@ export default function Chat({ friendship }: ChatProps) {
       <div>
         <form className="flex items-center gap-1" onSubmit={handleSubmit}>
           <Textarea
+            value={message || ""}
+            onChange={handleOnChangeMessage}
             className="resize-none bg-input focus-visible:ring-transparent"
             placeholder={`Conversar com ${friendship.friend.firstName}`}
           />
