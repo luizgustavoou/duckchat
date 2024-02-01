@@ -9,12 +9,12 @@ import {
   FormEvent,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { messageService } from "@/services";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import { wsURL } from "@/utils/config";
-import { Separator } from "@radix-ui/react-separator";
 import SkeletonCard from "./SkeletonCard";
 
 export interface ChatProps {
@@ -22,6 +22,7 @@ export interface ChatProps {
 }
 
 export default function Chat({ friendship }: ChatProps) {
+  const messageContainer = useRef<HTMLDivElement | null>(null);
   const [message, setMessage] = useState<string>("");
 
   const [status, setStatus] = useState<
@@ -90,6 +91,13 @@ export default function Chat({ friendship }: ChatProps) {
     };
   }, [friendship]);
 
+  useEffect(() => {
+    messageContainer.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "end",
+    });
+  }, [messages.length]);
+
   return (
     <div className="flex-1 flex flex-col gap-2">
       <div className="flex gap-2 items-center border-b-2 pb-2">
@@ -130,6 +138,7 @@ export default function Chat({ friendship }: ChatProps) {
                 </div>
               </div>
             ))}
+            <div ref={messageContainer} />
           </>
         )}
       </div>
