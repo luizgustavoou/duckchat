@@ -9,12 +9,17 @@ import { messageService } from "@/services";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import { wsURL } from "@/utils/config";
 import { Separator } from "@radix-ui/react-separator";
+import SkeletonCard from "./SkeletonCard";
 
 export interface ChatProps {
   friendship: IFriendship;
 }
 
 export default function Chat({ friendship }: ChatProps) {
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+
   const { ws, addEventListener, emit } = useWebsocket(wsURL);
 
   const [messages, setMessages] = useState<IMessage[]>([]);
@@ -34,11 +39,19 @@ export default function Chat({ friendship }: ChatProps) {
 
   useEffect(() => {
     const getAllMessagesOfFriendship = async () => {
-      const res = await messageService.getAllMessagesOfFriendship({
-        friendshipId: friendship.id,
-      });
+      try {
+        setStatus("loading");
 
-      setMessages(res);
+        const res = await messageService.getAllMessagesOfFriendship({
+          friendshipId: friendship.id,
+        });
+
+        setMessages(res);
+        setStatus("success");
+      } catch (error) {
+        setStatus("error");
+        console.log(error);
+      }
     };
 
     getAllMessagesOfFriendship();
@@ -64,31 +77,39 @@ export default function Chat({ friendship }: ChatProps) {
       </div>
 
       <div className="flex-1 overflow-auto">
-        {messages.map((message) => (
+        {status === "loading" ? (
           <>
-            <div
-              className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"
-              key={message.id}
-            >
-              <Avatar>
-                <AvatarImage
-                  className="w-12 rounded-full"
-                  src={message.user.avatarURL}
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div>
-                <span className="mr-1">{message.user.firstName}</span>
-                <span className="text-sm text-muted-foreground">
-                  {message.createdAt}
-                </span>
-
-                <p>{message.content}</p>
-              </div>
-            </div>
-            <Separator className="my-2" />
+            <SkeletonCard />
           </>
-        ))}
+        ) : (
+          <>
+            {messages.map((message) => (
+              <>
+                <div
+                  className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"
+                  key={message.id}
+                >
+                  <Avatar>
+                    <AvatarImage
+                      className="w-12 rounded-full"
+                      src={message.user.avatarURL}
+                    />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <div>
+                    <span className="mr-1">{message.user.firstName}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {message.createdAt}
+                    </span>
+
+                    <p>{message.content}</p>
+                  </div>
+                </div>
+                <Separator className="my-2" />
+              </>
+            ))}
+          </>
+        )}
       </div>
 
       <div>

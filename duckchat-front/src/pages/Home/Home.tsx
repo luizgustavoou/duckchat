@@ -3,7 +3,6 @@ import CardFriend from "../../components/CardFriend";
 import { useCallback, useEffect, useState } from "react";
 import { userService } from "@/services";
 import Chat from "@/components/Chat";
-import { Skeleton } from "@/components/ui/skeleton";
 import SkeletonCard from "@/components/SkeletonCard";
 
 export default function Home() {
@@ -65,7 +64,6 @@ export default function Home() {
       </div>
 
       <div className="flex-1 flex p-5 ">
-        {/* <Outlet /> */}
         {currentFriendship && <Chat friendship={currentFriendship} />}
       </div>
     </div>

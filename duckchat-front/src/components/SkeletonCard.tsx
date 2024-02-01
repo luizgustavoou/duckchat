@@ -1,9 +1,13 @@
 import { Skeleton } from "./ui/skeleton";
 
-function SkeletonCard() {
+export interface SkeletonCardProps {
+  length?: number;
+}
+
+function SkeletonCard({ length = 9 }: SkeletonCardProps) {
   return (
     <>
-      {Array(9)
+      {Array(length)
         .fill(1)
         .map((_) => (
           <div className="flex items-center space-x-4 p-2">
