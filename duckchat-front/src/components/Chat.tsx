@@ -92,7 +92,7 @@ export default function Chat({ friendship }: ChatProps) {
   }, [friendship]);
 
   useEffect(() => {
-    messageContainer.current?.scrollIntoView({
+    messageRef.current?.scrollIntoView({
       behavior: "smooth",
       block: "end",
     });
