@@ -22,7 +22,7 @@ export interface ChatProps {
 }
 
 export default function Chat({ friendship }: ChatProps) {
-  const messageContainer = useRef<HTMLDivElement | null>(null);
+  const messageRef = useRef<HTMLDivElement | null>(null);
   const [message, setMessage] = useState<string>("");
 
   const [status, setStatus] = useState<
@@ -138,7 +138,7 @@ export default function Chat({ friendship }: ChatProps) {
                 </div>
               </div>
             ))}
-            <div ref={messageContainer} />
+            <div ref={messageRef} />
           </>
         )}
       </div>
