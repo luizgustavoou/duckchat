@@ -111,33 +111,31 @@ export default function Chat({ friendship }: ChatProps) {
         <p>{`${friendship.friend.firstName} ${friendship.friend.lastName}`}</p>
       </div>
 
-      <div className="flex-1 overflow-auto">
+      <div className="flex-1 overflow-auto ">
         {status === "loading" ? (
           <SkeletonCard />
         ) : (
           <>
             {messages.map((message) => (
               <div
-                className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"
+                className="break-all py-3 px-4 hover:bg-accent/50 cursor-pointer"
                 key={message.id}
               >
-                <div className="flex flex-col break-all gap-2">
-                  <div className="flex items-center gap-2">
-                    <Avatar>
-                      <AvatarImage
-                        className="w-10 rounded-full"
-                        src={message.user.avatarURL}
-                      />
-                      <AvatarFallback>CN</AvatarFallback>
-                    </Avatar>
-                    <span className="mr-1">{message.user.firstName}</span>
-                    <span className="text-sm text-muted-foreground">
-                      {message.createdAt}
-                    </span>
-                  </div>
-
-                  <p>{message.content}</p>
+                <div className="flex items-center gap-2 mb-2">
+                  <Avatar>
+                    <AvatarImage
+                      className="w-10 rounded-full"
+                      src={message.user.avatarURL}
+                    />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <span className="mr-1">{message.user.firstName}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {message.createdAt}
+                  </span>
                 </div>
+
+                <span>{message.content}</span>
               </div>
             ))}
             <div ref={messageRef} />
