@@ -7,6 +7,9 @@ import {
   Param,
   Delete,
   Req,
+  HttpStatus,
+  ValidationPipe,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { CreateMessageDto } from './dto/create-message.dto';
@@ -19,7 +22,7 @@ export class MessageController {
   @Post()
   async create(
     @Req() req: Request,
-    @Body() createMessageDto: CreateMessageDto,
+    @Body(new ValidationPipe()) createMessageDto: CreateMessageDto,
   ) {
     const { sub: userId } = (<any>req).user;
     const { content, friendshipId } = createMessageDto;
@@ -33,27 +36,27 @@ export class MessageController {
   }
 
   @Get('friendship/:id')
-  async findAllByFriendshipId(@Param('id') id: string) {
+  async findAllByFriendshipId(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.messageService.findAllByFriendshipId({
       friendshipId: id,
     });
   }
 
   @Get(':id')
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.messageService.findOneById(id);
   }
 
   @Patch(':id')
   async update(
-    @Param('id') id: string,
-    @Body() updateMessageDto: UpdateMessageDto,
+    @Param('id', new ParseUUIDPipe()) id: string,
+    @Body(new ValidationPipe()) updateMessageDto: UpdateMessageDto,
   ) {
     return await this.messageService.update(id, updateMessageDto);
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.messageService.remove(id);
   }
 }
