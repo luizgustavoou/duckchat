@@ -1,4 +1,9 @@
+import { IsString, IsUUID } from 'class-validator';
+
 export class RefreshDto {
-    userId: string;
-    refresh_token: string;
+  @IsUUID()
+  userId: string;
+
+  @IsString()
+  refresh_token: string;
 }

@@ -1,10 +1,20 @@
-import { User } from "../entities/user.entity";
+import { IsString, MinLength } from 'class-validator';
 
 export class CreateUserDto {
-    username: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    avatarURL: string;
-}
+  @IsString()
+  @MinLength(3)
+  username: string;
 
+  @IsString()
+  @MinLength(3)
+  password: string;
+
+  @IsString()
+  @MinLength(3)
+  firstName: string;
+
+  @IsString()
+  lastName: string;
+
+  avatarURL: string;
+}
