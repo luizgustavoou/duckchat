@@ -45,7 +45,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex-1 flex max-h-screen">
+    <>
       <div className="flex flex-col  border-r-2">
         {status === "loading" ? (
           <SkeletonCard />
@@ -66,6 +66,6 @@ export default function Home() {
       <div className="flex-1 flex p-5 ">
         {currentFriendship && <Chat friendship={currentFriendship} />}
       </div>
-    </div>
+    </>
   );
 }

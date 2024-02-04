@@ -121,18 +121,20 @@ export default function Chat({ friendship }: ChatProps) {
                 className="flex py-3 px-4 items-center gap-2 hover:bg-accent/50 cursor-pointer"
                 key={message.id}
               >
-                <Avatar>
-                  <AvatarImage
-                    className="w-12 rounded-full"
-                    src={message.user.avatarURL}
-                  />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div>
-                  <span className="mr-1">{message.user.firstName}</span>
-                  <span className="text-sm text-muted-foreground">
-                    {message.createdAt}
-                  </span>
+                <div className="flex flex-col break-all gap-2">
+                  <div className="flex items-center gap-2">
+                    <Avatar>
+                      <AvatarImage
+                        className="w-10 rounded-full"
+                        src={message.user.avatarURL}
+                      />
+                      <AvatarFallback>CN</AvatarFallback>
+                    </Avatar>
+                    <span className="mr-1">{message.user.firstName}</span>
+                    <span className="text-sm text-muted-foreground">
+                      {message.createdAt}
+                    </span>
+                  </div>
 
                   <p>{message.content}</p>
                 </div>

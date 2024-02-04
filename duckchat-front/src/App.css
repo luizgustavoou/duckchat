@@ -1,0 +1,22 @@
+#div1 {
+  display: flex;
+  max-width: 150px;
+  height: 100px;
+  border: 2px solid red;
+}
+
+#div2 {
+  background-color: gray;
+  /* word-break: break-all; */
+  /* word-break: break-word; */
+  /* overflow-wrap: anywhere; */
+}
+
+#div3 {
+  background-color: rgb(197, 181, 181);
+}
+
+#div4 {
+  width: 150px;
+  background-color: rgb(144, 199, 172);
+}
