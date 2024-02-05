@@ -3,7 +3,7 @@ import { Textarea } from "./ui/textarea";
 import { IFriendship } from "@/entities/IFriendship";
 import { IMessage } from "@/entities/IMessage";
 import { Button } from "./ui/button";
-import { ChevronRightIcon, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import {
   ChangeEvent,
   FormEvent,
@@ -143,19 +143,17 @@ export default function Chat({ friendship }: ChatProps) {
         )}
       </div>
 
-      <div>
-        <form className="flex items-center gap-1" onSubmit={handleSubmit}>
-          <Textarea
-            value={message || ""}
-            onChange={handleOnChangeMessage}
-            className="resize-none bg-input focus-visible:ring-transparent"
-            placeholder={`Escreva algo para ${friendship.friend.firstName}`}
-          />
-          <Button size="icon" disabled={!message}>
-            <Send className="h-4 w-4" />
-          </Button>
-        </form>
-      </div>
+      <form className="flex items-center gap-1 p-3" onSubmit={handleSubmit}>
+        <Textarea
+          value={message || ""}
+          onChange={handleOnChangeMessage}
+          className="resize-none bg-input focus-visible:ring-transparent"
+          placeholder={`Escreva algo para ${friendship.friend.firstName}`}
+        />
+        <Button size="icon" disabled={!message}>
+          <Send className="h-4 w-4" />
+        </Button>
+      </form>
     </div>
   );
 }
