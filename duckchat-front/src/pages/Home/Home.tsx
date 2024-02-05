@@ -7,6 +7,7 @@ import SkeletonCard from "@/components/SkeletonCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import EditProfile from "@/components/EditProfile";
+import AddFriend from "@/components/AddFriend";
 
 export default function Home() {
   const { user } = useAppSelector((state) => state.userReducer);
@@ -63,7 +64,10 @@ export default function Home() {
             <p className="text-sm text-muted-foreground">{user?.about}</p>
           </div>
 
-          {user && <EditProfile user={user} />}
+          <div className="flex flex-col ">
+            {user && <EditProfile user={user} />}
+            <AddFriend />
+          </div>
         </div>
 
         <div className="flex-1 flex flex-col">

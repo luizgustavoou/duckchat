@@ -10,10 +10,12 @@ import Home from "./pages/Home/Home";
 import { RoutesPath } from "./utils/routes-path";
 import Signin from "./pages/Signin/Signin";
 import Signup from "./pages/Signup/Signup";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
     <Router>
+      {/* <Toaster /> */}
       <div className="flex min-h-screen m-0 p-6 ">
         <div className="w-screen flex bg-muted/60  text-card-foreground rounded-xl border">
           <Routes>
@@ -23,11 +25,6 @@ function App() {
           </Routes>
         </div>
       </div>
-
-      {/* <div id="div1">
-        <div id="div2">aaaaaaaaaa bbbbbbbbbbbbbbbbbbbbbbbbbb</div>
-        <div id="div3">oooo</div>
-      </div> */}
     </Router>
   );
 }

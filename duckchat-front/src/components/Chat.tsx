@@ -16,6 +16,7 @@ import { messageService } from "@/services";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import { wsURL } from "@/utils/config";
 import SkeletonCard from "./SkeletonCard";
+import { toast } from "./ui/use-toast";
 
 export interface ChatProps {
   friendship: IFriendship;
@@ -44,6 +45,11 @@ export default function Chat({ friendship }: ChatProps) {
       });
     } catch (error) {
       console.error(error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
     } finally {
       setMessage("");
     }

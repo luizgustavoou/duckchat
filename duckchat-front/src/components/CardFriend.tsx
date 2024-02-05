@@ -32,19 +32,6 @@ export default function CardFriend({
           <p className="text-sm text-muted-foreground">
             {friendship.friend?.about}
           </p>
-          {/* <div>
-            {friendship.status ? (
-              <div className="flex items-center gap-1">
-                <span>Ativo</span>{" "}
-                <div className="rounded-full w-3 h-3 bg-green-300 align-middle"></div>
-              </div>
-            ) : (
-              <div className="flex items-center gap-1">
-                <span>Inativo</span>{" "}
-                <div className="rounded-full w-3 h-3 bg-red-400 align-middle"></div>
-              </div>
-            )}
-          </div> */}
         </div>
       </>
     </div>
