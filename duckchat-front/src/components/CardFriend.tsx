@@ -28,7 +28,10 @@ export default function CardFriend({
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
         <div className="flex flex-col gap-1">
-          <div>{friendship.friend.firstName}</div>
+          <p>{friendship.friend?.firstName}</p>
+          <p className="text-sm text-muted-foreground">
+            {friendship.friend?.about}
+          </p>
           {/* <div>
             {friendship.status ? (
               <div className="flex items-center gap-1">

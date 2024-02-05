@@ -36,7 +36,7 @@ export class UserApiImpl implements IUserApi {
     return data;
   }
 
-  async addFriend(data: IAddFriend) {
+  async addFriend(data: IAddFriend): Promise<IFriendshipResponse> {
     const { userId } = data;
 
     const res = await api.get<IFriendshipResponse>(`/friendship/${userId}`);

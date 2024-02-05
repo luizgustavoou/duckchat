@@ -1,4 +1,4 @@
-import { IsString, MinLength } from 'class-validator';
+import { IsString, MaxLength, MinLength } from 'class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -15,6 +15,10 @@ export class CreateUserDto {
 
   @IsString()
   lastName: string;
+
+  @IsString()
+  @MaxLength(30)
+  about: string;
 
   avatarURL: string;
 }

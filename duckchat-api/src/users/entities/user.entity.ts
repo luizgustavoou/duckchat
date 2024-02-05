@@ -28,6 +28,9 @@ export class User {
   lastName: string;
 
   @Column()
+  about: string;
+
+  @Column()
   avatarURL: string;
 
   @CreateDateColumn()

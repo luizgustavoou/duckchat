@@ -57,11 +57,12 @@ export default function Home() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
           <div className="flex flex-col gap-1">
-            <div>{user?.firstName}</div>
+            <p>{user?.firstName}</p>
+            <p className="text-sm text-muted-foreground">{user?.about}</p>
           </div>
         </div>
 
-        <div className="flex-1 flex flex-col  ">
+        <div className="flex-1 flex flex-col">
           {status === "loading" ? (
             <SkeletonCard />
           ) : (

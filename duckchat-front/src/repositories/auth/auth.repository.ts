@@ -21,6 +21,7 @@ export class AuthRepositoryImpl implements IAuthRepository {
       username: res.username,
       password: res.password,
       firstName: res.firstName,
+      about: res.about,
       lastName: res.lastName,
       avatarURL: res.avatarURL,
     };

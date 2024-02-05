@@ -33,12 +33,38 @@ export class UserRepositoryImpl implements IUserRepository {
   async getAllFriendsOfUser(): Promise<IFriendship[]> {
     const res = await this.userApi.getAllFriendsOfUser();
 
-    return res;
+    const newRes: IFriendship[] = res.map((friendshipResponse) => ({
+      id: friendshipResponse.id,
+      friend: {
+        id: friendshipResponse.friend.id,
+        username: friendshipResponse.friend.username,
+        password: friendshipResponse.friend.password,
+        firstName: friendshipResponse.friend.firstName,
+        lastName: friendshipResponse.friend.lastName,
+        about: friendshipResponse.friend.about,
+        avatarURL: friendshipResponse.friend.avatarURL,
+      },
+    }));
+
+    return newRes;
   }
 
-  async addFriend(addFriendData: IAddFriend) {
+  async addFriend(addFriendData: IAddFriend): Promise<IFriendship> {
     const res = await this.userApi.addFriend(addFriendData);
 
-    return res;
+    const newRes: IFriendship = {
+      id: res.id,
+      friend: {
+        id: res.friend.id,
+        username: res.friend.username,
+        password: res.friend.password,
+        firstName: res.friend.firstName,
+        lastName: res.friend.lastName,
+        about: res.friend.about,
+        avatarURL: res.friend.avatarURL,
+      },
+    };
+
+    return newRes;
   }
 }

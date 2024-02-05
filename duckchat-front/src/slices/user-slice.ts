@@ -14,6 +14,7 @@ const initialState: UserState = {
     username: "luizgustavoou",
     password: "123",
     firstName: "gugu delicia",
+    about: "every little thing gonna be all right",
     lastName: "Umbelino",
     avatarURL: "https://github.com/shadcn.png",
   },
