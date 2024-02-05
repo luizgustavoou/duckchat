@@ -6,20 +6,7 @@ import Chat from "@/components/Chat";
 import SkeletonCard from "@/components/SkeletonCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { Label } from "@radix-ui/react-label";
-import { Input } from "@/components/ui/input";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Pencil } from "lucide-react";
+import EditProfile from "@/components/EditProfile";
 
 export default function Home() {
   const { user } = useAppSelector((state) => state.userReducer);
@@ -75,52 +62,7 @@ export default function Home() {
               <p>{user?.firstName}</p>
               <p className="text-sm text-muted-foreground">{user?.about}</p>
             </div>
-
-            <Dialog>
-              <DialogTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="bg-primary text-primary-foreground"
-                >
-                  <Pencil className="h-4 w-4" />
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="sm:max-w-[425px]">
-                <DialogHeader>
-                  <DialogTitle>Editar Perfil</DialogTitle>
-                  <DialogDescription>
-                    Faça alterações em seu perfil aqui. Clique em salvar quando
-                    terminar.
-                  </DialogDescription>
-                </DialogHeader>
-                <div className="grid gap-4 py-4">
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="name" className="text-right">
-                      Nome
-                    </Label>
-                    <Input
-                      id="name"
-                      defaultValue="Pedro Duarte"
-                      className="col-span-3"
-                    />
-                  </div>
-                  <div className="grid grid-cols-4 items-center gap-4">
-                    <Label htmlFor="username" className="text-right">
-                      Username
-                    </Label>
-                    <Input
-                      id="username"
-                      defaultValue="@peduarte"
-                      className="col-span-3"
-                    />
-                  </div>
-                </div>
-                <DialogFooter>
-                  <Button type="submit">Salvar mudanças</Button>
-                </DialogFooter>
-              </DialogContent>
-            </Dialog>
+            {user && <EditProfile user={user} />}
           </div>
         </div>
 
