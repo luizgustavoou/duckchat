@@ -13,7 +13,7 @@ export interface IUserApi {
     }[];
   }>;
 
-  getAllUsers(): Promise<IUserResponse[]>;
+  getAllUsers(): Promise<IUserResponse[]>; 
 
   getAllFriendsOfUser(): Promise<IFriendshipResponse[]>;
 

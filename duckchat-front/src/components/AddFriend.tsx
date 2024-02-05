@@ -10,11 +10,51 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Check, Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { useEffect, useState, MouseEvent } from "react";
+import { IUser } from "@/entities/IUser";
+import { userService } from "@/services";
 
 function AddFriend() {
-  
+  const [newFriends, setNewFriends] = useState<string[]>([]);
+
+  const [users, setUsers] = useState<IUser[]>([]);
+
+  useEffect(() => {
+    const gellAllUsers = async () => {
+      const res = await userService.getAllUsers();
+
+      setUsers(res);
+
+      console.log({ res });
+    };
+
+    gellAllUsers();
+  }, []);
+
+  const handleSubmit = async (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    console.log("Amigos adicionados!");
+    setNewFriends([]);
+  };
+
+  const handleAddFriend = async (user: IUser) => {
+    const newValue = [...newFriends];
+
+    const index = newFriends.indexOf(user.id);
+
+    if (index === -1) {
+      newValue.push(user.id);
+    } else {
+      newValue.splice(index, 1);
+    }
+
+    setNewFriends(newValue);
+  };
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -39,25 +79,36 @@ function AddFriend() {
             <Input id="name" placeholder="Procurar usuário..." />
           </div>
 
-          <div className="flex p-3 gap-3 items-center hover:bg-accent rounded-sm cursor-pointer">
-            <Avatar>
-              <AvatarImage
-                className="w-10 rounded-full"
-                src={"https://github.com/shadcn.png"}
-              />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col gap-1">
-              <p>{"teste"}</p>
+          {users.map((user) => (
+            <div
+              className="flex p-3 gap-3 items-center hover:bg-accent rounded-sm cursor-pointer"
+              onClick={(_) => handleAddFriend(user)}
+              key={user.id}
+            >
+              <Avatar>
+                <AvatarImage
+                  className="w-10 rounded-full"
+                  src={"https://github.com/shadcn.png"}
+                />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+              <div className="flex flex-col gap-1 me-auto">
+                <p>
+                  {user.firstName} {user.lastName}
+                </p>
+              </div>
+              {newFriends.includes(user.id) && <Check />}
             </div>
-          </div>
+          ))}
         </div>
         <DialogFooter>
           <div className="w-full flex justify-between">
             <p className="text-sm text-muted-foreground">
               Selecione usuários para serem adicionados
             </p>
-            <Button type="submit">Adicionar</Button>
+            <Button type="submit" onClick={handleSubmit}>
+              Adicionar
+            </Button>
           </div>
         </DialogFooter>
       </DialogContent>
