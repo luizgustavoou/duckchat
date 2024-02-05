@@ -4,8 +4,12 @@ import { useCallback, useEffect, useState } from "react";
 import { userService } from "@/services";
 import Chat from "@/components/Chat";
 import SkeletonCard from "@/components/SkeletonCard";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export default function Home() {
+  const { user } = useAppSelector((state) => state.userReducer);
+
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -45,27 +49,39 @@ export default function Home() {
   };
 
   return (
-    <>
-      <div className="flex flex-col  border-r-2">
-        {status === "loading" ? (
-          <SkeletonCard />
-        ) : (
-          <>
-            {friendships.map((friendship) => (
-              <CardFriend
-                friendship={friendship}
-                key={friendship.id}
-                isSelected={isSelected}
-                handleFriendshipClick={handleFriendshipClick}
-              ></CardFriend>
-            ))}
-          </>
-        )}
+    <div className="flex-1 flex">
+      <div className="flex flex-col border-r-2">
+        <div className="flex gap-3 py-5 px-4 items-center border-b-2">
+          <Avatar>
+            <AvatarImage className="w-14 rounded-full" src={user?.avatarURL} />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+          <div className="flex flex-col gap-1">
+            <div>{user?.firstName}</div>
+          </div>
+        </div>
+
+        <div className="flex-1 flex flex-col  ">
+          {status === "loading" ? (
+            <SkeletonCard />
+          ) : (
+            <>
+              {friendships.map((friendship) => (
+                <CardFriend
+                  friendship={friendship}
+                  key={friendship.id}
+                  isSelected={isSelected}
+                  handleFriendshipClick={handleFriendshipClick}
+                ></CardFriend>
+              ))}
+            </>
+          )}
+        </div>
       </div>
 
-      <div className="flex-1 flex p-5 ">
+      <div className="flex-1 flex">
         {currentFriendship && <Chat friendship={currentFriendship} />}
       </div>
-    </>
+    </div>
   );
 }

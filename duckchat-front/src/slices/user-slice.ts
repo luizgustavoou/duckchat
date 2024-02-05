@@ -15,7 +15,7 @@ const initialState: UserState = {
     password: "123",
     firstName: "gugu delicia",
     lastName: "Umbelino",
-    avatarURL: "testeurl",
+    avatarURL: "https://github.com/shadcn.png",
   },
 };
 

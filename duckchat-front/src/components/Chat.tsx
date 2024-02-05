@@ -100,7 +100,7 @@ export default function Chat({ friendship }: ChatProps) {
 
   return (
     <div className="flex-1 flex flex-col gap-2">
-      <div className="flex gap-2 items-center border-b-2 pb-2">
+      <div className="flex gap-2 items-center border-b-2 p-5">
         <Avatar>
           <AvatarImage
             className="w-12 rounded-full"
@@ -149,7 +149,7 @@ export default function Chat({ friendship }: ChatProps) {
             value={message || ""}
             onChange={handleOnChangeMessage}
             className="resize-none bg-input focus-visible:ring-transparent"
-            placeholder={`Conversar com ${friendship.friend.firstName}`}
+            placeholder={`Escreva algo para ${friendship.friend.firstName}`}
           />
           <Button size="icon" disabled={!message}>
             <Send className="h-4 w-4" />
