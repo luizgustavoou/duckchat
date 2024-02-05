@@ -3,7 +3,7 @@ import { Textarea } from "./ui/textarea";
 import { IFriendship } from "@/entities/IFriendship";
 import { IMessage } from "@/entities/IMessage";
 import { Button } from "./ui/button";
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronRightIcon, Send } from "lucide-react";
 import {
   ChangeEvent,
   FormEvent,
@@ -151,8 +151,8 @@ export default function Chat({ friendship }: ChatProps) {
             className="resize-none bg-input focus-visible:ring-transparent"
             placeholder={`Conversar com ${friendship.friend.firstName}`}
           />
-          <Button size="icon">
-            <ChevronRightIcon className="h-4 w-4" />
+          <Button size="icon" disabled={!message}>
+            <Send className="h-4 w-4" />
           </Button>
         </form>
       </div>
