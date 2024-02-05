@@ -6,6 +6,20 @@ import Chat from "@/components/Chat";
 import SkeletonCard from "@/components/SkeletonCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { Label } from "@radix-ui/react-label";
+import { Input } from "@/components/ui/input";
+
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Pencil } from "lucide-react";
 
 export default function Home() {
   const { user } = useAppSelector((state) => state.userReducer);
@@ -50,7 +64,7 @@ export default function Home() {
 
   return (
     <div className="flex-1 flex">
-      <div className="flex flex-col border-r-2">
+      <div className="flex flex-col border-r-2 ">
         <div className="flex gap-3 py-5 px-4 items-center border-b-2">
           <Avatar>
             <AvatarImage className="w-14 rounded-full" src={user?.avatarURL} />
@@ -59,6 +73,51 @@ export default function Home() {
           <div className="flex flex-col gap-1">
             <p>{user?.firstName}</p>
             <p className="text-sm text-muted-foreground">{user?.about}</p>
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="bg-primary text-primary-foreground"
+                >
+                  <Pencil className="h-4 w-4" />
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Editar Perfil</DialogTitle>
+                  <DialogDescription>
+                    Faça alterações em seu perfil aqui. Clique em salvar quando
+                    terminar.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      Nome
+                    </Label>
+                    <Input
+                      id="name"
+                      defaultValue="Pedro Duarte"
+                      className="col-span-3"
+                    />
+                  </div>
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="username" className="text-right">
+                      Username
+                    </Label>
+                    <Input
+                      id="username"
+                      defaultValue="@peduarte"
+                      className="col-span-3"
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button type="submit">Salvar mudanças</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           </div>
         </div>
 
