@@ -65,7 +65,7 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col ">
-            {user && <EditProfile user={user} />}
+            <EditProfile />
             <AddFriend />
           </div>
         </div>

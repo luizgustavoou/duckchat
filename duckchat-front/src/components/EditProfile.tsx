@@ -14,11 +14,15 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { IUser } from "@/entities/IUser";
 import { ChangeEvent, useEffect, useState } from "react";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
-export interface EditProfileProps {
-  user: IUser;
-}
-function EditProfile({ user }: EditProfileProps) {
+// export interface EditProfileProps {
+//   user: IUser;
+// }
+
+function EditProfile() {
+  const { user } = useAppSelector((state) => state.userReducer);
+
   const [username, setUsername] = useState<string | null>(null);
   const [firstName, setFirstName] = useState<string | null>(null);
   const [lastName, setLastName] = useState<string | null>(null);
@@ -41,6 +45,8 @@ function EditProfile({ user }: EditProfileProps) {
   };
 
   useEffect(() => {
+    if (!user) return;
+
     setFirstName(user.firstName);
     setLastName(user.lastName);
     setUsername(user.username);

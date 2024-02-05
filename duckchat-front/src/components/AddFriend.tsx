@@ -1,4 +1,3 @@
-import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 
 import {
@@ -11,8 +10,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Plus, Search } from "lucide-react";
-import CardFriend from "./CardFriend";
+import { Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 function AddFriend() {
