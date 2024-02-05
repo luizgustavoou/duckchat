@@ -70,9 +70,12 @@ export default function Home() {
             <AvatarImage className="w-14 rounded-full" src={user?.avatarURL} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <div className="flex flex-col gap-1">
-            <p>{user?.firstName}</p>
-            <p className="text-sm text-muted-foreground">{user?.about}</p>
+          <div className="flex gap-4 items-center">
+            <div>
+              <p>{user?.firstName}</p>
+              <p className="text-sm text-muted-foreground">{user?.about}</p>
+            </div>
+
             <Dialog>
               <DialogTrigger asChild>
                 <Button
