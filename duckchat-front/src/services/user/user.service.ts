@@ -2,6 +2,7 @@ import { IFriendship } from "@/entities/IFriendship";
 import { IAddFriend } from "../../interfaces/IAddFriend";
 import { IUserRepository } from "@/repositories/user/user.repository";
 import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
+import { IUser } from "@/entities/IUser";
 
 export interface IUserService {
   updateProfile(data: IUpdateProfile): Promise<{
@@ -11,6 +12,8 @@ export interface IUserService {
       [key: string]: any;
     }[];
   }>;
+
+  getAllUsers(): Promise<IUser[]>;
 
   getAllFriendsOfUser(): Promise<IFriendship[]>;
 
@@ -27,6 +30,16 @@ export class UserServiceImpl implements IUserService {
   }> {
     try {
       const res = await this.userRepository.updateProfile(data);
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAllUsers(): Promise<IUser[]> {
+    try {
+      const res = await this.userRepository.getAllUsers();
 
       return res;
     } catch (error) {

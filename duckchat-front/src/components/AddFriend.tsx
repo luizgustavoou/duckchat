@@ -14,6 +14,7 @@ import { Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 function AddFriend() {
+  
   return (
     <Dialog>
       <DialogTrigger asChild>

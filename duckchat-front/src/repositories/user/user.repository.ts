@@ -2,6 +2,7 @@ import { IFriendship } from "@/entities/IFriendship";
 import { IAddFriend } from "../../interfaces/IAddFriend";
 import { IUserApi } from "@/apis/user/user.api";
 import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
+import { IUser } from "@/entities/IUser";
 
 export interface IUserRepository {
   updateProfile(data: IUpdateProfile): Promise<{
@@ -11,6 +12,8 @@ export interface IUserRepository {
       [key: string]: any;
     }[];
   }>;
+
+  getAllUsers(): Promise<IUser[]>;
 
   getAllFriendsOfUser(): Promise<IFriendship[]>;
 
@@ -28,6 +31,22 @@ export class UserRepositoryImpl implements IUserRepository {
     const res = await this.userApi.updateProfile(data);
 
     return res;
+  }
+
+  async getAllUsers(): Promise<IUser[]> {
+    const res = await this.userApi.getAllUsers();
+
+    const newRes: IUser[] = res.map((userResponse) => ({
+      id: userResponse.id,
+      username: userResponse.username,
+      password: userResponse.password,
+      firstName: userResponse.firstName,
+      lastName: userResponse.lastName,
+      about: userResponse.about,
+      avatarURL: userResponse.avatarURL,
+    }));
+
+    return newRes;
   }
 
   async getAllFriendsOfUser(): Promise<IFriendship[]> {

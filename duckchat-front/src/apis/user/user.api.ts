@@ -2,6 +2,7 @@ import { api } from "@/utils/api";
 import { IAddFriend } from "../../interfaces/IAddFriend";
 import { IFriendshipResponse } from "./models/IFriendshipResponse";
 import { IUpdateProfile } from "../../interfaces/IUpdateProfile";
+import { IUserResponse } from "../auth/models/IUserResponse";
 
 export interface IUserApi {
   updateProfile(data: IUpdateProfile): Promise<{
@@ -11,6 +12,8 @@ export interface IUserApi {
       [key: string]: any;
     }[];
   }>;
+
+  getAllUsers(): Promise<IUserResponse[]>;
 
   getAllFriendsOfUser(): Promise<IFriendshipResponse[]>;
 
@@ -28,12 +31,16 @@ export class UserApiImpl implements IUserApi {
     return res.data;
   }
 
+  async getAllUsers(): Promise<IUserResponse[]> {
+    const res = await api.get<IUserResponse[]>("/users");
+
+    return res.data;
+  }
+
   async getAllFriendsOfUser(): Promise<IFriendshipResponse[]> {
     const res = await api.get<IFriendshipResponse[]>("/friendship");
 
-    const data = res.data;
-
-    return data;
+    return res.data;
   }
 
   async addFriend(data: IAddFriend): Promise<IFriendshipResponse> {
