@@ -17,7 +17,7 @@ function App() {
     <Router>
       {/* <Toaster /> */}
       <div className="flex min-h-screen m-0 p-6 ">
-        <div className="w-screen flex bg-muted/60  text-card-foreground rounded-xl border">
+        <div className="w-screen max-h-screen flex bg-muted/60  text-card-foreground rounded-xl border">
           <Routes>
             <Route path={RoutesPath.ROOT} element={<Home />} />
             <Route path={RoutesPath.SIGNIN} element={<Signin />} />
