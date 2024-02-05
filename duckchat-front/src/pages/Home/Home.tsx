@@ -57,13 +57,13 @@ export default function Home() {
             <AvatarImage className="w-14 rounded-full" src={user?.avatarURL} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <div className="flex gap-4 items-center">
-            <div>
-              <p>{user?.firstName}</p>
-              <p className="text-sm text-muted-foreground">{user?.about}</p>
-            </div>
-            {user && <EditProfile user={user} />}
+
+          <div>
+            <p>{user?.firstName}</p>
+            <p className="text-sm text-muted-foreground">{user?.about}</p>
           </div>
+
+          {user && <EditProfile user={user} />}
         </div>
 
         <div className="flex-1 flex flex-col">
