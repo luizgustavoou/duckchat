@@ -132,11 +132,17 @@ export default function Chat({ friendship }: ChatProps) {
             <div
               className={`flex  ${
                 userAuth?.id === message.user.id
-                  ? "justify-end"
+                  ? "justify-end "
                   : "justify-start"
               } `}
             >
-              <div className="bg-primary p-3 rounded-sm mb-2 max-w-[60%]">
+              <div
+                className={` ${
+                  userAuth?.id === message.user.id
+                    ? "bg-primary text-primary-foreground"
+                    : "bg-muted "
+                } p-3 rounded-sm mb-2 max-w-[60%]"`}
+              >
                 <span className="0">{message.content}</span>
               </div>
             </div>
