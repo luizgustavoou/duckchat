@@ -97,13 +97,13 @@ function AddFriend() {
           {status != "loading" &&
             users.map((user) => (
               <div
-                className="flex p-3 gap-3 items-center hover:bg-accent rounded-sm cursor-pointer"
+                className="flex gap-3 py-5 px-4 items-center hover:bg-accent/50  cursor-pointer rounded-sm"
                 onClick={(_) => handleAddFriend(user)}
                 key={user.id}
               >
                 <Avatar>
                   <AvatarImage
-                    className="w-10 rounded-full"
+                    className="w-12  rounded-full"
                     src={"https://github.com/shadcn.png"}
                   />
                   <AvatarFallback>CN</AvatarFallback>

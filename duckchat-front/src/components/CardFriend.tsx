@@ -19,21 +19,19 @@ export default function CardFriend({
       }`}
       onClick={(_) => handleFriendshipClick(friendship)}
     >
-      <>
-        <Avatar>
-          <AvatarImage
-            className="w-12 rounded-full"
-            src={friendship.friend.avatarURL}
-          />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
-        <div className="flex flex-col gap-1">
-          <p>{friendship.friend?.firstName}</p>
-          <p className="text-sm text-muted-foreground">
-            {friendship.friend?.about}
-          </p>
-        </div>
-      </>
+      <Avatar>
+        <AvatarImage
+          className="w-12 rounded-full"
+          src={friendship.friend.avatarURL}
+        />
+        <AvatarFallback>CN</AvatarFallback>
+      </Avatar>
+      <div className="flex flex-col gap-1">
+        <p>{friendship.friend?.firstName}</p>
+        <p className="text-sm text-muted-foreground">
+          {friendship.friend?.about}
+        </p>
+      </div>
     </div>
   );
 }
