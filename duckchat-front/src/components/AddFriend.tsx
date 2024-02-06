@@ -23,7 +23,7 @@ function AddFriend() {
 
   useEffect(() => {
     const gellAllUsers = async () => {
-      const res = await userService.getAllUsers();
+      const res = await userService.getAllNonFriendsUsers();
 
       setUsers(res);
 
