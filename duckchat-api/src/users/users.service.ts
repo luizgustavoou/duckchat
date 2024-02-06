@@ -39,6 +39,22 @@ export class UsersService {
   }
 
   async findNonFriends(userId: string) {
+    /*
+    QUERY:
+
+    SELECT user.id, user.firstName
+    FROM user
+    WHERE user.id != ${userId} AND user.id NOT IN
+    (
+      SELECT
+      CASE
+        WHEN user_friends.user1Id = ${userId} THEN user_friends.user2Id
+        ELSE user_friends.user1Id
+      END
+      FROM user_friends
+      WHERE user_friends.user1Id = ${userId} OR user_friends.user2Id = ${userId}
+    );
+    */
     const subquery = this.userFriendsRepository
       .createQueryBuilder('user_friends')
       .select(
