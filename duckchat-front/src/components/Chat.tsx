@@ -106,7 +106,7 @@ export default function Chat({ friendship }: ChatProps) {
 
   return (
     <div className="flex-1 flex flex-col gap-2">
-      <div className="flex gap-2 items-center border-b-2 p-5">
+      <div className="flex gap-3 py-5 px-4 items-center border-b-2">
         <Avatar>
           <AvatarImage
             className="w-12 rounded-full"
@@ -114,7 +114,11 @@ export default function Chat({ friendship }: ChatProps) {
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
-        <p>{`${friendship.friend.firstName} ${friendship.friend.lastName}`}</p>
+        <div className="flex flex-col gap-1">
+          <p>
+            {friendship.friend.firstName} {friendship.friend.lastName}
+          </p>
+        </div>
       </div>
 
       <div className="flex-1 overflow-auto ">
@@ -124,10 +128,10 @@ export default function Chat({ friendship }: ChatProps) {
           <>
             {messages.map((message) => (
               <div
-                className="break-all py-3 px-4 hover:bg-accent/50 cursor-pointer"
+                className="break-all py-5 px-4 hover:bg-accent/50 cursor-pointer"
                 key={message.id}
               >
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex gap-3 items-center mb-3">
                   <Avatar>
                     <AvatarImage
                       className="w-10 rounded-full"

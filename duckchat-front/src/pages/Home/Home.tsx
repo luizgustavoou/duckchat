@@ -52,7 +52,7 @@ export default function Home() {
 
   return (
     <div className="flex-1 flex">
-      <div className="flex flex-col border-r-2 ">
+      <div className="flex flex-col border-r-2">
         <div className="flex gap-3 py-5 px-4 items-center border-b-2">
           <Avatar>
             <AvatarImage className="w-14 rounded-full" src={user?.avatarURL} />
