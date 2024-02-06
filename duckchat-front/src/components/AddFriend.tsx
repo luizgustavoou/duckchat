@@ -15,19 +15,32 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useEffect, useState, MouseEvent } from "react";
 import { IUser } from "@/entities/IUser";
 import { userService } from "@/services";
+import SkeletonCard from "./SkeletonCard";
 
 function AddFriend() {
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+
   const [newFriends, setNewFriends] = useState<string[]>([]);
 
   const [users, setUsers] = useState<IUser[]>([]);
 
   useEffect(() => {
     const gellAllUsers = async () => {
-      const res = await userService.getAllNonFriendsUsers();
+      try {
+        const res = await userService.getAllNonFriendsUsers();
 
-      setUsers(res);
+        setUsers(res);
 
-      console.log({ res });
+        setStatus("success");
+      } catch (error) {
+        setStatus("error");
+      } finally {
+        setTimeout(() => {
+          setStatus("idle");
+        }, 3000);
+      }
     };
 
     gellAllUsers();
@@ -79,27 +92,30 @@ function AddFriend() {
             <Input id="name" placeholder="Procurar usuário..." />
           </div>
 
-          {users.map((user) => (
-            <div
-              className="flex p-3 gap-3 items-center hover:bg-accent rounded-sm cursor-pointer"
-              onClick={(_) => handleAddFriend(user)}
-              key={user.id}
-            >
-              <Avatar>
-                <AvatarImage
-                  className="w-10 rounded-full"
-                  src={"https://github.com/shadcn.png"}
-                />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-              <div className="flex flex-col gap-1 me-auto">
-                <p>
-                  {user.firstName} {user.lastName}
-                </p>
+          {status === "loading" && <SkeletonCard length={4} />}
+
+          {status != "loading" &&
+            users.map((user) => (
+              <div
+                className="flex p-3 gap-3 items-center hover:bg-accent rounded-sm cursor-pointer"
+                onClick={(_) => handleAddFriend(user)}
+                key={user.id}
+              >
+                <Avatar>
+                  <AvatarImage
+                    className="w-10 rounded-full"
+                    src={"https://github.com/shadcn.png"}
+                  />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <div className="flex flex-col gap-1 me-auto">
+                  <p>
+                    {user.firstName} {user.lastName}
+                  </p>
+                </div>
+                {newFriends.includes(user.id) && <Check />}
               </div>
-              {newFriends.includes(user.id) && <Check />}
-            </div>
-          ))}
+            ))}
         </div>
         <DialogFooter>
           <div className="w-full flex justify-between">
