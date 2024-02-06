@@ -13,7 +13,9 @@ export interface IUserApi {
     }[];
   }>;
 
-  getAllUsers(): Promise<IUserResponse[]>; 
+  getAllUsers(): Promise<IUserResponse[]>;
+
+  getAllNonFriendsUsers(): Promise<IUserResponse[]>;
 
   getAllFriendsOfUser(): Promise<IFriendshipResponse[]>;
 
@@ -33,6 +35,12 @@ export class UserApiImpl implements IUserApi {
 
   async getAllUsers(): Promise<IUserResponse[]> {
     const res = await api.get<IUserResponse[]>("/users");
+
+    return res.data;
+  }
+
+  async getAllNonFriendsUsers(): Promise<IUserResponse[]> {
+    const res = await api.get<IUserResponse[]>("users/non-friends");
 
     return res.data;
   }

@@ -15,6 +15,8 @@ export interface IUserService {
 
   getAllUsers(): Promise<IUser[]>;
 
+  getAllNonFriendsUsers(): Promise<IUser[]>;
+
   getAllFriendsOfUser(): Promise<IFriendship[]>;
 
   addFriend(data: IAddFriend): Promise<IFriendship>;
@@ -40,6 +42,16 @@ export class UserServiceImpl implements IUserService {
   async getAllUsers(): Promise<IUser[]> {
     try {
       const res = await this.userRepository.getAllUsers();
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getAllNonFriendsUsers(): Promise<IUser[]> {
+    try {
+      const res = await this.userRepository.getAllNonFriendsUsers();
 
       return res;
     } catch (error) {

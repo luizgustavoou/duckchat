@@ -15,6 +15,8 @@ export interface IUserRepository {
 
   getAllUsers(): Promise<IUser[]>;
 
+  getAllNonFriendsUsers(): Promise<IUser[]>;
+
   getAllFriendsOfUser(): Promise<IFriendship[]>;
 
   addFriend(addFriendData: IAddFriend): Promise<IFriendship>;
@@ -35,6 +37,22 @@ export class UserRepositoryImpl implements IUserRepository {
 
   async getAllUsers(): Promise<IUser[]> {
     const res = await this.userApi.getAllUsers();
+
+    const newRes: IUser[] = res.map((userResponse) => ({
+      id: userResponse.id,
+      username: userResponse.username,
+      password: userResponse.password,
+      firstName: userResponse.firstName,
+      lastName: userResponse.lastName,
+      about: userResponse.about,
+      avatarURL: userResponse.avatarURL,
+    }));
+
+    return newRes;
+  }
+
+  async getAllNonFriendsUsers(): Promise<IUser[]> {
+    const res = await this.userApi.getAllNonFriendsUsers();
 
     const newRes: IUser[] = res.map((userResponse) => ({
       id: userResponse.id,
