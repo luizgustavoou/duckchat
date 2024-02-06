@@ -23,6 +23,8 @@ export class FriendshipService {
     private readonly usersService: UsersService,
   ) {}
 
+  
+
   async create(creteFriendshipDto: CreteFriendshipDto) {
     const { friendId, userId } = creteFriendshipDto;
 
@@ -60,6 +62,7 @@ export class FriendshipService {
 
     return { id: newFriendship.id, friend: newFriendship.user2 };
   }
+
   async findOneById(id: string) {
     return await this.userFriendsRepository.findOneBy({ id });
   }

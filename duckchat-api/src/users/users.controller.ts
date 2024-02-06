@@ -8,6 +8,7 @@ import {
   Delete,
   ValidationPipe,
   ParseUUIDPipe,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -25,6 +26,13 @@ export class UsersController {
   @Get()
   async findAll() {
     return this.usersService.findAll();
+  }
+
+  @Get('non-friends')
+  async findNonFriends(@Req() req: Request) {
+    const { sub } = (<any>req).user;
+
+    return this.usersService.findNonFriends(sub);
   }
 
   @Get(':id')

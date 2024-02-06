@@ -13,9 +13,9 @@ const initialState: UserState = {
     id: "64f7485f-9083-409e-ba2d-67a37429a399",
     username: "luizgustavoou",
     password: "123",
-    firstName: "gugu delicia",
-    about: "every little thing gonna be all right",
+    firstName: "Luiz Gustavo",
     lastName: "Umbelino",
+    about: "every little thing gonna be all right",
     avatarURL: "https://github.com/shadcn.png",
   },
 };
