@@ -124,7 +124,7 @@ export default function Chat({ friendship }: ChatProps) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto p-4 break-all gap-3">
+      <div className="flex-1 gap-3 p-4 overflow-auto break-all ">
         {status === "loading" && <SkeletonCard />}
 
         {status != "loading" &&
