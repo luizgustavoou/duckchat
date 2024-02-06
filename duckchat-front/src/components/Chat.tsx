@@ -17,6 +17,7 @@ import { useWebsocket } from "@/hooks/useWebsocket";
 import { wsURL } from "@/utils/config";
 import SkeletonCard from "./SkeletonCard";
 import { toast } from "./ui/use-toast";
+import { userSelector } from "@/slices/user-slice";
 import { useAppSelector } from "@/hooks/useAppSelector";
 
 export interface ChatProps {
@@ -24,7 +25,7 @@ export interface ChatProps {
 }
 
 export default function Chat({ friendship }: ChatProps) {
-  const { user: userAuth } = useAppSelector((state) => state.userReducer);
+  const { user: userAuth } = useAppSelector(userSelector);
 
   const messageRef = useRef<HTMLDivElement | null>(null);
   const [message, setMessage] = useState<string>("");

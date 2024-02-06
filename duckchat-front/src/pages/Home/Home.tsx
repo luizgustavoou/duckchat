@@ -8,9 +8,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import EditProfile from "@/components/EditProfile";
 import AddFriend from "@/components/AddFriend";
+import { userSelector } from "@/slices/user-slice";
 
 export default function Home() {
-  const { user } = useAppSelector((state) => state.userReducer);
+  const { user: userAuth } = useAppSelector(userSelector);
 
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
@@ -55,13 +56,16 @@ export default function Home() {
       <div className="flex flex-col border-r-2">
         <div className="flex gap-3 py-5 px-4 items-center border-b-2">
           <Avatar>
-            <AvatarImage className="w-14 rounded-full" src={user?.avatarURL} />
+            <AvatarImage
+              className="w-14 rounded-full"
+              src={userAuth?.avatarURL}
+            />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
           <div>
-            <p>{user?.firstName}</p>
-            <p className="text-sm text-muted-foreground">{user?.about}</p>
+            <p>{userAuth?.firstName}</p>
+            <p className="text-sm text-muted-foreground">{userAuth?.about}</p>
           </div>
 
           <div className="flex flex-col ">

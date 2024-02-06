@@ -12,16 +12,16 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import { IUser } from "@/entities/IUser";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { userSelector } from "@/slices/user-slice";
 
 // export interface EditProfileProps {
 //   user: IUser;
 // }
 
 function EditProfile() {
-  const { user } = useAppSelector((state) => state.userReducer);
+  const { user: userAuth } = useAppSelector(userSelector);
 
   const [username, setUsername] = useState<string | null>(null);
   const [firstName, setFirstName] = useState<string | null>(null);
@@ -45,13 +45,13 @@ function EditProfile() {
   };
 
   useEffect(() => {
-    if (!user) return;
+    if (!userAuth) return;
 
-    setFirstName(user.firstName);
-    setLastName(user.lastName);
-    setUsername(user.username);
-    setAbout(user.about);
-  }, [user]);
+    setFirstName(userAuth.firstName);
+    setLastName(userAuth.lastName);
+    setUsername(userAuth.username);
+    setAbout(userAuth.about);
+  }, [userAuth]);
 
   return (
     <Dialog>
