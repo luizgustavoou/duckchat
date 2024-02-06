@@ -135,6 +135,7 @@ export default function Chat({ friendship }: ChatProps) {
                   ? "justify-end "
                   : "justify-start"
               } `}
+              key={message.id}
             >
               <div
                 className={`max-w-[60%] p-3 mb-2 rounded-sm text-sm  ${
