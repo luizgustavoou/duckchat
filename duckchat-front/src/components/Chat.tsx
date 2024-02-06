@@ -17,12 +17,15 @@ import { useWebsocket } from "@/hooks/useWebsocket";
 import { wsURL } from "@/utils/config";
 import SkeletonCard from "./SkeletonCard";
 import { toast } from "./ui/use-toast";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 export interface ChatProps {
   friendship: IFriendship;
 }
 
 export default function Chat({ friendship }: ChatProps) {
+  const { user: userAuth } = useAppSelector((state) => state.userReducer);
+
   const messageRef = useRef<HTMLDivElement | null>(null);
   const [message, setMessage] = useState<string>("");
 
@@ -121,36 +124,24 @@ export default function Chat({ friendship }: ChatProps) {
         </div>
       </div>
 
-      <div className="flex-1 overflow-auto ">
-        {status === "loading" ? (
-          <SkeletonCard />
-        ) : (
-          <>
-            {messages.map((message) => (
-              <div
-                className="break-all py-5 px-4 hover:bg-accent/50 cursor-pointer"
-                key={message.id}
-              >
-                <div className="flex gap-3 items-center mb-3">
-                  <Avatar>
-                    <AvatarImage
-                      className="w-10 rounded-full"
-                      src={message.user.avatarURL}
-                    />
-                    <AvatarFallback>CN</AvatarFallback>
-                  </Avatar>
-                  <span className="mr-1">{message.user.firstName}</span>
-                  <span className="text-sm text-muted-foreground">
-                    {message.createdAt}
-                  </span>
-                </div>
+      <div className="flex-1 overflow-auto p-4 break-all gap-3">
+        {status === "loading" && <SkeletonCard />}
 
-                <span>{message.content}</span>
+        {status != "loading" &&
+          messages.map((message) => (
+            <div
+              className={`flex  ${
+                userAuth?.id === message.user.id
+                  ? "justify-end"
+                  : "justify-start"
+              } `}
+            >
+              <div className="bg-primary p-3 rounded-sm mb-2 max-w-[60%]">
+                <span className="0">{message.content}</span>
               </div>
-            ))}
-            <div ref={messageRef} />
-          </>
-        )}
+            </div>
+          ))}
+        <div ref={messageRef} />
       </div>
 
       <form className="flex items-center gap-1 p-3" onSubmit={handleSubmit}>

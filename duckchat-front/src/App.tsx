@@ -9,6 +9,14 @@ import Signup from "./pages/Signup/Signup";
 function App() {
   return (
     <Router>
+      {/* <div className="flex flex-col w-20 h-20 bg-red-300">
+        <div>
+          <div className="bg-blue-300">aaaa</div>
+          <div className="bg-blue-300">aaaa</div>
+          <div className="bg-blue-300">aaaa</div>
+        </div>
+      </div> */}
+
       <div className="flex min-h-screen m-0 p-6 ">
         <div className="w-screen max-h-screen flex bg-muted/60  text-card-foreground rounded-xl border">
           <Routes>
