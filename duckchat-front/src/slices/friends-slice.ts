@@ -4,16 +4,16 @@ import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface FriendsState {
-  friends: IFriendship[];
+  friendships: IFriendship[];
   status: "idle" | "loading" | "success" | "error";
 }
 
 const initialState: FriendsState = {
-  friends: [],
+  friendships: [],
   status: "idle",
 };
 
-const getAllFriendsOfUser = createAsyncThunk<
+export const getAllFriendsOfUser = createAsyncThunk<
   IFriendship[],
   void,
   {
@@ -26,7 +26,7 @@ const getAllFriendsOfUser = createAsyncThunk<
     const res = await userService.getAllFriendsOfUser();
 
     return res;
-  } catch (error) {
+  } catch (error: any) {
     return thunkAPI.rejectWithValue(
       error?.message || "Ocorreu algum erro interno no servidor."
     );
@@ -43,7 +43,7 @@ export const friendsSlice = createSlice({
         state.status = "loading";
       })
       .addCase(getAllFriendsOfUser.fulfilled, (state, action) => {
-        state.friends = action.payload;
+        state.friendships = action.payload;
         state.status = "success";
       })
       .addCase(getAllFriendsOfUser.rejected, (state, action) => {

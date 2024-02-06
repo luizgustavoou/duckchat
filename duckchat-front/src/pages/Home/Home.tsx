@@ -1,7 +1,6 @@
 import { IFriendship } from "@/entities/IFriendship";
 import CardFriend from "../../components/CardFriend";
 import { useCallback, useEffect, useState } from "react";
-import { userService } from "@/services";
 import Chat from "@/components/Chat";
 import SkeletonCard from "@/components/SkeletonCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
@@ -9,35 +8,21 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import EditProfile from "@/components/EditProfile";
 import AddFriend from "@/components/AddFriend";
 import { userSelector } from "@/slices/user-slice";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { friendsSelector, getAllFriendsOfUser } from "@/slices/friends-slice";
 
 export default function Home() {
   const { user: userAuth } = useAppSelector(userSelector);
+  const { friendships, status: friendshipStatus } =
+    useAppSelector(friendsSelector);
 
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
-
-  const [friendships, setFriendships] = useState<IFriendship[]>([]);
+  const dispatch = useAppDispatch();
 
   const [currentFriendship, setCurrentFriendship] =
     useState<IFriendship | null>(null);
 
   useEffect(() => {
-    const getAllFriendsOfUser = async () => {
-      try {
-        setStatus("loading");
-        const res = await userService.getAllFriendsOfUser();
-
-        setFriendships(res);
-
-        setStatus("success");
-      } catch (error) {
-        setStatus("error");
-        console.log(error);
-      }
-    };
-
-    getAllFriendsOfUser();
+    dispatch(getAllFriendsOfUser());
   }, []);
 
   const isSelected = useCallback(
@@ -75,7 +60,7 @@ export default function Home() {
         </div>
 
         <div className="flex-1 flex flex-col">
-          {status === "loading" ? (
+          {friendshipStatus === "loading" ? (
             <SkeletonCard />
           ) : (
             <>
