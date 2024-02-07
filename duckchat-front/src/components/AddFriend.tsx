@@ -26,7 +26,8 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 function AddFriend() {
   const dispatch = useAppDispatch();
 
-  const { nonFriends, status } = useAppSelector(nonFriendsSelector);
+  const { nonFriends, status: nonFriendsStatus } =
+    useAppSelector(nonFriendsSelector);
 
   const [newFriends, setNewFriends] = useState<string[]>([]);
 
@@ -64,6 +65,8 @@ function AddFriend() {
     dispatch(getAllNonFriends());
   }, []);
 
+  const disableActions = nonFriendsStatus === "loading";
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -88,9 +91,9 @@ function AddFriend() {
             <Input id="name" placeholder="Procurar usuário..." />
           </div>
 
-          {status === "loading" && <SkeletonCard length={4} />}
+          {disableActions && <SkeletonCard length={4} />}
 
-          {status != "loading" &&
+          {nonFriendsStatus != "loading" &&
             nonFriends.map((user) => (
               <div
                 className="flex gap-3 py-5 px-4 items-center hover:bg-accent/50  cursor-pointer rounded-sm"
@@ -118,7 +121,11 @@ function AddFriend() {
             <p className="text-sm text-muted-foreground">
               Selecione usuários para serem adicionados
             </p>
-            <Button type="submit" onClick={handleSubmit}>
+            <Button
+              type="submit"
+              onClick={handleSubmit}
+              disabled={disableActions}
+            >
               Adicionar
             </Button>
           </div>
