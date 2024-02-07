@@ -3,7 +3,7 @@ import { IAddFriend } from "@/interfaces/IAddFriend";
 import { userService } from "@/services";
 import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllNonFriends } from "./non-friends-slice";
+import { getAllNonFriends } from "./non-friends-users-slice";
 
 export interface FriendsState {
   friendships: IFriendship[];

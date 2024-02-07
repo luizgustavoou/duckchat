@@ -29,10 +29,10 @@ export class UsersController {
   }
 
   @Get('non-friends')
-  async findNonFriends(@Req() req: Request) {
+  async findNonFriendsUsers(@Req() req: Request) {
     const { sub } = (<any>req).user;
 
-    return await this.usersService.findNonFriends(sub);
+    return await this.usersService.findNonFriendsUsers(sub);
   }
 
   @Get(':id')

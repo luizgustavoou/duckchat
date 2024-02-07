@@ -4,16 +4,16 @@ import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
 export interface NonFriendsState {
-  nonFriends: IUser[];
+  nonFriendsUsers: IUser[];
   status: "idle" | "loading" | "success" | "error";
 }
 
 const initialState: NonFriendsState = {
-  nonFriends: [],
+  nonFriendsUsers: [],
   status: "idle",
 };
 
-export const getAllNonFriends = createAsyncThunk<
+export const getAllNonFriendsUsers = createAsyncThunk<
   IUser[],
   void,
   {
@@ -21,7 +21,7 @@ export const getAllNonFriends = createAsyncThunk<
     state: RootState;
     rejectValue: string;
   }
->("nonfreinds/getall", async (_, thunkAPI) => {
+>("nonfriendsusers/getall", async (_, thunkAPI) => {
   try {
     const res = await userService.getAllNonFriendsUsers();
 
@@ -33,26 +33,27 @@ export const getAllNonFriends = createAsyncThunk<
   }
 });
 
-export const friendsSlice = createSlice({
+export const nonFriendsUsersSlice = createSlice({
   name: "friends",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllNonFriends.pending, (state, action) => {
+      .addCase(getAllNonFriendsUsers.pending, (state, action) => {
         state.status = "loading";
       })
-      .addCase(getAllNonFriends.fulfilled, (state, action) => {
-        state.nonFriends = action.payload;
+      .addCase(getAllNonFriendsUsers.fulfilled, (state, action) => {
+        state.nonFriendsUsers = action.payload;
         state.status = "success";
       })
-      .addCase(getAllNonFriends.rejected, (state, action) => {
+      .addCase(getAllNonFriendsUsers.rejected, (state, action) => {
         state.status = "error";
       });
   },
 });
 
-export const {} = friendsSlice.actions;
+export const {} = nonFriendsUsersSlice.actions;
 
-export const nonFriendsSelector = (state: RootState) => state.nonFriendsReducer;
-export default friendsSlice.reducer;
+export const nonFriendsUsersSelector = (state: RootState) =>
+  state.nonFriendsUsersReducer;
+export default nonFriendsUsersSlice.reducer;

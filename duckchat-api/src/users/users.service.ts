@@ -44,7 +44,7 @@ export class UsersService {
     return await this.usersRepository.save(user);
   }
 
-  async findNonFriends(userId: string) {
+  async findNonFriendsUsers(userId: string) {
     /*
     QUERY:
 

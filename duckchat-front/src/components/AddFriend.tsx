@@ -17,17 +17,18 @@ import { IUser } from "@/entities/IUser";
 import SkeletonCard from "./SkeletonCard";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { addFriend } from "@/slices/friends-slice";
-import {
-  getAllNonFriends,
-  nonFriendsSelector,
-} from "@/slices/non-friends-slice";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import {
+  getAllNonFriendsUsers,
+  nonFriendsUsersSelector,
+} from "../slices/non-friends-users-slice";
 
 function AddFriend() {
   const dispatch = useAppDispatch();
 
-  const { nonFriends, status: nonFriendsStatus } =
-    useAppSelector(nonFriendsSelector);
+  const { nonFriendsUsers, status: nonFriendsStatus } = useAppSelector(
+    nonFriendsUsersSelector
+  );
 
   const [newFriends, setNewFriends] = useState<string[]>([]);
 
@@ -42,7 +43,7 @@ function AddFriend() {
 
     await Promise.all(dispatchPromises);
 
-    await dispatch(getAllNonFriends());
+    await dispatch(getAllNonFriendsUsers());
 
     setNewFriends([]);
   };
@@ -62,7 +63,7 @@ function AddFriend() {
   };
 
   useEffect(() => {
-    dispatch(getAllNonFriends());
+    dispatch(getAllNonFriendsUsers());
   }, []);
 
   const disableActions = nonFriendsStatus === "loading";
@@ -94,7 +95,7 @@ function AddFriend() {
           {disableActions && <SkeletonCard length={4} />}
 
           {nonFriendsStatus != "loading" &&
-            nonFriends.map((user) => (
+            nonFriendsUsers.map((user) => (
               <div
                 className="flex gap-3 py-5 px-4 items-center hover:bg-accent/50  cursor-pointer rounded-sm"
                 onClick={(_) => handleAddFriend(user)}
