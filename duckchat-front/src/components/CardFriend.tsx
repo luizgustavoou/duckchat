@@ -1,6 +1,20 @@
 import { IFriendship } from "@/entities/IFriendship";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
+import { MouseEvent } from "react";
+import { Button } from "./ui/button";
+import { Trash } from "lucide-react";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 interface ICardFriendProps {
   friendship: IFriendship;
   handleFriendshipClick: (friendship: IFriendship) => void;
@@ -12,12 +26,25 @@ export default function CardFriend({
   isSelected,
   handleFriendshipClick,
 }: ICardFriendProps) {
+  const handleMouseOver = (
+    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+  ) => {};
+
+  const handleClick = (
+    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation();
+
+    console.log("opa!");
+  };
+
   return (
     <div
-      className={`flex gap-3 py-5 px-4 items-center hover:bg-accent/50 cursor-pointer ${
+      className={`relative flex gap-3 py-5 px-4 items-center hover:bg-accent/50 cursor-pointer ${
         isSelected(friendship) && "bg-accent/50"
       }`}
       onClick={(_) => handleFriendshipClick(friendship)}
+      onMouseOver={handleMouseOver}
     >
       <Avatar>
         <AvatarImage
@@ -31,6 +58,28 @@ export default function CardFriend({
         <p className="text-sm text-muted-foreground">
           {friendship.friend?.about}
         </p>
+      </div>
+      <div className="absolute top-auto right-3 " onClick={handleClick}>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="destructive" size="icon">
+              <Trash />
+            </Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Você tem certeza absoluta?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Essa ação não pode ser desfeita. Isso excluirá sua amizade e
+                remover todas as mensagens armazenadas.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction>Continue</AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </div>
   );
