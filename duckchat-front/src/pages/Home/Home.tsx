@@ -11,6 +11,20 @@ import { userSelector } from "@/slices/user-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { friendsSelector, getAllFriendsOfUser } from "@/slices/friends-slice";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+
 export default function Home() {
   const { user: userAuth } = useAppSelector(userSelector);
   const { friendships, status: friendshipStatus } =

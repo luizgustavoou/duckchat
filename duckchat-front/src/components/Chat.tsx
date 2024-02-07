@@ -3,7 +3,7 @@ import { Textarea } from "./ui/textarea";
 import { IFriendship } from "@/entities/IFriendship";
 import { IMessage } from "@/entities/IMessage";
 import { Button } from "./ui/button";
-import { Send } from "lucide-react";
+import { ChevronDown, Send } from "lucide-react";
 import {
   ChangeEvent,
   FormEvent,
@@ -19,6 +19,14 @@ import SkeletonCard from "./SkeletonCard";
 import { toast } from "./ui/use-toast";
 import { userSelector } from "@/slices/user-slice";
 import { useAppSelector } from "@/hooks/useAppSelector";
+
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 export interface ChatProps {
   friendship: IFriendship;
@@ -139,13 +147,30 @@ export default function Chat({ friendship }: ChatProps) {
               key={message.id}
             >
               <div
-                className={`max-w-[60%] p-3 mb-2 rounded-sm text-sm  ${
+                className={`relative max-w-[60%] p-3 mb-2 rounded-sm text-sm  ${
                   userAuth?.id === message.user.id
                     ? "bg-primary text-primary-foreground"
-                    : "bg-muted "
-                } `}
+                    : "bg-muted"
+                }`}
               >
                 <span className="0">{message.content}</span>
+                <div className="cursor-pointer absolute top-0 right-0">
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <ChevronDown size={20} />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-36 p-0 bg-muted rounded-none">
+                      <div className="flex flex-col ">
+                        <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                          Remover
+                        </div>
+                        <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                          Editar
+                        </div>
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                </div>
               </div>
             </div>
           ))}

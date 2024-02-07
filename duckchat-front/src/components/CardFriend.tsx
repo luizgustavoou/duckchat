@@ -16,7 +16,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { friendsSelector, removeFriend } from "@/slices/friends-slice";
+import { removeFriend } from "@/slices/friends-slice";
 interface ICardFriendProps {
   friendship: IFriendship;
   handleFriendshipClick: (friendship: IFriendship) => void;
@@ -86,7 +86,7 @@ export default function CardFriend({
               </AlertDialogTitle>
               <AlertDialogDescription>
                 Essa ação não pode ser desfeita. Isso excluirá sua amizade e
-                remover todas as mensagens armazenadas.
+                todas as mensagens.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
