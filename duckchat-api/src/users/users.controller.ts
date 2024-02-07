@@ -40,12 +40,11 @@ export class UsersController {
     return await this.usersService.findOneById(id);
   }
 
-  @Patch(':id')
-  async update(
-    @Param('id', new ParseUUIDPipe()) id: string,
-    @Body() updateUserDto: UpdateUserDto,
-  ) {
-    return await this.usersService.update(id, updateUserDto);
+  @Patch()
+  async update(@Body() updateUserDto: UpdateUserDto, @Req() req: Request) {
+    const { sub } = (<any>req).user;
+
+    return await this.usersService.update(sub, updateUserDto);
   }
 
   @Delete(':id')

@@ -12,15 +12,18 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState, MouseEvent } from "react";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { userSelector } from "@/slices/user-slice";
+import { updateProfile, userSelector } from "@/slices/user-slice";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { IUpdateProfile } from "../interfaces/IUpdateProfile";
 
 // export interface EditProfileProps {
 //   user: IUser;
 // }
 
 function EditProfile() {
+  const dispatch = useAppDispatch();
   const { user: userAuth } = useAppSelector(userSelector);
 
   const [username, setUsername] = useState<string | null>(null);
@@ -42,6 +45,21 @@ function EditProfile() {
 
   const handleOnChangeAbout = (e: ChangeEvent<HTMLInputElement>) => {
     setAbout(e.target.value);
+  };
+
+  const handleSubmit = async (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.preventDefault();
+
+    const dataUpdateProfile: IUpdateProfile = {};
+
+    if (username) dataUpdateProfile.username = username;
+    if (about) dataUpdateProfile.about = about;
+    if (firstName) dataUpdateProfile.firstName = firstName;
+    if (lastName) dataUpdateProfile.lastName = lastName;
+
+    await dispatch(updateProfile(dataUpdateProfile));
   };
 
   useEffect(() => {
@@ -131,7 +149,9 @@ function EditProfile() {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Salvar mudanças</Button>
+          <Button type="submit" onClick={handleSubmit}>
+            Salvar mudanças
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
