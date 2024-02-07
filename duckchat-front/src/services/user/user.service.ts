@@ -16,7 +16,7 @@ export interface IUserService {
 
   addFriend(data: IAddFriend): Promise<IFriendship>;
 
-  removeFriend(data: IRemoveFriend): Promise<IFriendship>;
+  removeFriend(data: IRemoveFriend): Promise<Pick<IFriendship, "id">>;
 }
 
 export class UserServiceImpl implements IUserService {
@@ -72,7 +72,7 @@ export class UserServiceImpl implements IUserService {
     }
   }
 
-  async removeFriend(data: IRemoveFriend): Promise<IFriendship> {
+  async removeFriend(data: IRemoveFriend): Promise<Pick<IFriendship, "id">> {
     try {
       const res = await this.userRepository.removeFriend(data);
 

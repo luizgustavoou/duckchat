@@ -16,7 +16,7 @@ export interface IUserApi {
 
   addFriend(data: IAddFriend): Promise<IFriendshipResponse>;
 
-  removeFriend(data: IRemoveFriend): Promise<IFriendshipResponse>;
+  removeFriend(data: IRemoveFriend): Promise<Pick<IFriendshipResponse, "id">>;
 }
 
 export class UserApiImpl implements IUserApi {
@@ -52,7 +52,9 @@ export class UserApiImpl implements IUserApi {
     return res.data;
   }
 
-  async removeFriend(data: IRemoveFriend): Promise<IFriendshipResponse> {
+  async removeFriend(
+    data: IRemoveFriend
+  ): Promise<Pick<IFriendshipResponse, "id">> {
     const { friendshipId } = data;
 
     const res = await api.delete<IFriendshipResponse>(

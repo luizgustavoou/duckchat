@@ -39,7 +39,7 @@ export const addFriend = createAsyncThunk<
 });
 
 export const removeFriend = createAsyncThunk<
-  IFriendship,
+  Pick<IFriendship, "id">,
   IRemoveFriend,
   {
     dispatch: AppDispatch;

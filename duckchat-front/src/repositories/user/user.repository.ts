@@ -16,7 +16,7 @@ export interface IUserRepository {
 
   addFriend(addFriendData: IAddFriend): Promise<IFriendship>;
 
-  removeFriend(data: IRemoveFriend): Promise<IFriendship>;
+  removeFriend(data: IRemoveFriend): Promise<Pick<IFriendship, "id">>;
 }
 
 export class UserRepositoryImpl implements IUserRepository {
@@ -108,20 +108,11 @@ export class UserRepositoryImpl implements IUserRepository {
     return newRes;
   }
 
-  async removeFriend(data: IRemoveFriend): Promise<IFriendship> {
+  async removeFriend(data: IRemoveFriend): Promise<Pick<IFriendship, "id">> {
     const res = await this.userApi.removeFriend(data);
 
-    const newRes: IFriendship = {
+    const newRes: Pick<IFriendship, "id"> = {
       id: res.id,
-      friend: {
-        id: res.friend.id,
-        username: res.friend.username,
-        password: res.friend.password,
-        firstName: res.friend.firstName,
-        lastName: res.friend.lastName,
-        about: res.friend.about,
-        avatarURL: res.friend.avatarURL,
-      },
     };
 
     return newRes;
