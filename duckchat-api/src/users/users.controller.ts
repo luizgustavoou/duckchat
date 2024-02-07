@@ -20,24 +20,24 @@ export class UsersController {
 
   @Post()
   async create(@Body(new ValidationPipe()) createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+    return await this.usersService.create(createUserDto);
   }
 
   @Get()
   async findAll() {
-    return this.usersService.findAll();
+    return await this.usersService.findAll();
   }
 
   @Get('non-friends')
   async findNonFriends(@Req() req: Request) {
     const { sub } = (<any>req).user;
 
-    return this.usersService.findNonFriends(sub);
+    return await this.usersService.findNonFriends(sub);
   }
 
   @Get(':id')
   async findOne(@Param('id', new ParseUUIDPipe()) id: string) {
-    return this.usersService.findOneById(id);
+    return await this.usersService.findOneById(id);
   }
 
   @Patch(':id')
@@ -45,11 +45,11 @@ export class UsersController {
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.usersService.update(id, updateUserDto);
+    return await this.usersService.update(id, updateUserDto);
   }
 
   @Delete(':id')
   async remove(@Param('id', new ParseUUIDPipe()) id: string) {
-    return this.usersService.remove(id);
+    return await this.usersService.remove(id);
   }
 }

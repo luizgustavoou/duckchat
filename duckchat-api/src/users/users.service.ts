@@ -1,4 +1,4 @@
-import { Injectable, UseGuards } from '@nestjs/common';
+import { Injectable, NotFoundException, UseGuards } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -33,9 +33,15 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    const user = await this.usersRepository.update(id, updateUserDto);
+    const user = await this.usersRepository.findOne({ where: { id } });
 
-    return user;
+    if (!user) {
+      throw new NotFoundException('Usuário não encontrado.');
+    }
+
+    this.usersRepository.merge(user, updateUserDto);
+
+    return await this.usersRepository.save(user);
   }
 
   async findNonFriends(userId: string) {

@@ -26,7 +26,7 @@ export class MessageService {
     const user = await this.usersService.findOneById(userId);
 
     if (!user) {
-      throw new NotFoundException('Usuário não encontrada.');
+      throw new NotFoundException('Usuário não encontrado.');
     }
 
     if (!friendship) {
