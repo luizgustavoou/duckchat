@@ -23,10 +23,10 @@ export class FriendshipService {
     private readonly usersService: UsersService,
   ) {}
 
-  
-
   async create(creteFriendshipDto: CreteFriendshipDto) {
     const { friendId, userId } = creteFriendshipDto;
+    console.log('oi');
+    console.log({ friendId, userId });
 
     if (friendId === userId) {
       throw new BadRequestException(

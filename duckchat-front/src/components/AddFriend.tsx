@@ -16,8 +16,12 @@ import { useEffect, useState, MouseEvent } from "react";
 import { IUser } from "@/entities/IUser";
 import { userService } from "@/services";
 import SkeletonCard from "./SkeletonCard";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { addFriend } from "@/slices/friends-slice";
 
 function AddFriend() {
+  const dispatch = useAppDispatch();
+
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
@@ -51,7 +55,10 @@ function AddFriend() {
   ) => {
     e.preventDefault();
 
-    console.log("Amigos adicionados!");
+    newFriends.forEach((id) => {
+      dispatch(addFriend({ userId: id }));
+    });
+
     setNewFriends([]);
   };
 

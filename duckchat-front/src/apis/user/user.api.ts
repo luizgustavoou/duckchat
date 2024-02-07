@@ -40,7 +40,7 @@ export class UserApiImpl implements IUserApi {
   }
 
   async getAllNonFriendsUsers(): Promise<IUserResponse[]> {
-    const res = await api.get<IUserResponse[]>("users/non-friends");
+    const res = await api.get<IUserResponse[]>("/users/non-friends");
 
     return res.data;
   }
@@ -54,7 +54,7 @@ export class UserApiImpl implements IUserApi {
   async addFriend(data: IAddFriend): Promise<IFriendshipResponse> {
     const { userId } = data;
 
-    const res = await api.get<IFriendshipResponse>(`/friendship/${userId}`);
+    const res = await api.post<IFriendshipResponse>(`/friendship/${userId}`);
 
     return res.data;
   }

@@ -28,6 +28,7 @@ export const addFriend = createAsyncThunk<
 
     return res;
   } catch (error: any) {
+    console.log(error);
     return thunkAPI.rejectWithValue(
       error?.message || "Ocorreu algum erro interno no servidor."
     );
