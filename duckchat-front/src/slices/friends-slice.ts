@@ -85,5 +85,6 @@ export const friendsSlice = createSlice({
 });
 
 export const {} = friendsSlice.actions;
+
 export const friendsSelector = (state: RootState) => state.friendsReducer;
 export default friendsSlice.reducer;

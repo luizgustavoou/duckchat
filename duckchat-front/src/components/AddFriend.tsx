@@ -14,41 +14,21 @@ import { Check, Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useEffect, useState, MouseEvent } from "react";
 import { IUser } from "@/entities/IUser";
-import { userService } from "@/services";
 import SkeletonCard from "./SkeletonCard";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { addFriend } from "@/slices/friends-slice";
+import {
+  getAllNonFriends,
+  nonFriendsSelector,
+} from "@/slices/non-friends-slice";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 function AddFriend() {
   const dispatch = useAppDispatch();
 
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
+  const { nonFriends, status } = useAppSelector(nonFriendsSelector);
 
   const [newFriends, setNewFriends] = useState<string[]>([]);
-
-  const [users, setUsers] = useState<IUser[]>([]);
-
-  useEffect(() => {
-    const gellAllUsers = async () => {
-      try {
-        const res = await userService.getAllNonFriendsUsers();
-
-        setUsers(res);
-
-        setStatus("success");
-      } catch (error) {
-        setStatus("error");
-      } finally {
-        setTimeout(() => {
-          setStatus("idle");
-        }, 3000);
-      }
-    };
-
-    gellAllUsers();
-  }, []);
 
   const handleSubmit = async (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
@@ -77,6 +57,11 @@ function AddFriend() {
 
     setNewFriends(newValue);
   };
+
+  useEffect(() => {
+    dispatch(getAllNonFriends());
+  }, []);
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -104,7 +89,7 @@ function AddFriend() {
           {status === "loading" && <SkeletonCard length={4} />}
 
           {status != "loading" &&
-            users.map((user) => (
+            nonFriends.map((user) => (
               <div
                 className="flex gap-3 py-5 px-4 items-center hover:bg-accent/50  cursor-pointer rounded-sm"
                 onClick={(_) => handleAddFriend(user)}
