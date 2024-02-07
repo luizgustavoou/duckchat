@@ -27,6 +27,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import AppPopover from "./AppPopover";
 
 export interface ChatProps {
   friendship: IFriendship;
@@ -51,12 +52,11 @@ export default function Chat({ friendship }: ChatProps) {
     e.preventDefault();
 
     try {
-      messageService.sendMessage({
+      await messageService.sendMessage({
         friendshipId: friendship.id,
         content: message,
       });
     } catch (error) {
-      console.error(error);
       toast({
         variant: "destructive",
         title: "Uh oh! Something went wrong.",
@@ -155,11 +155,9 @@ export default function Chat({ friendship }: ChatProps) {
               >
                 <span className="0">{message.content}</span>
                 <div className="cursor-pointer absolute top-0 right-0">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <ChevronDown size={20} />
-                    </PopoverTrigger>
-                    <PopoverContent className="w-36 p-0 bg-muted rounded-none">
+                  <AppPopover
+                    trigger={<ChevronDown size={20} />}
+                    content={
                       <div className="flex flex-col ">
                         <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
                           Remover
@@ -168,8 +166,9 @@ export default function Chat({ friendship }: ChatProps) {
                           Editar
                         </div>
                       </div>
-                    </PopoverContent>
-                  </Popover>
+                    }
+                    parentContentClassName="w-36 p-0 bg-muted rounded-none"
+                  />
                 </div>
               </div>
             </div>
