@@ -55,9 +55,11 @@ function AddFriend() {
   ) => {
     e.preventDefault();
 
-    newFriends.forEach((id) => {
-      dispatch(addFriend({ userId: id }));
-    });
+    const dispatchPromises = newFriends.map((id) =>
+      dispatch(addFriend({ userId: id }))
+    );
+
+    await Promise.all(dispatchPromises);
 
     setNewFriends([]);
   };
