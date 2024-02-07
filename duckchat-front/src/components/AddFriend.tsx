@@ -41,6 +41,8 @@ function AddFriend() {
 
     await Promise.all(dispatchPromises);
 
+    await dispatch(getAllNonFriends());
+
     setNewFriends([]);
   };
 

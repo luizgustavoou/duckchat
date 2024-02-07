@@ -7,7 +7,6 @@ export class FriendshipController {
 
   @Post(':id')
   async create(@Param('id') friendId: string, @Req() req: Request) {
-    console.log('entrou no controller!');
     const { sub } = (<any>req).user;
 
     return await this.friendshipService.create({ userId: sub, friendId });

@@ -3,6 +3,7 @@ import { IAddFriend } from "@/interfaces/IAddFriend";
 import { userService } from "@/services";
 import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getAllNonFriends } from "./non-friends-slice";
 
 export interface FriendsState {
   friendships: IFriendship[];
@@ -25,6 +26,8 @@ export const addFriend = createAsyncThunk<
 >("friends/add", async (data, thunkAPI) => {
   try {
     const res = await userService.addFriend(data);
+
+    // await thunkAPI.dispatch(getAllNonFriends());
 
     return res;
   } catch (error: any) {

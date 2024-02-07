@@ -25,8 +25,6 @@ export class FriendshipService {
 
   async create(creteFriendshipDto: CreteFriendshipDto) {
     const { friendId, userId } = creteFriendshipDto;
-    console.log('oi');
-    console.log({ friendId, userId });
 
     if (friendId === userId) {
       throw new BadRequestException(
