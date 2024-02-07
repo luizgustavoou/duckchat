@@ -15,6 +15,8 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { friendsSelector, removeFriend } from "@/slices/friends-slice";
 interface ICardFriendProps {
   friendship: IFriendship;
   handleFriendshipClick: (friendship: IFriendship) => void;
@@ -26,6 +28,8 @@ export default function CardFriend({
   isSelected,
   handleFriendshipClick,
 }: ICardFriendProps) {
+  const dispatch = useAppDispatch();
+
   const handleMouseOver = (
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
   ) => {};
@@ -36,6 +40,14 @@ export default function CardFriend({
     e.stopPropagation();
 
     console.log("opa!");
+  };
+
+  const handleRemove = async (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    e.stopPropagation();
+
+    await dispatch(removeFriend({ friendshipId: friendship.id }));
   };
 
   return (
@@ -76,7 +88,9 @@ export default function CardFriend({
             </AlertDialogHeader>
             <AlertDialogFooter>
               <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction>Continue</AlertDialogAction>
+              <AlertDialogAction onClick={handleRemove}>
+                Continue
+              </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
