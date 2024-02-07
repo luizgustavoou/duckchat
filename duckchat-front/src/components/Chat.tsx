@@ -20,13 +20,6 @@ import { toast } from "./ui/use-toast";
 import { userSelector } from "@/slices/user-slice";
 import { useAppSelector } from "@/hooks/useAppSelector";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import AppPopover from "./AppPopover";
 
 export interface ChatProps {
