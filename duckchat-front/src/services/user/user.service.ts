@@ -3,6 +3,7 @@ import { IAddFriend } from "../../interfaces/IAddFriend";
 import { IUserRepository } from "@/repositories/user/user.repository";
 import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUser } from "@/entities/IUser";
+import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
 
 export interface IUserService {
   updateProfile(data: IUpdateProfile): Promise<IUser>;
@@ -14,6 +15,8 @@ export interface IUserService {
   getAllFriendsOfUser(): Promise<IFriendship[]>;
 
   addFriend(data: IAddFriend): Promise<IFriendship>;
+
+  removeFriend(data: IRemoveFriend): Promise<IFriendship>;
 }
 
 export class UserServiceImpl implements IUserService {
@@ -62,6 +65,16 @@ export class UserServiceImpl implements IUserService {
   async addFriend(data: IAddFriend): Promise<IFriendship> {
     try {
       const res = await this.userRepository.addFriend(data);
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async removeFriend(data: IRemoveFriend): Promise<IFriendship> {
+    try {
+      const res = await this.userRepository.removeFriend(data);
 
       return res;
     } catch (error) {

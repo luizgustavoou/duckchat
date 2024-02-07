@@ -38,6 +38,29 @@ export const addFriend = createAsyncThunk<
   }
 });
 
+export const removeFriend = createAsyncThunk<
+  Remove,
+  IAddFriend,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    rejectValue: string;
+  }
+>("friends/add", async (data, thunkAPI) => {
+  try {
+    const res = await userService.addFriend(data);
+
+    // await thunkAPI.dispatch(getAllNonFriends());
+
+    return res;
+  } catch (error: any) {
+    console.log(error);
+    return thunkAPI.rejectWithValue(
+      error?.message || "Ocorreu algum erro interno no servidor."
+    );
+  }
+});
+
 export const getAllFriendsOfUser = createAsyncThunk<
   IFriendship[],
   void,

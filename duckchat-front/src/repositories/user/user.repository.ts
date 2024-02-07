@@ -3,6 +3,7 @@ import { IAddFriend } from "../../interfaces/IAddFriend";
 import { IUserApi } from "@/apis/user/user.api";
 import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUser } from "@/entities/IUser";
+import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
 
 export interface IUserRepository {
   updateProfile(data: IUpdateProfile): Promise<IUser>;
@@ -14,6 +15,8 @@ export interface IUserRepository {
   getAllFriendsOfUser(): Promise<IFriendship[]>;
 
   addFriend(addFriendData: IAddFriend): Promise<IFriendship>;
+
+  removeFriend(data: IRemoveFriend): Promise<IFriendship>;
 }
 
 export class UserRepositoryImpl implements IUserRepository {
@@ -86,8 +89,27 @@ export class UserRepositoryImpl implements IUserRepository {
     return newRes;
   }
 
-  async addFriend(addFriendData: IAddFriend): Promise<IFriendship> {
-    const res = await this.userApi.addFriend(addFriendData);
+  async addFriend(data: IAddFriend): Promise<IFriendship> {
+    const res = await this.userApi.addFriend(data);
+
+    const newRes: IFriendship = {
+      id: res.id,
+      friend: {
+        id: res.friend.id,
+        username: res.friend.username,
+        password: res.friend.password,
+        firstName: res.friend.firstName,
+        lastName: res.friend.lastName,
+        about: res.friend.about,
+        avatarURL: res.friend.avatarURL,
+      },
+    };
+
+    return newRes;
+  }
+
+  async removeFriend(data: IRemoveFriend): Promise<IFriendship> {
+    const res = await this.userApi.removeFriend(data);
 
     const newRes: IFriendship = {
       id: res.id,

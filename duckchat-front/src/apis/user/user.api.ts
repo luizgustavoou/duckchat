@@ -3,6 +3,7 @@ import { IAddFriend } from "../../interfaces/IAddFriend";
 import { IFriendshipResponse } from "./models/IFriendshipResponse";
 import { IUpdateProfile } from "../../interfaces/IUpdateProfile";
 import { IUserResponse } from "../auth/models/IUserResponse";
+import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
 
 export interface IUserApi {
   updateProfile(data: IUpdateProfile): Promise<IUserResponse>;
@@ -14,6 +15,8 @@ export interface IUserApi {
   getAllFriendsOfUser(): Promise<IFriendshipResponse[]>;
 
   addFriend(data: IAddFriend): Promise<IFriendshipResponse>;
+
+  removeFriend(data: IRemoveFriend): Promise<IFriendshipResponse>;
 }
 
 export class UserApiImpl implements IUserApi {
@@ -45,6 +48,16 @@ export class UserApiImpl implements IUserApi {
     const { userId } = data;
 
     const res = await api.post<IFriendshipResponse>(`/friendship/${userId}`);
+
+    return res.data;
+  }
+
+  async removeFriend(data: IRemoveFriend): Promise<IFriendshipResponse> {
+    const { friendshipId } = data;
+
+    const res = await api.delete<IFriendshipResponse>(
+      `/friendship/${friendshipId}`
+    );
 
     return res.data;
   }
