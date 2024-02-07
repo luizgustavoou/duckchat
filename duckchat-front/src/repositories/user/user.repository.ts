@@ -5,13 +5,7 @@ import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUser } from "@/entities/IUser";
 
 export interface IUserRepository {
-  updateProfile(data: IUpdateProfile): Promise<{
-    raw: any;
-    affected?: number;
-    generatedMaps: {
-      [key: string]: any;
-    }[];
-  }>;
+  updateProfile(data: IUpdateProfile): Promise<IUser>;
 
   getAllUsers(): Promise<IUser[]>;
 
@@ -25,14 +19,20 @@ export interface IUserRepository {
 export class UserRepositoryImpl implements IUserRepository {
   constructor(private userApi: IUserApi) {}
 
-  async updateProfile(data: IUpdateProfile): Promise<{
-    raw: any;
-    affected?: number | undefined;
-    generatedMaps: { [key: string]: any }[];
-  }> {
+  async updateProfile(data: IUpdateProfile): Promise<IUser> {
     const res = await this.userApi.updateProfile(data);
 
-    return res;
+    const newRes: IUser = {
+      id: res.id,
+      username: res.username,
+      password: res.password,
+      firstName: res.firstName,
+      lastName: res.lastName,
+      about: res.about,
+      avatarURL: res.avatarURL,
+    };
+
+    return newRes;
   }
 
   async getAllUsers(): Promise<IUser[]> {

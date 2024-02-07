@@ -5,13 +5,7 @@ import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUser } from "@/entities/IUser";
 
 export interface IUserService {
-  updateProfile(data: IUpdateProfile): Promise<{
-    raw: any;
-    affected?: number;
-    generatedMaps: {
-      [key: string]: any;
-    }[];
-  }>;
+  updateProfile(data: IUpdateProfile): Promise<IUser>;
 
   getAllUsers(): Promise<IUser[]>;
 
@@ -25,11 +19,7 @@ export interface IUserService {
 export class UserServiceImpl implements IUserService {
   constructor(private userRepository: IUserRepository) {}
 
-  async updateProfile(data: IUpdateProfile): Promise<{
-    raw: any;
-    affected?: number | undefined;
-    generatedMaps: { [key: string]: any }[];
-  }> {
+  async updateProfile(data: IUpdateProfile): Promise<IUser> {
     try {
       const res = await this.userRepository.updateProfile(data);
 

@@ -5,13 +5,7 @@ import { IUpdateProfile } from "../../interfaces/IUpdateProfile";
 import { IUserResponse } from "../auth/models/IUserResponse";
 
 export interface IUserApi {
-  updateProfile(data: IUpdateProfile): Promise<{
-    raw: any;
-    affected?: number;
-    generatedMaps: {
-      [key: string]: any;
-    }[];
-  }>;
+  updateProfile(data: IUpdateProfile): Promise<IUserResponse>;
 
   getAllUsers(): Promise<IUserResponse[]>;
 
@@ -23,12 +17,8 @@ export interface IUserApi {
 }
 
 export class UserApiImpl implements IUserApi {
-  async updateProfile(data: IUpdateProfile): Promise<{
-    raw: any;
-    affected?: number | undefined;
-    generatedMaps: { [key: string]: any }[];
-  }> {
-    const res = await api.patch(`/users`, data);
+  async updateProfile(data: IUpdateProfile): Promise<IUserResponse> {
+    const res = await api.patch<IUserResponse>(`/users`, data);
 
     return res.data;
   }
