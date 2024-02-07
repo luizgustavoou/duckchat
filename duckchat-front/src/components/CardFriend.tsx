@@ -80,7 +80,10 @@ export default function CardFriend({
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Você tem certeza absoluta?</AlertDialogTitle>
+              <AlertDialogTitle>
+                Remover amizade com {friendship.friend.firstName}{" "}
+                {friendship.friend.lastName}?
+              </AlertDialogTitle>
               <AlertDialogDescription>
                 Essa ação não pode ser desfeita. Isso excluirá sua amizade e
                 remover todas as mensagens armazenadas.
