@@ -1,15 +1,6 @@
 import { Label } from "@radix-ui/react-label";
 import { Input } from "@/components/ui/input";
 
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { ChangeEvent, useEffect, useState, MouseEvent } from "react";
@@ -17,6 +8,7 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 import { updateProfile, userSelector } from "@/slices/user-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { IUpdateProfile } from "../interfaces/IUpdateProfile";
+import AppDialog from "./AppDialog";
 
 function EditProfile() {
   const dispatch = useAppDispatch();
@@ -70,8 +62,8 @@ function EditProfile() {
   const disableActions = userStatus === "loading";
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <AppDialog
+      trigger={
         <Button
           variant="outline"
           size="icon"
@@ -79,15 +71,14 @@ function EditProfile() {
         >
           <Pencil className="h-4 w-4" />
         </Button>
-      </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
-        <DialogHeader>
-          <DialogTitle>Editar Perfil</DialogTitle>
-          <DialogDescription>
-            Faça alterações em seu perfil aqui. Clique em salvar quando
-            terminar.
-          </DialogDescription>
-        </DialogHeader>
+      }
+      title={<p>Editar Perfil</p>}
+      description={
+        <p>
+          Faça alterações em seu perfil aqui. Clique em salvar quando terminar.
+        </p>
+      }
+      main={
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
@@ -151,17 +142,13 @@ function EditProfile() {
             />
           </div>
         </div>
-        <DialogFooter>
-          <Button
-            type="submit"
-            onClick={handleSubmit}
-            disabled={disableActions}
-          >
-            Salvar mudanças
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+      }
+      footer={
+        <Button type="submit" onClick={handleSubmit} disabled={disableActions}>
+          Salvar mudanças
+        </Button>
+      }
+    ></AppDialog>
   );
 }
 
