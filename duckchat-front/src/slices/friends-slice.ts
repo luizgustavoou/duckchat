@@ -3,7 +3,7 @@ import { IAddFriend } from "@/interfaces/IAddFriend";
 import { userService } from "@/services";
 import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAllNonFriends } from "./non-friends-users-slice";
+import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
 
 export interface FriendsState {
   friendships: IFriendship[];
@@ -39,18 +39,18 @@ export const addFriend = createAsyncThunk<
 });
 
 export const removeFriend = createAsyncThunk<
-  Remove,
-  IAddFriend,
+  IFriendship,
+  IRemoveFriend,
   {
     dispatch: AppDispatch;
     state: RootState;
     rejectValue: string;
   }
->("friends/add", async (data, thunkAPI) => {
+>("friends/remove", async (data, thunkAPI) => {
   try {
-    const res = await userService.addFriend(data);
+    const res = await userService.removeFriend(data);
 
-    // await thunkAPI.dispatch(getAllNonFriends());
+    // await thunkAPI.dispatch(getAllFriendsOfUser());
 
     return res;
   } catch (error: any) {
@@ -87,24 +87,37 @@ export const friendsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllFriendsOfUser.pending, (state, action) => {
+      .addCase(getAllFriendsOfUser.pending, (state, _) => {
         state.status = "loading";
       })
       .addCase(getAllFriendsOfUser.fulfilled, (state, action) => {
         state.friendships = action.payload;
         state.status = "success";
       })
-      .addCase(getAllFriendsOfUser.rejected, (state, action) => {
+      .addCase(getAllFriendsOfUser.rejected, (state, _) => {
         state.status = "error";
       })
-      .addCase(addFriend.pending, (state, action) => {
+      .addCase(addFriend.pending, (state, _) => {
         state.status = "loading";
       })
       .addCase(addFriend.fulfilled, (state, action) => {
         state.friendships.push(action.payload);
         state.status = "success";
       })
-      .addCase(addFriend.rejected, (state, action) => {
+      .addCase(addFriend.rejected, (state, _) => {
+        state.status = "error";
+      })
+      .addCase(removeFriend.pending, (state, _) => {
+        state.status = "loading";
+      })
+      .addCase(removeFriend.fulfilled, (state, action) => {
+        state.friendships = state.friendships.filter((friendship) => {
+          return friendship.id !== action.payload.id;
+        });
+
+        state.status = "success";
+      })
+      .addCase(removeFriend.rejected, (state, _) => {
         state.status = "error";
       });
   },
