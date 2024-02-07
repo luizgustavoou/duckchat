@@ -69,7 +69,7 @@ export class UserServiceImpl implements IUserService {
     }
   }
 
-  async addFriend(data: IAddFriend) {
+  async addFriend(data: IAddFriend): Promise<IFriendship> {
     try {
       const res = await this.userRepository.addFriend(data);
 

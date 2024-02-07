@@ -42,6 +42,11 @@
   width: 10px;
 }
 
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+}
+
 /* Track */
 ::-webkit-scrollbar-track {
   background: #f1f1f1;
@@ -50,7 +55,6 @@
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888;
-  border-radius: 5px;
 }
 
 /* Handle on hover */

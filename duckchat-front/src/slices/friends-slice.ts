@@ -1,4 +1,5 @@
 import { IFriendship } from "@/entities/IFriendship";
+import { IAddFriend } from "@/interfaces/IAddFriend";
 import { userService } from "@/services";
 import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -12,6 +13,26 @@ const initialState: FriendsState = {
   friendships: [],
   status: "idle",
 };
+
+export const addFriend = createAsyncThunk<
+  IFriendship,
+  IAddFriend,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    rejectValue: string;
+  }
+>("friends/add", async (data, thunkAPI) => {
+  try {
+    const res = await userService.addFriend(data);
+
+    return res;
+  } catch (error: any) {
+    return thunkAPI.rejectWithValue(
+      error?.message || "Ocorreu algum erro interno no servidor."
+    );
+  }
+});
 
 export const getAllFriendsOfUser = createAsyncThunk<
   IFriendship[],
@@ -47,6 +68,16 @@ export const friendsSlice = createSlice({
         state.status = "success";
       })
       .addCase(getAllFriendsOfUser.rejected, (state, action) => {
+        state.status = "error";
+      })
+      .addCase(addFriend.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(addFriend.fulfilled, (state, action) => {
+        state.friendships.push(action.payload);
+        state.status = "success";
+      })
+      .addCase(addFriend.rejected, (state, action) => {
         state.status = "error";
       });
   },
