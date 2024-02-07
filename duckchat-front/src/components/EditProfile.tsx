@@ -18,13 +18,9 @@ import { updateProfile, userSelector } from "@/slices/user-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { IUpdateProfile } from "../interfaces/IUpdateProfile";
 
-// export interface EditProfileProps {
-//   user: IUser;
-// }
-
 function EditProfile() {
   const dispatch = useAppDispatch();
-  const { user: userAuth } = useAppSelector(userSelector);
+  const { user: userAuth, status: userStatus } = useAppSelector(userSelector);
 
   const [username, setUsername] = useState<string | null>(null);
   const [firstName, setFirstName] = useState<string | null>(null);
@@ -71,6 +67,8 @@ function EditProfile() {
     setAbout(userAuth.about);
   }, [userAuth]);
 
+  const disableActions = userStatus === "loading";
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -100,6 +98,7 @@ function EditProfile() {
               value={username || ""}
               onChange={handleOnChangeUsername}
               className="col-span-3"
+              disabled={disableActions}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -111,6 +110,7 @@ function EditProfile() {
               value={firstName || ""}
               onChange={handleOnChangeFirstName}
               className="col-span-3"
+              disabled={disableActions}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -122,6 +122,7 @@ function EditProfile() {
               value={lastName || ""}
               onChange={handleOnChangeLastName}
               className="col-span-3"
+              disabled={disableActions}
             />
           </div>
 
@@ -134,6 +135,7 @@ function EditProfile() {
               value={username || ""}
               onChange={handleOnChangeUsername}
               className="col-span-3"
+              disabled={disableActions}
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
@@ -145,11 +147,16 @@ function EditProfile() {
               value={about || ""}
               onChange={handleOnChangeAbout}
               className="col-span-3"
+              disabled={disableActions}
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={handleSubmit}>
+          <Button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={disableActions}
+          >
             Salvar mudanças
           </Button>
         </DialogFooter>
