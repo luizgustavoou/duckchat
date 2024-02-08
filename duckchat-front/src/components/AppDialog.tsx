@@ -7,6 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { DialogClose } from "@radix-ui/react-dialog";
 import { ReactNode } from "react";
 
 export interface AppDialogProps {
@@ -35,7 +36,9 @@ function AppDialog({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         {main}
-        <DialogFooter>{footer}</DialogFooter>
+        <DialogFooter>
+          {footer}
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

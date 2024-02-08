@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { removeFriend } from "@/slices/friends-slice";
+import AppAlertDialog from "./AppAlertDialog";
 interface ICardFriendProps {
   friendship: IFriendship;
   handleFriendshipClick: (friendship: IFriendship) => void;
@@ -38,8 +39,6 @@ export default function CardFriend({
     e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
   ) => {
     e.stopPropagation();
-
-    console.log("opa!");
   };
 
   const handleRemove = async (
@@ -72,31 +71,20 @@ export default function CardFriend({
         </p>
       </div>
       <div className="absolute top-auto right-3 " onClick={handleClick}>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
+        <AppAlertDialog
+          trigger={
             <Button variant="destructive" size="icon">
               <Trash />
             </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>
-                Remover amizade com {friendship.friend.firstName}{" "}
-                {friendship.friend.lastName}?
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                Essa ação não pode ser desfeita. Isso excluirá sua amizade e
-                todas as mensagens.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancelar</AlertDialogCancel>
-              <AlertDialogAction onClick={handleRemove}>
-                Continuar
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+          }
+          title={`Remover amizade com ${friendship.friend.firstName}
+          ${friendship.friend.lastName}`}
+          description="Essa ação não pode ser desfeita. Isso excluirá sua amizade e
+          todas as mensagens."
+          contentCancelButton="Cancelar"
+          contentContinueButton="Continuar"
+          handleContinueClick={handleRemove}
+        />
       </div>
     </div>
   );
