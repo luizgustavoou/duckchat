@@ -23,6 +23,10 @@ import { useAppSelector } from "@/hooks/useAppSelector";
 
 import AppPopover from "./AppPopover";
 import AppAlertDialog from "./AppAlertDialog";
+import AppDialog from "./AppDialog";
+import { Input } from "./ui/input";
+import { Label } from "@radix-ui/react-label";
+import EditMessage from "./EditMessage";
 
 export interface ChatProps {
   friendship: IFriendship;
@@ -103,7 +107,7 @@ export default function Chat({ friendship }: ChatProps) {
 
       strategy(data.message);
     },
-    []
+    [messages]
   );
 
   const handleOnChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -191,7 +195,7 @@ export default function Chat({ friendship }: ChatProps) {
                 <span className="0">{message.content}</span>
 
                 {userAuth?.id === message.user.id && (
-                  <div className="cursor-pointer absolute top-0 right-0">
+                  <div className="cursor-pointer absolute top-0 right-0 py-1 ">
                     <AppPopover
                       trigger={<ChevronDown size={20} />}
                       content={
@@ -203,7 +207,7 @@ export default function Chat({ friendship }: ChatProps) {
                                 Remover
                               </div>
                             }
-                            description="Essa ação não pode ser defeita. Isso excluirá a mensagem."
+                            description="Essa ação não pode ser desfeita. Isso excluirá a mensagem."
                             contentCancelButton="Cancelar"
                             contentContinueButton="Continuar"
                             handleContinueClick={(_) =>
@@ -211,9 +215,14 @@ export default function Chat({ friendship }: ChatProps) {
                             }
                           />
 
-                          <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
-                            Editar
-                          </div>
+                          <EditMessage
+                            message={message}
+                            trigger={
+                              <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                                Editar
+                              </div>
+                            }
+                          />
                         </div>
                       }
                       parentContentClassName="w-36 p-0 bg-muted rounded-none"

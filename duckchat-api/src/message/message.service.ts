@@ -94,7 +94,10 @@ export class MessageService {
   }
 
   async update(id: string, updateMessageDto: UpdateMessageDto) {
-    const message = await this.messageRepository.findOne({ where: { id } });
+    const message = await this.messageRepository.findOne({
+      where: { id },
+      relations: { userFriends: true, user: true },
+    });
 
     if (!message) {
       throw new NotFoundException('Mensagem não encontrado.');
@@ -138,8 +141,6 @@ export class MessageService {
     }
 
     await this.messageRepository.delete(id);
-
-    console.log({ friendshipId: message.userFriends.id });
 
     this.ghatGateway.emitMessageToFriendship({
       friendshipId: message.userFriends.id,

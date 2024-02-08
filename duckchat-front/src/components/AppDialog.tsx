@@ -36,9 +36,7 @@ function AppDialog({
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         {main}
-        <DialogFooter>
-          {footer}
-        </DialogFooter>
+        <DialogFooter>{footer}</DialogFooter>
       </DialogContent>
     </Dialog>
   );

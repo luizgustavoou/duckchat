@@ -144,7 +144,7 @@ function EditProfile() {
           Salvar mudanças
         </Button>
       }
-    ></AppDialog>
+    />
   );
 }
 
