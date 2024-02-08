@@ -9,6 +9,7 @@ import { updateProfile, userSelector } from "@/slices/user-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { IUpdateProfile } from "../interfaces/IUpdateProfile";
 import AppDialog from "./AppDialog";
+import AppSheet from "./AppSheet";
 
 function EditProfile() {
   const dispatch = useAppDispatch();
@@ -62,7 +63,7 @@ function EditProfile() {
   const disableActions = userStatus === "loading";
 
   return (
-    <AppDialog
+    <AppSheet
       trigger={
         <Button
           variant="outline"
@@ -139,7 +140,7 @@ function EditProfile() {
           </div>
         </div>
       }
-      footer={
+      close={
         <Button type="submit" onClick={handleSubmit} disabled={disableActions}>
           Salvar mudanças
         </Button>
