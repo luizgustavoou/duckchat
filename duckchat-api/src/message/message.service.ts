@@ -102,6 +102,27 @@ export class MessageService {
 
     this.messageRepository.merge(message, updateMessageDto);
 
+    this.ghatGateway.emitMessageToFriendship({
+      friendshipId: message.userFriends.id,
+      type: 'message_updated',
+      message: {
+        id: message.id,
+        user: {
+          id: message.user.id,
+          username: message.user.username,
+          password: message.user.password,
+          firstName: message.user.firstName,
+          lastName: message.user.lastName,
+          avatarURL: message.user.avatarURL,
+          created_at: message.user.createdAt,
+          updated_at: message.user.updatedAt,
+        },
+        content: message.content,
+        createdAt: message.createdAt,
+        updatedAt: message.updatedAt,
+      },
+    });
+
     return await this.messageRepository.save(message);
   }
 
@@ -113,6 +134,27 @@ export class MessageService {
     }
 
     await this.messageRepository.delete(id);
+
+    this.ghatGateway.emitMessageToFriendship({
+      friendshipId: message.userFriends.id,
+      type: 'message_updated',
+      message: {
+        id: message.id,
+        user: {
+          id: message.user.id,
+          username: message.user.username,
+          password: message.user.password,
+          firstName: message.user.firstName,
+          lastName: message.user.lastName,
+          avatarURL: message.user.avatarURL,
+          created_at: message.user.createdAt,
+          updated_at: message.user.updatedAt,
+        },
+        content: message.content,
+        createdAt: message.createdAt,
+        updatedAt: message.updatedAt,
+      },
+    });
 
     return { id: message.id };
   }
