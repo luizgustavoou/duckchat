@@ -21,6 +21,7 @@ import { userSelector } from "@/slices/user-slice";
 import { useAppSelector } from "@/hooks/useAppSelector";
 
 import AppPopover from "./AppPopover";
+import AppAlertDialog from "./AppAlertDialog";
 
 export interface ChatProps {
   friendship: IFriendship;
@@ -60,9 +61,23 @@ export default function Chat({ friendship }: ChatProps) {
     }
   };
 
-  const handleNewMessage = useCallback((data: IMessage) => {
-    setMessages((messages) => [...messages, data]);
-  }, []);
+  const handleNewMessage = useCallback(
+    (data: {
+      message: IMessage;
+      type: "message_created" | "message_updated" | "message_removed";
+    }) => {
+      switch (data.type) {
+        case "message_created":
+          setMessages((messages) => [...messages, data.message]);
+
+          break;
+
+        default:
+          break;
+      }
+    },
+    []
+  );
 
   const handleOnChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);
@@ -147,14 +162,25 @@ export default function Chat({ friendship }: ChatProps) {
                 }`}
               >
                 <span className="0">{message.content}</span>
+
                 <div className="cursor-pointer absolute top-0 right-0">
                   <AppPopover
                     trigger={<ChevronDown size={20} />}
                     content={
                       <div className="flex flex-col ">
-                        <div className="px-5 py-3 hover:bg-black/40 cursor-pointer" >
-                          Remover
-                        </div>
+                        <AppAlertDialog
+                          title="Remover mensagem"
+                          trigger={
+                            <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                              Remover
+                            </div>
+                          }
+                          description="Essa ação não pode ser defeita. Isso excluirá a mensagem."
+                          contentCancelButton="Cancelar"
+                          contentContinueButton="Continuar"
+                          handleContinueClick={(e) => {}}
+                        />
+
                         <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
                           Editar
                         </div>

@@ -39,21 +39,25 @@ export class MessageService {
       user: user,
     });
 
-    this.ghatGateway.emitMessageToFriendship(friendshipId, {
-      id: message.id,
-      user: {
-        id: message.user.id,
-        username: message.user.username,
-        password: message.user.password,
-        firstName: message.user.firstName,
-        lastName: message.user.lastName,
-        avatarURL: message.user.avatarURL,
-        created_at: message.user.createdAt,
-        updated_at: message.user.updatedAt,
+    this.ghatGateway.emitMessageToFriendship({
+      friendshipId,
+      type: 'message_created',
+      message: {
+        id: message.id,
+        user: {
+          id: message.user.id,
+          username: message.user.username,
+          password: message.user.password,
+          firstName: message.user.firstName,
+          lastName: message.user.lastName,
+          avatarURL: message.user.avatarURL,
+          created_at: message.user.createdAt,
+          updated_at: message.user.updatedAt,
+        },
+        content: message.content,
+        createdAt: message.createdAt,
+        updatedAt: message.updatedAt,
       },
-      content: message.content,
-      createdAt: message.createdAt,
-      updatedAt: message.updatedAt,
     });
 
     return message;
@@ -90,7 +94,10 @@ export class MessageService {
   }
 
   async update(id: string, updateMessageDto: UpdateMessageDto) {
-    const user: UpdateResult = await this.messageRepository.update(id, updateMessageDto);
+    const user: UpdateResult = await this.messageRepository.update(
+      id,
+      updateMessageDto,
+    );
 
     return user;
   }

@@ -67,7 +67,7 @@ export default function Home() {
             <p className="text-sm text-muted-foreground">{userAuth?.about}</p>
           </div>
 
-          <div className="flex flex-col ">
+          <div className="flex flex-col gap-1">
             <EditProfile />
             <AddFriend />
           </div>

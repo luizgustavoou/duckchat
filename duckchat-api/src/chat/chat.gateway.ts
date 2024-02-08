@@ -23,9 +23,10 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer()
   server: Server;
 
-  emitMessageToFriendship(
-    friendshipId: string,
-    content: {
+  emitMessageToFriendship(value: {
+    type: 'message_created' | 'message_updated' | 'message_removed';
+    friendshipId: string;
+    message: {
       id: string;
       content: string;
       user: {
@@ -40,9 +41,11 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       };
       createdAt: Date;
       updatedAt: Date;
-    },
-  ) {
-    this.server.to(friendshipId).emit('newMessage', content);
+    };
+  }) {
+    this.server
+      .to(value.friendshipId)
+      .emit('newMessage', { type: value.type, message: value.message });
   }
 
   @SubscribeMessage('enter_room')
