@@ -62,10 +62,16 @@ export default function Chat({ friendship }: ChatProps) {
     }
   };
 
-  const handleRemoveMessage = (
-    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
-  ) => {
-    
+  const handleRemoveMessage = async (message: IMessage) => {
+    try {
+      await messageService.removeMessage({ messageId: message.id });
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.",
+      });
+    }
   };
 
   const handleNewMessage = useCallback(
@@ -199,7 +205,9 @@ export default function Chat({ friendship }: ChatProps) {
                           description="Essa ação não pode ser defeita. Isso excluirá a mensagem."
                           contentCancelButton="Cancelar"
                           contentContinueButton="Continuar"
-                          handleContinueClick={handleRemoveMessage}
+                          handleContinueClick={(_) =>
+                            handleRemoveMessage(message)
+                          }
                         />
 
                         <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">

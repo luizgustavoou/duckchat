@@ -127,7 +127,11 @@ export class MessageService {
   }
 
   async remove(id: string) {
-    const message = await this.messageRepository.findOneBy({ id });
+    // TODO: Ao remover mensagem não precisa enviar o usuario que comentou e nem o ocnteudo da mensagem. Basta enviar o id da mensagem para o front saber o que fazer.
+    const message = await this.messageRepository.findOne({
+      where: { id },
+      relations: { userFriends: true, user: true },
+    });
 
     if (!message) {
       throw new NotFoundException('Mensagem não encontrada.');
@@ -135,9 +139,11 @@ export class MessageService {
 
     await this.messageRepository.delete(id);
 
+    console.log({ friendshipId: message.userFriends.id });
+
     this.ghatGateway.emitMessageToFriendship({
       friendshipId: message.userFriends.id,
-      type: 'message_updated',
+      type: 'message_created',
       message: {
         id: message.id,
         user: {

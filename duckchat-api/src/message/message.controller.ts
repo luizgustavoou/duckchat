@@ -57,6 +57,7 @@ export class MessageController {
 
   @Delete(':id')
   async remove(@Param('id', new ParseUUIDPipe()) id: string) {
+
     return await this.messageService.remove(id);
   }
 }
