@@ -120,7 +120,7 @@ function AddFriend() {
           </Button>
         </div>
       }
-    ></AppDialog>
+    />
   );
 }
 
