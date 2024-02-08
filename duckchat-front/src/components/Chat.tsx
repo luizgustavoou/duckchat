@@ -53,8 +53,8 @@ export default function Chat({ friendship }: ChatProps) {
     message: IMessage;
     type: "message_created" | "message_updated" | "message_removed";
   }) => {
-    console.log("[LOG handleNewMessage");
-    console.log({ data });
+    // console.log("[LOG handleNewMessage");
+    // console.log({ data });
 
     const messageStrategys = {
       message_created: (createdMessage: IMessage) => {
