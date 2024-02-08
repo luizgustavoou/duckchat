@@ -3,17 +3,14 @@ import { IMessageRepository } from "@/repositories/message/message.repository";
 import { IGetAllMessagesOfFriendship } from "@/interfaces/IGetAllMessagesOfFriendship";
 import { ISendMessage } from "@/interfaces/ISendMessage";
 import { IUpdateMessage } from "@/interfaces/IUpdateMessage";
+import { IRemoveMessage } from "@/interfaces/IRemoveMessage";
 
 export interface IMessageService {
   sendMessage(sendMessageData: ISendMessage): Promise<IMessage>;
 
-  updateMessage(data: IUpdateMessage): Promise<{
-    raw: any;
-    affected?: number;
-    generatedMaps: {
-      [key: string]: any;
-    }[];
-  }>;
+  updateMessage(data: IUpdateMessage): Promise<IMessage>;
+
+  removeMessage(data: IRemoveMessage): Promise<Pick<IMessage, "id">>;
 
   getAllMessagesOfFriendship(
     data: IGetAllMessagesOfFriendship
@@ -23,13 +20,19 @@ export interface IMessageService {
 export class MessageServiceImpl implements IMessageService {
   constructor(private messageRepository: IMessageRepository) {}
 
-  async updateMessage(data: IUpdateMessage): Promise<{
-    raw: any;
-    affected?: number | undefined;
-    generatedMaps: { [key: string]: any }[];
-  }> {
+  async updateMessage(data: IUpdateMessage): Promise<IMessage> {
     try {
       const res = await this.messageRepository.updateMessage(data);
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async removeMessage(data: IRemoveMessage): Promise<Pick<IMessage, "id">> {
+    try {
+      const res = await this.messageRepository.removeMessage(data);
 
       return res;
     } catch (error) {

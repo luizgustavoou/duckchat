@@ -94,15 +94,26 @@ export class MessageService {
   }
 
   async update(id: string, updateMessageDto: UpdateMessageDto) {
-    const user: UpdateResult = await this.messageRepository.update(
-      id,
-      updateMessageDto,
-    );
+    const message = await this.messageRepository.findOne({ where: { id } });
 
-    return user;
+    if (!message) {
+      throw new NotFoundException('Mensagem não encontrado.');
+    }
+
+    this.messageRepository.merge(message, updateMessageDto);
+
+    return await this.messageRepository.save(message);
   }
 
   async remove(id: string) {
+    const message = await this.messageRepository.findOneBy({ id });
+
+    if (!message) {
+      throw new NotFoundException('Mensagem não encontrada.');
+    }
+
     await this.messageRepository.delete(id);
+
+    return { id: message.id };
   }
 }

@@ -11,6 +11,7 @@ import {
   useEffect,
   useRef,
   useState,
+  MouseEvent,
 } from "react";
 import { messageService } from "@/services";
 import { useWebsocket } from "@/hooks/useWebsocket";
@@ -42,7 +43,7 @@ export default function Chat({ friendship }: ChatProps) {
 
   const [messages, setMessages] = useState<IMessage[]>([]);
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleCreateMessage = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     try {
@@ -61,20 +62,40 @@ export default function Chat({ friendship }: ChatProps) {
     }
   };
 
+  const handleRemoveMessage = (
+    e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
+  ) => {
+    
+  };
+
   const handleNewMessage = useCallback(
     (data: {
       message: IMessage;
       type: "message_created" | "message_updated" | "message_removed";
     }) => {
-      switch (data.type) {
-        case "message_created":
-          setMessages((messages) => [...messages, data.message]);
+      const messageStrategys = {
+        message_created: (createdMessage: IMessage) => {
+          setMessages((messages) => [...messages, createdMessage]);
+        },
+        message_updated: (updatedMessage: IMessage) => {
+          setMessages(
+            messages.map((message) => {
+              if (message.id !== updatedMessage.id) return message;
 
-          break;
+              return updatedMessage;
+            })
+          );
+        },
+        message_removed: (removedMessage: IMessage) => {
+          setMessages(
+            messages.filter((message) => message.id !== removedMessage.id)
+          );
+        },
+      };
 
-        default:
-          break;
-      }
+      const strategy = messageStrategys[data.type];
+
+      strategy(data.message);
     },
     []
   );
@@ -178,7 +199,7 @@ export default function Chat({ friendship }: ChatProps) {
                           description="Essa ação não pode ser defeita. Isso excluirá a mensagem."
                           contentCancelButton="Cancelar"
                           contentContinueButton="Continuar"
-                          handleContinueClick={(e) => {}}
+                          handleContinueClick={handleRemoveMessage}
                         />
 
                         <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
@@ -195,7 +216,10 @@ export default function Chat({ friendship }: ChatProps) {
         <div ref={messageRef} />
       </div>
 
-      <form className="flex items-center gap-1 p-3" onSubmit={handleSubmit}>
+      <form
+        className="flex items-center gap-1 p-3"
+        onSubmit={handleCreateMessage}
+      >
         <Textarea
           value={message || ""}
           onChange={handleOnChangeMessage}

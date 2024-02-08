@@ -127,7 +127,7 @@ export class FriendshipService {
 
     if (!friendship) {
       throw new NotFoundException('Amizade não encontrada.');
-    }
+    } 
 
     await this.userFriendsRepository.delete(id);
 

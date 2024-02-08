@@ -3,6 +3,7 @@ import { ISendMessage } from "../../interfaces/ISendMessage";
 import { IMessageResponse } from "./models/IMessageResponse";
 import { IGetAllMessagesOfFriendship } from "../../interfaces/IGetAllMessagesOfFriendship";
 import { IUpdateMessage } from "../../interfaces/IUpdateMessage";
+import { IRemoveMessage } from "@/interfaces/IRemoveMessage";
 export interface IMessageApi {
   sendMessage(data: ISendMessage): Promise<
     IMessageResponse & {
@@ -14,13 +15,9 @@ export interface IMessageApi {
     }
   >;
 
-  updateMessage(data: IUpdateMessage): Promise<{
-    raw: any;
-    affected?: number;
-    generatedMaps: {
-      [key: string]: any;
-    }[];
-  }>;
+  updateMessage(data: IUpdateMessage): Promise<IMessageResponse>;
+
+  removeMessage(data: IRemoveMessage): Promise<Pick<IMessageResponse, "id">>;
 
   getAllMessagesOfFriendship(
     data: IGetAllMessagesOfFriendship
@@ -28,18 +25,24 @@ export interface IMessageApi {
 }
 
 export class MessageApiImpl implements IMessageApi {
-  async updateMessage(data: IUpdateMessage): Promise<{
-    raw: any;
-    affected?: number | undefined;
-    generatedMaps: { [key: string]: any }[];
-  }> {
+  async updateMessage(data: IUpdateMessage): Promise<IMessageResponse> {
     const { messageId, content } = data;
 
-    const res = await api.patch<{
-      raw: any;
-      affected?: number | undefined;
-      generatedMaps: { [key: string]: any }[];
-    }>(`/message/${messageId}`, { content });
+    const res = await api.patch<IMessageResponse>(`/message/${messageId}`, {
+      content,
+    });
+
+    return res.data;
+  }
+
+  async removeMessage(
+    data: IRemoveMessage
+  ): Promise<Pick<IMessageResponse, "id">> {
+    const { messageId } = data;
+
+    const res = await api.delete<Pick<IMessageResponse, "id">>(
+      `/message/${messageId}`
+    );
 
     return res.data;
   }
