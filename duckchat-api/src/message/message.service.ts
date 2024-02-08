@@ -143,7 +143,7 @@ export class MessageService {
 
     this.ghatGateway.emitMessageToFriendship({
       friendshipId: message.userFriends.id,
-      type: 'message_created',
+      type: 'message_removed',
       message: {
         id: message.id,
         user: {
