@@ -4,6 +4,7 @@ export interface SkeletonCardProps {
   length?: number;
 }
 
+// Todo:  Mudar nome desse componente. Pois ele é um skeleton desse tipo de "componente/estrutura"
 function SkeletonCard({ length = 9 }: SkeletonCardProps) {
   return (
     <>

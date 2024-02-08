@@ -3,16 +3,8 @@ import { Textarea } from "./ui/textarea";
 import { IFriendship } from "@/entities/IFriendship";
 import { IMessage } from "@/entities/IMessage";
 import { Button } from "./ui/button";
-import { ChevronDown, Send } from "lucide-react";
-import {
-  ChangeEvent,
-  FormEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  MouseEvent,
-} from "react";
+import { Send } from "lucide-react";
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { messageService } from "@/services";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import { wsURL } from "@/utils/config";

@@ -7,12 +7,15 @@ import AppAlertDialog from "./AppAlertDialog";
 import EditMessage from "./EditMessage";
 import { messageService } from "@/services";
 import { toast } from "./ui/use-toast";
+import { useState, MouseEvent } from "react";
 
 export interface MessageProps {
   message: IMessage;
 }
 
 function Message({ message }: MessageProps) {
+  const [showActions, setShowActions] = useState<boolean>(false);
+
   const { user: userAuth } = useAppSelector(userSelector);
 
   const handleRemoveMessage = async (message: IMessage) => {
@@ -27,11 +30,19 @@ function Message({ message }: MessageProps) {
     }
   };
 
+  const handleMouse = (
+    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+  ) => {
+    setShowActions((value) => !value);
+  };
+
   return (
     <div
       className={`flex  ${
         userAuth?.id === message.user.id ? "justify-end " : "justify-start"
       } `}
+      onMouseLeave={handleMouse}
+      onMouseEnter={handleMouse}
     >
       <div
         className={`relative max-w-[60%] p-3 mb-2 rounded-sm text-sm  ${
@@ -42,7 +53,7 @@ function Message({ message }: MessageProps) {
       >
         <span className="0">{message.content}</span>
 
-        {userAuth?.id === message.user.id && (
+        {userAuth?.id === message.user.id && showActions && (
           <div className="cursor-pointer absolute top-0 right-0 py-1 ">
             <AppPopover
               trigger={<ChevronDown size={20} />}
