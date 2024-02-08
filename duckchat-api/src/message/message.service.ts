@@ -130,9 +130,9 @@ export class MessageService {
   }
 
   async remove(id: string) {
-    console.log(
-      `[LOG remove from message.service.ts] Iniciando a deleção da entidade com id ${id}`,
-    );
+    // console.log(
+    //   `[LOG remove from message.service.ts] Iniciando a deleção da entidade com id ${id}`,
+    // );
 
     // TODO: Ao remover mensagem não precisa enviar o usuario que comentou e nem o ocnteudo da mensagem. Basta enviar o id da mensagem para o front saber o que fazer.
     const message = await this.messageRepository.findOne({
@@ -167,7 +167,7 @@ export class MessageService {
       },
     });
 
-    console.log(`[LOG remove from message.service.ts] Mensagem deletada!`);
+    // console.log(`[LOG remove from message.service.ts] Mensagem deletada!`);
 
     return { id: message.id };
   }
