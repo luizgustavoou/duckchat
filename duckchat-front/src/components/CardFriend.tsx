@@ -90,9 +90,9 @@ export default function CardFriend({
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>Cancelar</AlertDialogCancel>
               <AlertDialogAction onClick={handleRemove}>
-                Continue
+                Continuar
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>

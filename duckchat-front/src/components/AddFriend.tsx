@@ -114,7 +114,7 @@ function AddFriend() {
           <Button
             type="submit"
             onClick={handleSubmit}
-            disabled={disableActions}
+            disabled={disableActions || newFriends.length === 0}
           >
             Adicionar
           </Button>

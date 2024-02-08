@@ -130,6 +130,8 @@ export class FriendshipService {
     }
 
     await this.userFriendsRepository.delete(id);
+
+    return { id: friendship.id };
   }
 
   // async removeByUsersId(removeByUsersIdDto: RemoveByUsersIdDto) {

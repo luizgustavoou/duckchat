@@ -152,7 +152,7 @@ export default function Chat({ friendship }: ChatProps) {
                     trigger={<ChevronDown size={20} />}
                     content={
                       <div className="flex flex-col ">
-                        <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                        <div className="px-5 py-3 hover:bg-black/40 cursor-pointer" >
                           Remover
                         </div>
                         <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
