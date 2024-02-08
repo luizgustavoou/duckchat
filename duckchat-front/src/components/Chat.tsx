@@ -190,34 +190,36 @@ export default function Chat({ friendship }: ChatProps) {
               >
                 <span className="0">{message.content}</span>
 
-                <div className="cursor-pointer absolute top-0 right-0">
-                  <AppPopover
-                    trigger={<ChevronDown size={20} />}
-                    content={
-                      <div className="flex flex-col ">
-                        <AppAlertDialog
-                          title="Remover mensagem"
-                          trigger={
-                            <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
-                              Remover
-                            </div>
-                          }
-                          description="Essa ação não pode ser defeita. Isso excluirá a mensagem."
-                          contentCancelButton="Cancelar"
-                          contentContinueButton="Continuar"
-                          handleContinueClick={(_) =>
-                            handleRemoveMessage(message)
-                          }
-                        />
+                {userAuth?.id === message.user.id && (
+                  <div className="cursor-pointer absolute top-0 right-0">
+                    <AppPopover
+                      trigger={<ChevronDown size={20} />}
+                      content={
+                        <div className="flex flex-col ">
+                          <AppAlertDialog
+                            title="Remover mensagem"
+                            trigger={
+                              <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                                Remover
+                              </div>
+                            }
+                            description="Essa ação não pode ser defeita. Isso excluirá a mensagem."
+                            contentCancelButton="Cancelar"
+                            contentContinueButton="Continuar"
+                            handleContinueClick={(_) =>
+                              handleRemoveMessage(message)
+                            }
+                          />
 
-                        <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
-                          Editar
+                          <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                            Editar
+                          </div>
                         </div>
-                      </div>
-                    }
-                    parentContentClassName="w-36 p-0 bg-muted rounded-none"
-                  />
-                </div>
+                      }
+                      parentContentClassName="w-36 p-0 bg-muted rounded-none"
+                    />
+                  </div>
+                )}
               </div>
             </div>
           ))}
