@@ -71,8 +71,8 @@ function AddFriend() {
           <Plus className="h-4 w-4" />
         </Button>
       }
-      title={<p>Adicionar amigos</p>}
-      description={<p>Faça novas amizades para iniciar um novo bate-papo.</p>}
+      title="Adicionar amigos"
+      description="Faça novas amizades para iniciar um novo bate-papo."
       main={
         <div className="flex flex-col gap-4 py-4">
           <div className="flex items-center">

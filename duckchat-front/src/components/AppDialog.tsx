@@ -11,8 +11,8 @@ import { ReactNode } from "react";
 
 export interface AppDialogProps {
   trigger: ReactNode;
-  title: ReactNode;
-  description: ReactNode;
+  title: string;
+  description: string;
   main: ReactNode;
   footer: ReactNode;
   maxWidth?: number;

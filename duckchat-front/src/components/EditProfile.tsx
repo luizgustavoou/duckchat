@@ -72,12 +72,8 @@ function EditProfile() {
           <Pencil className="h-4 w-4" />
         </Button>
       }
-      title={<p>Editar Perfil</p>}
-      description={
-        <p>
-          Faça alterações em seu perfil aqui. Clique em salvar quando terminar.
-        </p>
-      }
+      title="Editar Perfil"
+      description="Faça alterações em seu perfil aqui. Clique em salvar quando terminar."
       main={
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
