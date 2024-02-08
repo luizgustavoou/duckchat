@@ -78,37 +78,35 @@ export default function Chat({ friendship }: ChatProps) {
     }
   };
 
-  const handleNewMessage = useCallback(
-    (data: {
-      message: IMessage;
-      type: "message_created" | "message_updated" | "message_removed";
-    }) => {
-      const messageStrategys = {
-        message_created: (createdMessage: IMessage) => {
-          setMessages((messages) => [...messages, createdMessage]);
-        },
-        message_updated: (updatedMessage: IMessage) => {
-          setMessages(
-            messages.map((message) => {
-              if (message.id !== updatedMessage.id) return message;
+  const handleNewMessage = (data: {
+    message: IMessage;
+    type: "message_created" | "message_updated" | "message_removed";
+  }) => {
+    console.log("[LOG handleNewMessage");
+    console.log({ data });
 
-              return updatedMessage;
-            })
-          );
-        },
-        message_removed: (removedMessage: IMessage) => {
-          setMessages(
-            messages.filter((message) => message.id !== removedMessage.id)
-          );
-        },
-      };
+    const messageStrategys = {
+      message_created: (createdMessage: IMessage) => {
+        setMessages((messages) => [...messages, createdMessage]);
+      },
+      message_updated: (updatedMessage: IMessage) => {
+        setMessages((messages) =>
+          messages.map((message) =>
+            message.id !== updatedMessage.id ? message : updatedMessage
+          )
+        );
+      },
+      message_removed: (removedMessage: IMessage) => {
+        setMessages((messages) =>
+          messages.filter((message) => message.id !== removedMessage.id)
+        );
+      },
+    };
 
-      const strategy = messageStrategys[data.type];
+    const strategy = messageStrategys[data.type];
 
-      strategy(data.message);
-    },
-    [messages]
-  );
+    strategy(data.message);
+  };
 
   const handleOnChangeMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setMessage(e.target.value);

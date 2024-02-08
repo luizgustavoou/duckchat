@@ -105,7 +105,7 @@ export class MessageService {
 
     this.messageRepository.merge(message, updateMessageDto);
 
-    this.ghatGateway.emitMessageToFriendship({
+    await this.ghatGateway.emitMessageToFriendship({
       friendshipId: message.userFriends.id,
       type: 'message_updated',
       message: {
@@ -130,6 +130,10 @@ export class MessageService {
   }
 
   async remove(id: string) {
+    console.log(
+      `[LOG remove from message.service.ts] Iniciando a deleção da entidade com id ${id}`,
+    );
+
     // TODO: Ao remover mensagem não precisa enviar o usuario que comentou e nem o ocnteudo da mensagem. Basta enviar o id da mensagem para o front saber o que fazer.
     const message = await this.messageRepository.findOne({
       where: { id },
@@ -142,7 +146,7 @@ export class MessageService {
 
     await this.messageRepository.delete(id);
 
-    this.ghatGateway.emitMessageToFriendship({
+    await this.ghatGateway.emitMessageToFriendship({
       friendshipId: message.userFriends.id,
       type: 'message_removed',
       message: {
@@ -162,6 +166,8 @@ export class MessageService {
         updatedAt: message.updatedAt,
       },
     });
+
+    console.log(`[LOG remove from message.service.ts] Mensagem deletada!`);
 
     return { id: message.id };
   }
