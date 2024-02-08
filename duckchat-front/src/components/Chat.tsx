@@ -18,23 +18,14 @@ import { useWebsocket } from "@/hooks/useWebsocket";
 import { wsURL } from "@/utils/config";
 import SkeletonCard from "./SkeletonCard";
 import { toast } from "./ui/use-toast";
-import { userSelector } from "@/slices/user-slice";
-import { useAppSelector } from "@/hooks/useAppSelector";
 
-import AppPopover from "./AppPopover";
-import AppAlertDialog from "./AppAlertDialog";
-import AppDialog from "./AppDialog";
-import { Input } from "./ui/input";
-import { Label } from "@radix-ui/react-label";
-import EditMessage from "./EditMessage";
+import Message from "./Message";
 
 export interface ChatProps {
   friendship: IFriendship;
 }
 
 export default function Chat({ friendship }: ChatProps) {
-  const { user: userAuth } = useAppSelector(userSelector);
-
   const messageRef = useRef<HTMLDivElement | null>(null);
   const [message, setMessage] = useState<string>("");
 
@@ -63,18 +54,6 @@ export default function Chat({ friendship }: ChatProps) {
       });
     } finally {
       setMessage("");
-    }
-  };
-
-  const handleRemoveMessage = async (message: IMessage) => {
-    try {
-      await messageService.removeMessage({ messageId: message.id });
-    } catch (error) {
-      toast({
-        variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
-      });
     }
   };
 
@@ -175,60 +154,7 @@ export default function Chat({ friendship }: ChatProps) {
 
         {status != "loading" &&
           messages.map((message) => (
-            <div
-              className={`flex  ${
-                userAuth?.id === message.user.id
-                  ? "justify-end "
-                  : "justify-start"
-              } `}
-              key={message.id}
-            >
-              <div
-                className={`relative max-w-[60%] p-3 mb-2 rounded-sm text-sm  ${
-                  userAuth?.id === message.user.id
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted"
-                }`}
-              >
-                <span className="0">{message.content}</span>
-
-                {userAuth?.id === message.user.id && (
-                  <div className="cursor-pointer absolute top-0 right-0 py-1 ">
-                    <AppPopover
-                      trigger={<ChevronDown size={20} />}
-                      content={
-                        <div className="flex flex-col ">
-                          <AppAlertDialog
-                            title="Remover mensagem"
-                            trigger={
-                              <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
-                                Remover
-                              </div>
-                            }
-                            description="Essa ação não pode ser desfeita. Isso excluirá a mensagem."
-                            contentCancelButton="Cancelar"
-                            contentContinueButton="Continuar"
-                            handleContinueClick={(_) =>
-                              handleRemoveMessage(message)
-                            }
-                          />
-
-                          <EditMessage
-                            message={message}
-                            trigger={
-                              <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
-                                Editar
-                              </div>
-                            }
-                          />
-                        </div>
-                      }
-                      parentContentClassName="w-36 p-0 bg-muted rounded-none"
-                    />
-                  </div>
-                )}
-              </div>
-            </div>
+            <Message message={message} key={message.id} />
           ))}
         <div ref={messageRef} />
       </div>
