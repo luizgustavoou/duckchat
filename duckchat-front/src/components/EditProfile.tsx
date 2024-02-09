@@ -5,15 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
 import { ChangeEvent, useEffect, useState, MouseEvent } from "react";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { updateProfile, userSelector } from "@/slices/user-slice";
+import { updateProfile, authSelector } from "@/slices/auth-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { IUpdateProfile } from "../interfaces/IUpdateProfile";
-import AppDialog from "./AppDialog";
 import AppSheet from "./AppSheet";
 
 function EditProfile() {
   const dispatch = useAppDispatch();
-  const { user: userAuth, status: userStatus } = useAppSelector(userSelector);
+  const { user: authUser, status: authStatus } = useAppSelector(authSelector);
 
   const [username, setUsername] = useState<string | null>(null);
   const [firstName, setFirstName] = useState<string | null>(null);
@@ -52,15 +51,15 @@ function EditProfile() {
   };
 
   useEffect(() => {
-    if (!userAuth) return;
+    if (!authUser) return;
 
-    setFirstName(userAuth.firstName);
-    setLastName(userAuth.lastName);
-    setUsername(userAuth.username);
-    setAbout(userAuth.about);
-  }, [userAuth]);
+    setFirstName(authUser.firstName);
+    setLastName(authUser.lastName);
+    setUsername(authUser.username);
+    setAbout(authUser.about);
+  }, [authUser]);
 
-  const disableActions = userStatus === "loading";
+  const disableActions = authStatus === "loading";
 
   return (
     <AppSheet

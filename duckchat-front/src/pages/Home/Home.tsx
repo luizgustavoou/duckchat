@@ -7,26 +7,12 @@ import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import EditProfile from "@/components/EditProfile";
 import AddFriend from "@/components/AddFriend";
-import { userSelector } from "@/slices/user-slice";
+import { authSelector } from "@/slices/auth-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { friendsSelector, getAllFriendsOfUser } from "@/slices/friends-slice";
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-
 export default function Home() {
-  const { user: userAuth } = useAppSelector(userSelector);
+  const { user: authUser } = useAppSelector(authSelector);
   const { friendships, status: friendshipStatus } =
     useAppSelector(friendsSelector);
 
@@ -57,14 +43,14 @@ export default function Home() {
           <Avatar>
             <AvatarImage
               className="w-14 rounded-full"
-              src={userAuth?.avatarURL}
+              src={authUser?.avatarURL}
             />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
           <div>
-            <p>{userAuth?.firstName}</p>
-            <p className="text-sm text-muted-foreground">{userAuth?.about}</p>
+            <p>{authUser?.firstName}</p>
+            <p className="text-sm text-muted-foreground">{authUser?.about}</p>
           </div>
 
           <div className="flex flex-col gap-1">

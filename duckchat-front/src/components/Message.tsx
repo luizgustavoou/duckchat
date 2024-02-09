@@ -1,6 +1,6 @@
 import { IMessage } from "@/entities/IMessage";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { userSelector } from "@/slices/user-slice";
+import { authSelector } from "@/slices/auth-slice";
 import AppPopover from "./AppPopover";
 import { ChevronDown } from "lucide-react";
 import AppAlertDialog from "./AppAlertDialog";
@@ -16,7 +16,7 @@ export interface MessageProps {
 function Message({ message }: MessageProps) {
   const [showActions, setShowActions] = useState<boolean>(false);
 
-  const { user: userAuth } = useAppSelector(userSelector);
+  const { user: authUser } = useAppSelector(authSelector);
 
   const handleRemoveMessage = async (message: IMessage) => {
     try {
@@ -39,21 +39,21 @@ function Message({ message }: MessageProps) {
   return (
     <div
       className={`flex  ${
-        userAuth?.id === message.user.id ? "justify-end " : "justify-start"
+        authUser?.id === message.user.id ? "justify-end " : "justify-start"
       } `}
       onMouseLeave={handleMouse}
       onMouseEnter={handleMouse}
     >
       <div
         className={`relative max-w-[60%] p-3 mb-2 rounded-sm text-sm  ${
-          userAuth?.id === message.user.id
+          authUser?.id === message.user.id
             ? "bg-primary text-primary-foreground"
             : "bg-muted"
         }`}
       >
         <span className="0">{message.content}</span>
 
-        {userAuth?.id === message.user.id && showActions && (
+        {authUser?.id === message.user.id && showActions && (
           <div className="cursor-pointer absolute top-0 right-0 py-1 ">
             <AppPopover
               trigger={<ChevronDown size={20} />}

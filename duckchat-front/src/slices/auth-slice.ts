@@ -6,12 +6,12 @@ import { userService } from "@/services";
 import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export interface UserState {
+export interface AuthState {
   user: IUser | null;
   status: "idle" | "loading" | "success" | "error";
 }
 
-const initialState: UserState = {
+const initialState: AuthState = {
   user: {
     id: "64f7485f-9083-409e-ba2d-67a37429a399",
     username: "luizgustavoou",
@@ -32,7 +32,7 @@ export const updateProfile = createAsyncThunk<
     state: RootState;
     rejectValue: string;
   }
->("user/updateprofile", async (data, thunkAPI) => {
+>("auth/updateprofile", async (data, thunkAPI) => {
   try {
     const res = await userService.updateProfile(data);
 
@@ -45,8 +45,8 @@ export const updateProfile = createAsyncThunk<
   }
 });
 
-export const userSlice = createSlice({
-  name: "user",
+export const authSlice = createSlice({
+  name: "auth",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -64,6 +64,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const {} = userSlice.actions;
-export const userSelector = (state: RootState) => state.userReducer;
-export default userSlice.reducer;
+export const {} = authSlice.actions;
+export const authSelector = (state: RootState) => state.authReducer;
+export default authSlice.reducer;

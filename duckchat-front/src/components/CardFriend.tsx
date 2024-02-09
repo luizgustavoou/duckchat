@@ -64,6 +64,7 @@ export default function CardFriend({
         />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
+
       <div className="flex flex-col gap-1">
         <p>{friendship.friend?.firstName}</p>
         <p className="text-sm text-muted-foreground">

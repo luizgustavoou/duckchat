@@ -1,12 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import userReducer from "./slices/user-slice";
+import authReducer from "./slices/auth-slice";
 import friendsReducer from "./slices/friends-slice";
 import nonFriendsUsersReducer from "./slices/non-friends-users-slice";
 
 export const store = configureStore({
   reducer: {
-    userReducer,
+    authReducer,
     friendsReducer,
     nonFriendsUsersReducer,
   },
