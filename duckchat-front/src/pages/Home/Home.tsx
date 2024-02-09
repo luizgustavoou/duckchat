@@ -58,6 +58,7 @@ export default function Home() {
 
           <div>
             <p>{authUser?.firstName}</p>
+            <p>{authUser?.id}</p>
             <p className="text-sm text-muted-foreground">{authUser?.about}</p>
           </div>
 

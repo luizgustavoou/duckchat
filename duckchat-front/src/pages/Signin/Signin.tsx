@@ -45,13 +45,6 @@ function Signin() {
 
     await dispatch(signin({ username, password }));
   }
-
-  useEffect(() => {
-    if (authStatus === "success") {
-      navigate(RoutesPath.HOME);
-    }
-  }, [authStatus]);
-
   return (
     <div className="flex flex-1 justify-center items-center">
       <div className="w-1/2">
