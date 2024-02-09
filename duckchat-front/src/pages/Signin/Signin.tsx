@@ -13,6 +13,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAppNavigate } from "@/hooks/useNavigate";
+import { useAppDispatch } from "@/hooks/useAppDispatch";
+import { authSelector, signin } from "@/slices/auth-slice";
+import { useEffect } from "react";
+import { useAppSelector } from "@/hooks/useAppSelector";
+import { RoutesPath } from "@/utils/routes-path";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -22,6 +27,9 @@ const formSchema = z.object({
 });
 
 function Signin() {
+  const dispatch = useAppDispatch();
+  const { status: authStatus } = useAppSelector(authSelector);
+
   const navigate = useAppNavigate();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -32,10 +40,17 @@ function Signin() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    navigate("/");
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { username, password } = values;
+
+    await dispatch(signin({ username, password }));
   }
+
+  useEffect(() => {
+    if (authStatus === "success") {
+      navigate(RoutesPath.HOME);
+    }
+  }, [authStatus]);
 
   return (
     <div className="flex flex-1 justify-center items-center">

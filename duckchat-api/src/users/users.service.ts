@@ -27,10 +27,7 @@ export class UsersService {
   }
 
   async findOneByUsername(username: string) {
-    return await this.usersRepository.findOne({
-      where: { username },
-      select: ['id', 'username', 'firstName', 'lastName', 'avatarURL'],
-    });
+    return await this.usersRepository.findOneBy({ username });
   }
 
   async findOneById(id: string) {
