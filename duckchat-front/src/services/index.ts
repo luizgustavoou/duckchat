@@ -6,10 +6,14 @@ import {
 import { AuthServiceImpl, IAuthService } from "./auth/auth.service";
 import { IUserService, UserServiceImpl } from "./user/user.service";
 import { IMessageService, MessageServiceImpl } from "./message/message.service";
-import { IStorageService, StorageServiceImpl } from "./storage/storage.service";
+import {
+  CookiesServiceImpl,
+  IStorageService,
+  StorageServiceImpl,
+} from "./storage/storage.service";
 import { JWTService, JWTServiceImpl } from "./jwt/jwt.service";
 
-const storageService: IStorageService = new StorageServiceImpl();
+const storageService: IStorageService = new CookiesServiceImpl();
 
 const authService: IAuthService = new AuthServiceImpl(
   authRepository,

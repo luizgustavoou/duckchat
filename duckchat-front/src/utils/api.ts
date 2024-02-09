@@ -1,5 +1,6 @@
 import axios from "axios";
 import { baseURL } from "./config";
+import { storageService } from "@/services";
 // ler: https://blog.theashishmaurya.me/handling-jwt-access-and-refresh-token-using-axios-in-react-app
 
 export const api = axios.create({
@@ -8,7 +9,7 @@ export const api = axios.create({
 
 api.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("accessToken");
+    const token = storageService.getItem("accessToken");
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
