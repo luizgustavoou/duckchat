@@ -7,7 +7,7 @@ import { AuthServiceImpl, IAuthService } from "./auth/auth.service";
 import { IUserService, UserServiceImpl } from "./user/user.service";
 import { IMessageService, MessageServiceImpl } from "./message/message.service";
 import { IStorageService, StorageServiceImpl } from "./storage/storage.service";
-import { JWTService } from "./jwt/jwt.service";
+import { JWTService, JWTServiceImpl } from "./jwt/jwt.service";
 
 const storageService: IStorageService = new StorageServiceImpl();
 
@@ -22,6 +22,6 @@ const messageService: IMessageService = new MessageServiceImpl(
   messageRepository
 );
 
-const jwtService = new JWTService();
+const jwtService: JWTService = new JWTServiceImpl();
 
 export { authService, userService, messageService, storageService, jwtService };

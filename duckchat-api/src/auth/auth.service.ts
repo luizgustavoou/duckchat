@@ -83,6 +83,7 @@ export class AuthService {
       firstName: user.firstName,
       lastName: user.lastName,
       avatarURL: user.avatarURL,
+      about: user.about,
     };
 
     const [accessToken, refreshToken] = await Promise.all([

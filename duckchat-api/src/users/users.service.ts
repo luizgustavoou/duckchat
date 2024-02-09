@@ -20,16 +20,24 @@ export class UsersService {
   }
 
   async findAll() {
-    const users = await this.usersRepository.find();
+    const users = await this.usersRepository.find({
+      select: ['id', 'username', 'firstName', 'lastName', 'avatarURL'],
+    });
     return users;
   }
 
   async findOneByUsername(username: string) {
-    return await this.usersRepository.findOneBy({ username });
+    return await this.usersRepository.findOne({
+      where: { username },
+      select: ['id', 'username', 'firstName', 'lastName', 'avatarURL'],
+    });
   }
 
   async findOneById(id: string) {
-    return await this.usersRepository.findOneBy({ id });
+    return await this.usersRepository.findOne({
+      where: { id },
+      select: ['id', 'username', 'firstName', 'lastName', 'avatarURL'],
+    });
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
@@ -41,7 +49,16 @@ export class UsersService {
 
     this.usersRepository.merge(user, updateUserDto);
 
-    return await this.usersRepository.save(user);
+    const userUpdated = await this.usersRepository.save(user);
+
+    return {
+      id: userUpdated.id,
+      username: userUpdated.username,
+      firstName: userUpdated.firstName,
+      lastName: userUpdated.lastName,
+      about: userUpdated.about,
+      avatarURL: userUpdated.avatarURL,
+    };
   }
 
   async findNonFriendsUsers(userId: string) {
@@ -73,7 +90,14 @@ export class UsersService {
 
     const query = this.usersRepository
       .createQueryBuilder('user')
-      // .select(['user.id', 'user.firstName'])
+      .select([
+        'user.id',
+        'user.username',
+        'user.firstName',
+        'user.lastName',
+        'user.about',
+        'user.avatarURL',
+      ])
       .where('user.id != :userId')
       .andWhere(`user.id NOT IN (${subquery.getQuery()})`)
       .setParameters({ userId })
