@@ -78,7 +78,12 @@ export const updateProfile = createAsyncThunk<
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout(state) {
+      authService.logout();
+      state.user = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signin.pending, (state, _) => {
@@ -106,6 +111,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const {} = authSlice.actions;
+export const { logout } = authSlice.actions;
 export const authSelector = (state: RootState) => state.authReducer;
 export default authSlice.reducer;

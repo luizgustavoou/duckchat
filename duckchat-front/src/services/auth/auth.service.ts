@@ -9,6 +9,8 @@ export interface IAuthService {
   signin(data: ISignin): Promise<IAuth>;
 
   signup(data: ISignup): Promise<IUser>;
+
+  logout(): void;
 }
 
 export class AuthServiceImpl implements IAuthService {
@@ -38,5 +40,10 @@ export class AuthServiceImpl implements IAuthService {
     } catch (error) {
       throw error;
     }
+  }
+
+  logout(): void {
+    this.storageService.removeItem("accessToken");
+    this.storageService.removeItem("refreshToken");
   }
 }

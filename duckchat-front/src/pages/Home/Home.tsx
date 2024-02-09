@@ -1,19 +1,17 @@
 import { IFriendship } from "@/entities/IFriendship";
 import CardFriend from "../../components/CardFriend";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, MouseEvent } from "react";
 import Chat from "@/components/Chat";
 import SkeletonCard from "@/components/SkeletonCard";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import EditProfile from "@/components/EditProfile";
 import AddFriend from "@/components/AddFriend";
-import { authSelector } from "@/slices/auth-slice";
+import { authSelector, logout } from "@/slices/auth-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { friendsSelector, getAllFriendsOfUser } from "@/slices/friends-slice";
 import AppPopover from "@/components/AppPopover";
-import AppAlertDialog from "@/components/AppAlertDialog";
-import { MoreHorizontalIcon, Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { MoreHorizontalIcon } from "lucide-react";
 
 export default function Home() {
   const { user: authUser } = useAppSelector(authSelector);
@@ -38,6 +36,12 @@ export default function Home() {
 
   const handleFriendshipClick = (friendshipId: IFriendship) => {
     setCurrentFriendship(friendshipId);
+  };
+
+  const handleLogout = (
+    e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>
+  ) => {
+    dispatch(logout());
   };
 
   return (
@@ -78,9 +82,15 @@ export default function Home() {
                       </div>
                     }
                   />
+                  <div
+                    className="px-5 py-3 hover:bg-black/40 cursor-pointer"
+                    onClick={handleLogout}
+                  >
+                    Sair
+                  </div>
                 </div>
               }
-              parentContentClassName="w-36 p-0 bg-muted rounded-none"
+              parentContentClassName="w-40 p-0 bg-muted rounded-none"
             />
           </div>
         </div>
