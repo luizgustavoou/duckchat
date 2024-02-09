@@ -28,7 +28,6 @@ export class UserRepositoryImpl implements IUserRepository {
     const newRes: IUser = {
       id: res.id,
       username: res.username,
-      password: res.password,
       firstName: res.firstName,
       lastName: res.lastName,
       about: res.about,
@@ -44,7 +43,6 @@ export class UserRepositoryImpl implements IUserRepository {
     const newRes: IUser[] = res.map((userResponse) => ({
       id: userResponse.id,
       username: userResponse.username,
-      password: userResponse.password,
       firstName: userResponse.firstName,
       lastName: userResponse.lastName,
       about: userResponse.about,
@@ -60,7 +58,6 @@ export class UserRepositoryImpl implements IUserRepository {
     const newRes: IUser[] = res.map((userResponse) => ({
       id: userResponse.id,
       username: userResponse.username,
-      password: userResponse.password,
       firstName: userResponse.firstName,
       lastName: userResponse.lastName,
       about: userResponse.about,
@@ -78,7 +75,6 @@ export class UserRepositoryImpl implements IUserRepository {
       friend: {
         id: friendshipResponse.friend.id,
         username: friendshipResponse.friend.username,
-        password: friendshipResponse.friend.password,
         firstName: friendshipResponse.friend.firstName,
         lastName: friendshipResponse.friend.lastName,
         about: friendshipResponse.friend.about,
@@ -97,7 +93,6 @@ export class UserRepositoryImpl implements IUserRepository {
       friend: {
         id: res.friend.id,
         username: res.friend.username,
-        password: res.friend.password,
         firstName: res.friend.firstName,
         lastName: res.friend.lastName,
         about: res.friend.about,

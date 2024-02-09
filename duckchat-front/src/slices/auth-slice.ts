@@ -2,7 +2,7 @@
 
 import { IUser } from "@/entities/IUser";
 import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
-import { userService } from "@/services";
+import { jwtService, storageService, userService } from "@/services";
 import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
@@ -11,16 +11,12 @@ export interface AuthState {
   status: "idle" | "loading" | "success" | "error";
 }
 
+const accessToken = storageService.getItem("accessToken");
+
+const user: IUser | null = accessToken ? jwtService.decode(accessToken) : null;
+
 const initialState: AuthState = {
-  user: {
-    id: "64f7485f-9083-409e-ba2d-67a37429a399",
-    username: "luizgustavoou",
-    password: "123",
-    firstName: "Luiz Gustavo",
-    lastName: "Umbelino",
-    about: "every little thing gonna be all right",
-    avatarURL: "https://github.com/shadcn.png",
-  },
+  user,
   status: "idle",
 };
 
