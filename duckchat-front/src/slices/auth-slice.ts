@@ -13,7 +13,25 @@ export interface AuthState {
 
 const accessToken = storageService.getItem("accessToken");
 
-const user: IUser | null = accessToken ? jwtService.decode(accessToken) : null;
+const userJwt: {
+  sub: string;
+  username: string;
+  firstName: string;
+  lastName: string;
+  about: string;
+  avatarURL: string;
+} | null = accessToken ? jwtService.decode(accessToken) : null;
+
+const user: IUser | null = userJwt
+  ? {
+      id: userJwt.sub,
+      username: userJwt.username,
+      firstName: userJwt.firstName,
+      lastName: userJwt.lastName,
+      about: userJwt.about,
+      avatarURL: userJwt.avatarURL,
+    }
+  : userJwt;
 
 const initialState: AuthState = {
   user,
