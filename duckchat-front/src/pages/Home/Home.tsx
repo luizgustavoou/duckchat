@@ -10,6 +10,10 @@ import AddFriend from "@/components/AddFriend";
 import { authSelector } from "@/slices/auth-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { friendsSelector, getAllFriendsOfUser } from "@/slices/friends-slice";
+import AppPopover from "@/components/AppPopover";
+import AppAlertDialog from "@/components/AppAlertDialog";
+import { MoreHorizontalIcon, Plus } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   const { user: authUser } = useAppSelector(authSelector);
@@ -54,8 +58,30 @@ export default function Home() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <EditProfile />
-            <AddFriend />
+            <AppPopover
+              trigger={
+                <MoreHorizontalIcon size={20} className="cursor-pointer" />
+              }
+              content={
+                <div className="flex flex-col ">
+                  <AddFriend
+                    trigger={
+                      <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                        Adicionar amigo
+                      </div>
+                    }
+                  />
+                  <EditProfile
+                    trigger={
+                      <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                        Editar perfil
+                      </div>
+                    }
+                  />
+                </div>
+              }
+              parentContentClassName="w-36 p-0 bg-muted rounded-none"
+            />
           </div>
         </div>
 

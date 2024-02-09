@@ -10,11 +10,10 @@ import Home from "./pages/Home/Home";
 import { RoutesPath } from "./utils/routes-path";
 import Signin from "./pages/Signin/Signin";
 import Signup from "./pages/Signup/Signup";
-import { useAppSelector } from "./hooks/useAppSelector";
-import { authSelector } from "./slices/auth-slice";
+import { useAuth } from "./hooks/useAuth";
 
 function App() {
-  const { user } = useAppSelector(authSelector);
+  const { auth } = useAuth();
 
   return (
     <Router>
@@ -27,15 +26,15 @@ function App() {
             />
             <Route
               path={RoutesPath.HOME}
-              element={user ? <Home /> : <Navigate to={RoutesPath.SIGNIN} />}
+              element={auth ? <Home /> : <Navigate to={RoutesPath.SIGNIN} />}
             />
             <Route
               path={RoutesPath.SIGNIN}
-              element={!user ? <Signin /> : <Navigate to={RoutesPath.HOME} />}
+              element={!auth ? <Signin /> : <Navigate to={RoutesPath.HOME} />}
             />
             <Route
               path={RoutesPath.SIGNUP}
-              element={!user ? <Signup /> : <Navigate to={RoutesPath.HOME} />}
+              element={!auth ? <Signup /> : <Navigate to={RoutesPath.HOME} />}
             />
             <Route path="*" element={<Navigate to={RoutesPath.HOME} />} />
           </Routes>

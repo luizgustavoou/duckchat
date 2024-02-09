@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Check, Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { useEffect, useState, MouseEvent } from "react";
+import { useEffect, useState, MouseEvent, ReactNode } from "react";
 import { IUser } from "@/entities/IUser";
 import SkeletonCard from "./SkeletonCard";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -15,7 +15,10 @@ import {
 } from "../slices/non-friends-users-slice";
 import AppDialog from "./AppDialog";
 
-function AddFriend() {
+export interface AddFriendProps {
+  trigger: ReactNode;
+}
+function AddFriend({trigger}: AddFriendProps) {
   const dispatch = useAppDispatch();
 
   const { nonFriendsUsers, status: nonFriendsStatus } = useAppSelector(
@@ -63,13 +66,7 @@ function AddFriend() {
   return (
     <AppDialog
       trigger={
-        <Button
-          variant="outline"
-          size="icon"
-          className="bg-primary text-primary-foreground"
-        >
-          <Plus className="h-4 w-4" />
-        </Button>
+        trigger
       }
       title="Adicionar amigos"
       description="Faça novas amizades para iniciar um novo bate-papo."

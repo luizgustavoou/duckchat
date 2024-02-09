@@ -3,14 +3,18 @@ import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import { ChangeEvent, useEffect, useState, MouseEvent } from "react";
+import { ChangeEvent, useEffect, useState, MouseEvent, ReactNode } from "react";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { updateProfile, authSelector } from "@/slices/auth-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { IUpdateProfile } from "../interfaces/IUpdateProfile";
 import AppSheet from "./AppSheet";
 
-function EditProfile() {
+export interface EditProfileProps {
+  trigger: ReactNode;
+}
+
+function EditProfile({ trigger }: EditProfileProps) {
   const dispatch = useAppDispatch();
   const { user: authUser, status: authStatus } = useAppSelector(authSelector);
 
@@ -64,13 +68,7 @@ function EditProfile() {
   return (
     <AppSheet
       trigger={
-        <Button
-          variant="outline"
-          size="icon"
-          className="bg-primary text-primary-foreground"
-        >
-          <Pencil className="h-4 w-4" />
-        </Button>
+        trigger
       }
       title="Editar Perfil"
       description="Faça alterações em seu perfil aqui. Clique em salvar quando terminar."
