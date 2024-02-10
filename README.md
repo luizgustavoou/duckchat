@@ -73,7 +73,8 @@ docker compose up -d
 ## :soon: Implementação futura
 
 ## :dart: Status do projeto
-Em desenvolvimento
+Backend: Finalizado
+Frontend: 90% finalizado
 
 # Autor
 
