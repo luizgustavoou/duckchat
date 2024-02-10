@@ -1,3 +1,7 @@
+
+
+https://github.com/luizgustavoou/duckchat/assets/89609312/7171c0d8-b09e-44fb-a9d9-fa6edd88a1ba
+
 # Duckchat
 <!-- license --> 
 
@@ -6,12 +10,11 @@ A aplicação consiste em uma cópia do Discord, trazendo funcionalidades básic
 
 ## Layout web
 https://github.com/luizgustavoou/duckchat/assets/89609312/6bf0c050-51e7-4803-8dd5-7f0448639f03
-
+https://github.com/luizgustavoou/duckchat/assets/89609312/af66c8fc-4df1-464f-8cd5-a5749fe375d2
 
 <!--
 ## Modelo conceitual
 
-https://github.com/luizgustavoou/duckchat/assets/89609312/af66c8fc-4df1-464f-8cd5-a5749fe375d2
 
 
 ![Modelo Conceitual](https://github.com/acenelio/assets/raw/main/sds1/modelo-conceitual.png)
