@@ -1,7 +1,3 @@
-
-
-https://github.com/luizgustavoou/duckchat/assets/89609312/7171c0d8-b09e-44fb-a9d9-fa6edd88a1ba
-
 # Duckchat
 <!-- license --> 
 
@@ -9,7 +5,7 @@ https://github.com/luizgustavoou/duckchat/assets/89609312/7171c0d8-b09e-44fb-a9d
 A aplicação consiste em uma cópia do Discord, trazendo funcionalidades básicas da plataforma como a conversa por chat.
 
 ## Layout web
-https://github.com/luizgustavoou/duckchat/assets/89609312/6bf0c050-51e7-4803-8dd5-7f0448639f03
+[https://github.com/luizgustavoou/duckchat/assets/89609312/6bf0c050-51e7-4803-8dd5-7f0448639f03](https://github.com/luizgustavoou/duckchat/assets/89609312/7171c0d8-b09e-44fb-a9d9-fa6edd88a1ba)
 https://github.com/luizgustavoou/duckchat/assets/89609312/af66c8fc-4df1-464f-8cd5-a5749fe375d2
 
 <!--
