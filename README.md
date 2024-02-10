@@ -2,19 +2,18 @@
 <!-- license --> 
 
 ## :memo:  Sobre o projeto
-
-<!-- https://wmazoni-sds1.netlify.app -->
 A aplicação consiste em uma cópia do Discord, trazendo funcionalidades básicas da plataforma como a conversa por chat.
 
-<!--## Layout mobile
-![Mobile 1](https://github.com/acenelio/assets/raw/main/sds1/mobile1.png) ![Mobile 2](https://github.com/acenelio/assets/raw/main/sds1/mobile2.png)
--->
-
 ## Layout web
-<!-- [video miniblog](https://github.com/luizgustavoou/Miniblog/assets/89609312/2eae513a-ed78-4a62-b044-b7ae4c9a5143) -->
+https://github.com/luizgustavoou/duckchat/assets/89609312/6bf0c050-51e7-4803-8dd5-7f0448639f03
+
 
 <!--
 ## Modelo conceitual
+
+https://github.com/luizgustavoou/duckchat/assets/89609312/af66c8fc-4df1-464f-8cd5-a5749fe375d2
+
+
 ![Modelo Conceitual](https://github.com/acenelio/assets/raw/main/sds1/modelo-conceitual.png)
 -->
 ## :books: Funcionalidades
