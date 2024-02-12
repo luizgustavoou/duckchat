@@ -56,12 +56,21 @@ function Signin() {
 
   useEffect(() => {
     if (authStatus !== "error") return;
-
-    toast({
+    const newToast = toast({
       variant: "destructive",
       title: "Erro ao efetuar login",
       description: authMessage,
     });
+
+    const timeout = setTimeout(() => {
+      newToast.dismiss();
+      console.log("Olá!");
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeout);
+      newToast.dismiss();
+    };
   }, [authStatus]);
 
   return (
