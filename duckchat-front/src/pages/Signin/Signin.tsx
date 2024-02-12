@@ -15,8 +15,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { signin } from "@/slices/auth-slice";
-import { useRef } from "react";
+import { authSelector, resetMessage, signin } from "@/slices/auth-slice";
+import { useEffect, useRef } from "react";
+import { useToast } from "@/components/ui/use-toast";
+import { useAppSelector } from "@/hooks/useAppSelector";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -26,6 +28,11 @@ const formSchema = z.object({
 });
 
 function Signin() {
+  const { toast } = useToast();
+
+  const { status: authStatus, message: authMessage } =
+    useAppSelector(authSelector);
+
   const dispatch = useAppDispatch();
   const refContainer = useRef<HTMLDivElement | null>(null);
 
@@ -41,7 +48,21 @@ function Signin() {
     const { username, password } = values;
 
     await dispatch(signin({ username, password }));
+
+    setTimeout(() => {
+      dispatch(resetMessage());
+    }, 2000);
   }
+
+  useEffect(() => {
+    if (authStatus !== "error") return;
+
+    toast({
+      variant: "destructive",
+      title: "Erro ao efetuar login",
+      description: authMessage,
+    });
+  }, [authStatus]);
 
   return (
     <div className="h-screen flex justify-center items-center ">

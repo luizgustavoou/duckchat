@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { baseURL } from "./config";
 import { storageService } from "@/services";
-import { HttpError } from "@/exceptions/http-error";
 import { responseErrorHandler } from "@/helpers/response-error-handler";
 // ler: https://blog.theashishmaurya.me/handling-jwt-access-and-refresh-token-using-axios-in-react-app
 

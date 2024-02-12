@@ -2,6 +2,7 @@
 
 import { IAuth } from "@/entities/IAuth";
 import { IUser } from "@/entities/IUser";
+import { HttpError } from "@/exceptions/http-error";
 import { ISignin } from "@/interfaces/ISignin";
 import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUserJWT } from "@/interfaces/IUserJwt";
@@ -18,6 +19,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 export interface AuthState {
   user: IUser | null;
   status: "idle" | "loading" | "success" | "error";
+  message: string | null;
 }
 
 const accessToken = storageService.getItem("accessToken");
@@ -31,6 +33,7 @@ const user: IUser | null = userJwt ? serializeUserJwt(userJwt) : userJwt;
 const initialState: AuthState = {
   user,
   status: "idle",
+  message: null,
 };
 
 export const signin = createAsyncThunk<
@@ -47,9 +50,11 @@ export const signin = createAsyncThunk<
 
     return res;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error?.message || "Ocorreu algum erro interno no servidor."
-    );
+    let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+    if (error instanceof HttpError) errorMessage = error.message;
+
+    return thunkAPI.rejectWithValue(errorMessage);
   }
 });
 
@@ -67,10 +72,11 @@ export const updateProfile = createAsyncThunk<
 
     return res;
   } catch (error: any) {
-    console.log(error);
-    return thunkAPI.rejectWithValue(
-      error?.message || "Ocorreu algum erro interno no servidor."
-    );
+    let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+    if (error instanceof HttpError) errorMessage = error.message;
+
+    return thunkAPI.rejectWithValue(errorMessage);
   }
 });
 
@@ -81,6 +87,10 @@ export const authSlice = createSlice({
     logout(state) {
       authService.logout();
       state.user = null;
+    },
+    resetMessage(state) {
+      state.message = null;
+      state.status = "idle";
     },
   },
   extraReducers: (builder) => {
@@ -94,8 +104,9 @@ export const authSlice = createSlice({
         state.user = serializeUserJwt(userJwt);
         state.status = "success";
       })
-      .addCase(signin.rejected, (state, _) => {
+      .addCase(signin.rejected, (state, action) => {
         state.status = "error";
+        state.message = action.payload as string;
       })
       .addCase(updateProfile.pending, (state, _) => {
         // state.status = "loading";
@@ -110,6 +121,6 @@ export const authSlice = createSlice({
   },
 });
 
-export const { logout } = authSlice.actions;
+export const { logout, resetMessage } = authSlice.actions;
 export const authSelector = (state: RootState) => state.authReducer;
 export default authSlice.reducer;
