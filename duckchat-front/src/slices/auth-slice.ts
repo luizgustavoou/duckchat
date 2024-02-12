@@ -47,7 +47,6 @@ export const signin = createAsyncThunk<
 
     return res;
   } catch (error: any) {
-    console.log(error);
     return thunkAPI.rejectWithValue(
       error?.message || "Ocorreu algum erro interno no servidor."
     );
@@ -99,14 +98,14 @@ export const authSlice = createSlice({
         state.status = "error";
       })
       .addCase(updateProfile.pending, (state, _) => {
-        state.status = "loading";
+        // state.status = "loading";
       })
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.user = action.payload;
-        state.status = "success";
+        // state.status = "success";
       })
       .addCase(updateProfile.rejected, (state, _) => {
-        state.status = "error";
+        // state.status = "error";
       });
   },
 });

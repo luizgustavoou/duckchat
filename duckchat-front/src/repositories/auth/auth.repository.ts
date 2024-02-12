@@ -19,7 +19,6 @@ export class AuthRepositoryImpl implements IAuthRepository {
     const newRes: IUser = {
       id: res.id,
       username: res.username,
-      password: res.password,
       firstName: res.firstName,
       about: res.about,
       lastName: res.lastName,
