@@ -60,7 +60,10 @@ function Signin() {
   };
   return (
     <div className="h-screen flex justify-center items-center ">
-      <div className="mycontainer" ref={refContainer}>
+      <div
+        className="mycontainer bg-secondary text-secondary-foreground"
+        ref={refContainer}
+      >
         <div className="form-container sign-in">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -152,7 +155,7 @@ function Signin() {
           </Form>
         </div>
         <div className="toggle-container ">
-          <div className="toggle">
+          <div className="toggle bg-orange-400">
             <div className="toggle-panel toggle-left">
               <h1>Bem vindo!</h1>
               <p>
