@@ -1,3 +1,5 @@
+import "./Signin.css";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,9 +17,9 @@ import { Input } from "@/components/ui/input";
 import { useAppNavigate } from "@/hooks/useNavigate";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { authSelector, signin } from "@/slices/auth-slice";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAppSelector } from "@/hooks/useAppSelector";
-import { RoutesPath } from "@/utils/routes-path";
+import { RupesPath } from "@/utils/rupes-path";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -28,6 +30,8 @@ const formSchema = z.object({
 
 function Signin() {
   const dispatch = useAppDispatch();
+  const refContainer = useRef<HTMLDivElement | null>(null);
+
   const { status: authStatus } = useAppSelector(authSelector);
 
   const navigate = useAppNavigate();
@@ -45,51 +49,127 @@ function Signin() {
 
     await dispatch(signin({ username, password }));
   }
+
+  const toSignup = (e) => {
+    refContainer.current?.classList.add("active");
+  };
+
+  const toSignin = (e) => {
+    refContainer.current?.classList.remove("active");
+    console.log("i");
+  };
   return (
-    <div className="flex flex-1 justify-center items-center">
-      <div className="w-1/2">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Username</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Username"
-                      {...field}
-                      autoComplete="current-username"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Senha</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Senha"
-                      {...field}
-                      type="password"
-                      autoComplete="current-password"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <Button className="w-full" type="submit">
-              Entrar
-            </Button>
-          </form>
-        </Form>
+    <div className="h-screen flex justify-center items-center ">
+      <div className="mycontainer" ref={refContainer}>
+        <div className="form-container sign-in">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <h1>Login</h1>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Username"
+                        {...field}
+                        autoComplete="current-username"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Senha</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Senha"
+                        {...field}
+                        type="password"
+                        autoComplete="current-password"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className="w-full" type="submit">
+                Entrar
+              </Button>
+            </form>
+          </Form>
+        </div>
+        <div className="form-container sign-up ">
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <h1>Registrar-se</h1>
+              <FormField
+                control={form.control}
+                name="username"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Username"
+                        {...field}
+                        autoComplete="current-username"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Senha</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Senha"
+                        {...field}
+                        type="password"
+                        autoComplete="current-password"
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button className="w-full" type="submit">
+                Entrar
+              </Button>
+            </form>
+          </Form>
+        </div>
+        <div className="toggle-container ">
+          <div className="toggle">
+            <div className="toggle-panel toggle-left">
+              <h1>Bem vindo!</h1>
+              <p>
+                Insira seus dados pessoais para usar todos os recursos do site
+              </p>
+              <Button onClick={toSignin}>Sign In</Button>
+            </div>
+            <div className="toggle-panel toggle-right">
+              <h1>Olá, amigo!</h1>
+              <p>
+                Registre-se com seus dados pessoais para usar todos os recursos
+                do site
+              </p>
+              <Button onClick={toSignup}>Sign up</Button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

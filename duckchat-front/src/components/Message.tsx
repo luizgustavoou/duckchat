@@ -82,7 +82,7 @@ function Message({ message }: MessageProps) {
                   />
                 </div>
               }
-              parentContentClassName="w-36 p-0 bg-muted rounded-none"
+              parentContentClassName="w-36 p-0 rounded-none"
             />
           </div>
         )}

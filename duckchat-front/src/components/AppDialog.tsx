@@ -30,7 +30,9 @@ function AppDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className={`sm:max-w-[${maxWidth}px]`}>
+      <DialogContent
+        className={`bg-popover text-popover-foreground sm:max-w-[${maxWidth}px]`}
+      >
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>

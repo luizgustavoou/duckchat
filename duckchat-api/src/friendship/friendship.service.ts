@@ -88,7 +88,6 @@ export class FriendshipService {
       // },
     });
 
-    // TODO: Ver se precisa mostrar as mensagens. Acho que a rota de mensagens que vai ser responsavel.
     const friends = friendships.map((friendship) => {
       let friend: User;
 
@@ -99,7 +98,6 @@ export class FriendshipService {
       }
 
       return { id: friendship.id, friend };
-      // return { id: friendship.id, friend, messages: friendship.messages };
     });
 
     return friends;
@@ -127,7 +125,7 @@ export class FriendshipService {
 
     if (!friendship) {
       throw new NotFoundException('Amizade não encontrada.');
-    } 
+    }
 
     await this.userFriendsRepository.delete(id);
 

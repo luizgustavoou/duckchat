@@ -45,8 +45,8 @@ export default function Home() {
   };
 
   return (
-    <div className="flex-1 flex">
-      <div className="flex flex-col border-r-2 overflow-auto">
+    <div className="min-h-[750px] flex-1 flex text-card-foreground rounded-xl border-border border m-10 bg-secondary/30">
+      <div className="flex flex-col border-border border-r-2 overflow-auto">
         <div className="flex gap-3 py-5 px-4 items-center border-b-2">
           <Avatar>
             <AvatarImage
@@ -58,7 +58,6 @@ export default function Home() {
 
           <div>
             <p>{authUser?.firstName}</p>
-            <p>{authUser?.id}</p>
             <p className="text-sm text-muted-foreground">{authUser?.about}</p>
           </div>
 
@@ -91,7 +90,7 @@ export default function Home() {
                   </div>
                 </div>
               }
-              parentContentClassName="w-40 p-0 bg-muted rounded-none"
+              parentContentClassName="w-40 p-0 rounded-none"
             />
           </div>
         </div>

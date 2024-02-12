@@ -19,7 +19,9 @@ function AppPopover({
   return (
     <Popover>
       <PopoverTrigger asChild>{trigger}</PopoverTrigger>
-      <PopoverContent className={parentContentClassName}>
+      <PopoverContent
+        className={`bg-popover text-popover-foreground ${parentContentClassName}`}
+      >
         {content}
       </PopoverContent>
     </Popover>
