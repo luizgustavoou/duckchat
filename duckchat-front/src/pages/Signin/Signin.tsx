@@ -155,7 +155,7 @@ function Signin() {
           </Form>
         </div>
         <div className="toggle-container ">
-          <div className="toggle bg-card/75 text-card-foreground">
+          <div className="toggle  bg-orange-500  text-card-foreground">
             <div className="toggle-panel toggle-left">
               <h1>Bem vindo!</h1>
               <p>
