@@ -161,7 +161,7 @@ function Signin() {
               <p>
                 Insira seus dados pessoais para usar todos os recursos do site
               </p>
-              <Button onClick={toSignin}>Sign In</Button>
+              <Button onClick={toSignin}>Login</Button>
             </div>
             <div className="toggle-panel toggle-right">
               <h1>Olá, amigo!</h1>
@@ -169,7 +169,7 @@ function Signin() {
                 Registre-se com seus dados pessoais para usar todos os recursos
                 do site
               </p>
-              <Button onClick={toSignup}>Sign up</Button>
+              <Button onClick={toSignup}>Registrar-se</Button>
             </div>
           </div>
         </div>
