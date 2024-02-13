@@ -29,10 +29,20 @@ export class UsersController {
   }
 
   @Get('non-friends')
-  async findNonFriendsUsers(@Req() req: Request) {
+  async findAllNonFriendsUsers(@Req() req: Request) {
     const { sub } = (<any>req).user;
 
-    return await this.usersService.findNonFriendsUsers(sub);
+    return await this.usersService.findAllNonFriendsUsers(sub);
+  }
+
+  @Get('non-friends/search/:value')
+  async findNonFriendsUsersBySearch(
+    @Req() req: Request,
+    @Param('value') value: string,
+  ) {
+    const { sub } = (<any>req).user;
+
+    return await this.usersService.findNonFriendsUsersBySearch(sub, value);
   }
 
   @Get(':id')

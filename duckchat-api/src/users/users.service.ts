@@ -58,7 +58,7 @@ export class UsersService {
     };
   }
 
-  async findNonFriendsUsers(userId: string) {
+  async findAllNonFriendsUsers(userId: string) {
     /*
     QUERY:
 
@@ -96,6 +96,57 @@ export class UsersService {
         'user.avatarURL',
       ])
       .where('user.id != :userId')
+      .andWhere(`user.id NOT IN (${subquery.getQuery()})`)
+      .setParameters({ userId })
+      .getMany();
+
+    return query;
+  }
+
+  async findNonFriendsUsersBySearch(userId: string, searchValue: string) {
+    /*
+    QUERY:
+
+    SELECT user.id, user.firstName
+    FROM user
+    WHERE  (user.firstName LIKE '%${searchValue}%' OR user.lastName LIKE '%${searchValue}%') AND 
+    user.id != ${userId} AND user.id NOT IN 
+
+    (
+      SELECT
+      CASE
+        WHEN user_friends.user1Id = ${userId} THEN user_friends.user2Id
+        ELSE user_friends.user1Id
+      END
+      FROM user_friends
+      WHERE user_friends.user1Id = ${userId} OR user_friends.user2Id = ${userId}
+    );
+    */
+    const subquery = this.userFriendsRepository
+      .createQueryBuilder('user_friends')
+      .select(
+        'CASE WHEN user_friends.user1Id = :userId THEN user_friends.user2Id ELSE user_friends.user1Id END',
+        'friendId',
+      )
+      .where(
+        'user_friends.user1Id = :userId OR user_friends.user2Id = :userId',
+      );
+
+    const query = this.usersRepository
+      .createQueryBuilder('user')
+      .select([
+        'user.id',
+        'user.username',
+        'user.firstName',
+        'user.lastName',
+        'user.about',
+        'user.avatarURL',
+      ])
+      .where('user.id != :userId')
+      .andWhere(
+        `user.firstName LIKE :searchValue OR user.lastName LIKE :searchValue`,
+        { searchValue: `%${searchValue}%` },
+      )
       .andWhere(`user.id NOT IN (${subquery.getQuery()})`)
       .setParameters({ userId })
       .getMany();
