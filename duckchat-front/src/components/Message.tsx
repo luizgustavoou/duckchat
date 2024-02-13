@@ -6,14 +6,16 @@ import { ChevronDown } from "lucide-react";
 import AppAlertDialog from "./AppAlertDialog";
 import EditMessage from "./EditMessage";
 import { messageService } from "@/services";
-import { toast } from "./ui/use-toast";
 import { useState, MouseEvent } from "react";
+import { useToast } from "./ui/use-toast";
+import { HttpError } from "@/exceptions/http-error";
 
 export interface MessageProps {
   message: IMessage;
 }
 
 function Message({ message }: MessageProps) {
+  const { toast } = useToast();
   const [showActions, setShowActions] = useState<boolean>(false);
 
   const { user: authUser } = useAppSelector(authSelector);
@@ -22,10 +24,14 @@ function Message({ message }: MessageProps) {
     try {
       await messageService.removeMessage({ messageId: message.id });
     } catch (error) {
+      let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+      if (error instanceof HttpError) errorMessage = error.message;
+
       toast({
         variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
+        title: "Erro ao deletar mensagem.",
+        description: errorMessage,
       });
     }
   };

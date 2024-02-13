@@ -74,6 +74,8 @@ export class MessageApiImpl implements IMessageApi {
       }
     >("/message", data);
 
+    console.log({ res });
+
     return res.data;
   }
 }

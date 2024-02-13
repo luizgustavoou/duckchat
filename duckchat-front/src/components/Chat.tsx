@@ -9,15 +9,17 @@ import { messageService } from "@/services";
 import { useWebsocket } from "@/hooks/useWebsocket";
 import { wsURL } from "@/utils/config";
 import SkeletonCard from "./SkeletonCard";
-import { toast } from "./ui/use-toast";
+import { toast, useToast } from "./ui/use-toast";
 
 import Message from "./Message";
+import { HttpError } from "@/exceptions/http-error";
 
 export interface ChatProps {
   friendship: IFriendship;
 }
 
 export default function Chat({ friendship }: ChatProps) {
+  const { toast } = useToast();
   const messageRef = useRef<HTMLDivElement | null>(null);
   const [message, setMessage] = useState<string>("");
 
@@ -39,10 +41,14 @@ export default function Chat({ friendship }: ChatProps) {
         content: message,
       });
     } catch (error) {
+      let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+      if (error instanceof HttpError) errorMessage = error.message;
+
       toast({
         variant: "destructive",
-        title: "Uh oh! Something went wrong.",
-        description: "There was a problem with your request.",
+        title: "Erro ao deletar mensagem.",
+        description: errorMessage,
       });
     } finally {
       setMessage("");
