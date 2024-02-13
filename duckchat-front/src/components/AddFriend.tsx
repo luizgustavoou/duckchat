@@ -15,6 +15,8 @@ import {
 } from "../slices/non-friends-users-slice";
 import AppDialog from "./AppDialog";
 import { useDebounce } from "@/hooks/useDebounce";
+import { promise } from "zod";
+import { getNonFriendsUsersBySearch } from "../slices/non-friends-users-slice";
 
 export interface AddFriendProps {
   trigger: ReactNode;
@@ -29,8 +31,13 @@ function AddFriend({ trigger }: AddFriendProps) {
   const [search, setSearch] = useState<string | null>(null);
   const [newFriends, setNewFriends] = useState<string[]>([]);
 
-  const handleSearch = useDebounce((value: string) => {
-    console.log("Searching for: " + value);
+  const handleSearch = useDebounce(async (value: string) => {
+    if (!value || value === "") {
+      await dispatch(getAllNonFriendsUsers());
+      return;
+    }
+
+    await dispatch(getNonFriendsUsersBySearch({ searchValue: value }));
   }, 2000);
 
   const handleOnSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
