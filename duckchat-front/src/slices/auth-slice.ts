@@ -136,6 +136,7 @@ export const authSlice = createSlice({
       })
       .addCase(signup.fulfilled, (state, _) => {
         state.status = "success";
+        state.message = "Legal, sua conta foi criada com sucesso!";
       })
       .addCase(signup.rejected, (state, action) => {
         state.status = "error";

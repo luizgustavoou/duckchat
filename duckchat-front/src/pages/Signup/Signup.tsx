@@ -13,15 +13,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import {
-  authSelector,
-  resetMessage,
-  signin,
-  signup,
-} from "@/slices/auth-slice";
+import { authSelector, resetMessage, signup } from "@/slices/auth-slice";
 import { useEffect, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { RoutesPath } from "@/utils/routes-path";
+import { Link } from "react-router-dom";
 
 const formSchema = z.object({
   firstName: z.string().min(3, {
@@ -80,6 +77,24 @@ function Signin() {
     const newToast = toast({
       variant: "destructive",
       title: "Erro ao efetuar cadastro",
+      description: authMessage,
+    });
+
+    const timeout = setTimeout(() => {
+      newToast.dismiss();
+    }, 2000);
+
+    return () => {
+      clearTimeout(timeout);
+      newToast.dismiss();
+    };
+  }, [authStatus]);
+
+  useEffect(() => {
+    if (authStatus !== "success") return;
+
+    const newToast = toast({
+      title: "Succeso ao efetuar cadastro",
       description: authMessage,
     });
 
@@ -197,6 +212,14 @@ function Signin() {
             </Button>
           </form>
         </Form>
+        <p className="text-muted-foreground">
+          <Link
+            to={RoutesPath.SIGNIN}
+            className="text-accent-foreground font-semibold underline"
+          >
+            Voltar
+          </Link>
+        </p>
       </div>
     </div>
   );

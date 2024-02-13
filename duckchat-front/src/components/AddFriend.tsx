@@ -18,7 +18,7 @@ import AppDialog from "./AppDialog";
 export interface AddFriendProps {
   trigger: ReactNode;
 }
-function AddFriend({trigger}: AddFriendProps) {
+function AddFriend({ trigger }: AddFriendProps) {
   const dispatch = useAppDispatch();
 
   const { nonFriendsUsers, status: nonFriendsStatus } = useAppSelector(
@@ -65,13 +65,11 @@ function AddFriend({trigger}: AddFriendProps) {
 
   return (
     <AppDialog
-      trigger={
-        trigger
-      }
+      trigger={trigger}
       title="Adicionar amigos"
       description="Faça novas amizades para iniciar um novo bate-papo."
       main={
-        <div className="flex flex-col gap-4 py-4">
+        <div className="max-h-[500px] flex flex-col gap-4 py-4 ">
           <div className="flex items-center">
             {/* <Search width={16} height={16} /> */}
             <Input id="name" placeholder="Procurar usuário..." />
@@ -79,28 +77,30 @@ function AddFriend({trigger}: AddFriendProps) {
 
           {disableActions && <SkeletonCard length={4} />}
 
-          {nonFriendsStatus != "loading" &&
-            nonFriendsUsers.map((user) => (
-              <div
-                className="flex gap-3 py-5 px-4 items-center hover:bg-accent/50  cursor-pointer rounded-sm"
-                onClick={(_) => handleAddFriend(user)}
-                key={user.id}
-              >
-                <Avatar>
-                  <AvatarImage
-                    className="w-12  rounded-full"
-                    src={"https://github.com/shadcn.png"}
-                  />
-                  <AvatarFallback>CN</AvatarFallback>
-                </Avatar>
-                <div className="flex flex-col gap-1 me-auto">
-                  <p>
-                    {user.firstName} {user.lastName}
-                  </p>
+          <div className="overflow-auto">
+            {nonFriendsStatus != "loading" &&
+              nonFriendsUsers.map((user) => (
+                <div
+                  className="flex gap-3 py-5 px-4 items-center hover:bg-accent/50  cursor-pointer rounded-sm"
+                  onClick={(_) => handleAddFriend(user)}
+                  key={user.id}
+                >
+                  <Avatar>
+                    <AvatarImage
+                      className="w-12  rounded-full"
+                      src={"https://github.com/shadcn.png"}
+                    />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                  <div className="flex flex-col gap-1 me-auto">
+                    <p>
+                      {user.firstName} {user.lastName}
+                    </p>
+                  </div>
+                  {newFriends.includes(user.id) && <Check />}
                 </div>
-                {newFriends.includes(user.id) && <Check />}
-              </div>
-            ))}
+              ))}
+          </div>
         </div>
       }
       footer={

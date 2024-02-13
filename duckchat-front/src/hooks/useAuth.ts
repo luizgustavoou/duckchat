@@ -6,15 +6,16 @@ export const useAuth = () => {
   const { user } = useAppSelector(authSelector);
 
   const [auth, setAuth] = useState<boolean>(false);
-  const [state, setState] = useState<"idle" | "loading" | "success" | "error">(
-    "loading"
-  );
+  // const [state, setState] = useState<"idle" | "loading" | "success" | "error">(
+  //   "loading"
+  // );
 
   useEffect(() => {
     setAuth(!!user);
 
-    setState("success");
+    // setState("success");
   }, [user]);
 
-  return { auth, state };
+  return { auth };
+  // return { auth, state };
 };
