@@ -1,4 +1,6 @@
 import { IUser } from "@/entities/IUser";
+import { HttpError } from "@/exceptions/http-error";
+import { IGetNonFriendsUsersBySearch } from "@/interfaces/IGetNonFriendsUsersBySearch";
 import { userService } from "@/services";
 import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
@@ -27,9 +29,33 @@ export const getAllNonFriendsUsers = createAsyncThunk<
 
     return res;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error?.message || "Ocorreu algum erro interno no servidor."
-    );
+    let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+    if (error instanceof HttpError) errorMessage = error.message;
+
+    return thunkAPI.rejectWithValue(errorMessage);
+  }
+});
+
+export const getNonFriendsUsersBySearch = createAsyncThunk<
+  IUser[],
+  IGetNonFriendsUsersBySearch,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    rejectValue: string;
+  }
+>("nonfriendsusers/search", async (data, thunkAPI) => {
+  try {
+    const res = await userService.getNonFriendsUsersBySearch(data);
+
+    return res;
+  } catch (error: any) {
+    let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+    if (error instanceof HttpError) errorMessage = error.message;
+
+    return thunkAPI.rejectWithValue(errorMessage);
   }
 });
 
@@ -39,14 +65,24 @@ export const nonFriendsUsersSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllNonFriendsUsers.pending, (state, action) => {
+      .addCase(getAllNonFriendsUsers.pending, (state, _) => {
         state.status = "loading";
       })
       .addCase(getAllNonFriendsUsers.fulfilled, (state, action) => {
         state.nonFriendsUsers = action.payload;
         state.status = "success";
       })
-      .addCase(getAllNonFriendsUsers.rejected, (state, action) => {
+      .addCase(getAllNonFriendsUsers.rejected, (state, _) => {
+        state.status = "error";
+      })
+      .addCase(getNonFriendsUsersBySearch.pending, (state, _) => {
+        state.status = "loading";
+      })
+      .addCase(getNonFriendsUsersBySearch.fulfilled, (state, action) => {
+        state.nonFriendsUsers = action.payload;
+        state.status = "success";
+      })
+      .addCase(getNonFriendsUsersBySearch.rejected, (state, _) => {
         state.status = "error";
       });
   },

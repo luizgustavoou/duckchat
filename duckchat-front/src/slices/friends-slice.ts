@@ -4,6 +4,7 @@ import { userService } from "@/services";
 import { AppDispatch, RootState } from "@/store";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
+import { HttpError } from "@/exceptions/http-error";
 
 export interface FriendsState {
   friendships: IFriendship[];
@@ -31,10 +32,11 @@ export const addFriend = createAsyncThunk<
 
     return res;
   } catch (error: any) {
-    console.log(error);
-    return thunkAPI.rejectWithValue(
-      error?.message || "Ocorreu algum erro interno no servidor."
-    );
+    let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+    if (error instanceof HttpError) errorMessage = error.message;
+
+    return thunkAPI.rejectWithValue(errorMessage);
   }
 });
 
@@ -54,10 +56,11 @@ export const removeFriend = createAsyncThunk<
 
     return res;
   } catch (error: any) {
-    console.log(error);
-    return thunkAPI.rejectWithValue(
-      error?.message || "Ocorreu algum erro interno no servidor."
-    );
+    let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+    if (error instanceof HttpError) errorMessage = error.message;
+
+    return thunkAPI.rejectWithValue(errorMessage);
   }
 });
 
@@ -75,9 +78,11 @@ export const getAllFriendsOfUser = createAsyncThunk<
 
     return res;
   } catch (error: any) {
-    return thunkAPI.rejectWithValue(
-      error?.message || "Ocorreu algum erro interno no servidor."
-    );
+    let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+    if (error instanceof HttpError) errorMessage = error.message;
+
+    return thunkAPI.rejectWithValue(errorMessage);
   }
 });
 

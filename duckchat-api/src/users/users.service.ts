@@ -145,10 +145,9 @@ export class UsersService {
       .where('user.id != :userId')
       .andWhere(
         `user.firstName LIKE :searchValue OR user.lastName LIKE :searchValue`,
-        { searchValue: `%${searchValue}%` },
       )
       .andWhere(`user.id NOT IN (${subquery.getQuery()})`)
-      .setParameters({ userId })
+      .setParameters({ userId, searchValue: `%${searchValue}%` })
       .getMany();
 
     return query;
