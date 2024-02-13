@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Check, Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
-import { useEffect, useState, MouseEvent, ReactNode } from "react";
+import { useEffect, useState, MouseEvent, ReactNode, ChangeEvent } from "react";
 import { IUser } from "@/entities/IUser";
 import SkeletonCard from "./SkeletonCard";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -14,6 +14,7 @@ import {
   nonFriendsUsersSelector,
 } from "../slices/non-friends-users-slice";
 import AppDialog from "./AppDialog";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export interface AddFriendProps {
   trigger: ReactNode;
@@ -25,7 +26,19 @@ function AddFriend({ trigger }: AddFriendProps) {
     nonFriendsUsersSelector
   );
 
+  const [search, setSearch] = useState<string | null>(null);
   const [newFriends, setNewFriends] = useState<string[]>([]);
+
+  const handleSearch = useDebounce((value: string) => {
+    console.log("Searching for: " + value);
+  }, 2000);
+
+  const handleOnSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target;
+    setSearch(value);
+
+    handleSearch(value);
+  };
 
   const handleSubmit = async (
     e: MouseEvent<HTMLButtonElement, globalThis.MouseEvent>
@@ -61,6 +74,20 @@ function AddFriend({ trigger }: AddFriendProps) {
     dispatch(getAllNonFriendsUsers());
   }, []);
 
+  // useEffect(() => {
+  //   let interval: NodeJS.Timeout;
+
+  //   if (search === null || search === "") return;
+
+  //   interval = setTimeout(() => {
+  //     console.log("Fazer requisição!");
+  //   }, 2000);
+
+  //   return () => {
+  //     clearTimeout(interval);
+  //   };
+  // }, [search]);
+
   const disableActions = nonFriendsStatus === "loading";
 
   return (
@@ -72,7 +99,12 @@ function AddFriend({ trigger }: AddFriendProps) {
         <div className="max-h-[500px] flex flex-col gap-4 py-4 ">
           <div className="flex items-center">
             {/* <Search width={16} height={16} /> */}
-            <Input id="name" placeholder="Procurar usuário..." />
+            <Input
+              id="name"
+              placeholder="Procurar usuário..."
+              value={search || ""}
+              onChange={handleOnSearchChange}
+            />
           </div>
 
           {disableActions && <SkeletonCard length={4} />}
