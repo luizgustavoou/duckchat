@@ -1,4 +1,44 @@
-import { IsString, MaxLength, MinLength } from 'class-validator';
+import { IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+
+import {
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+  ValidationArguments,
+  registerDecorator,
+  ValidationOptions,
+} from 'class-validator';
+
+@ValidatorConstraint({ name: 'minIfNotNull', async: false })
+export class MinIfNotNullValidator implements ValidatorConstraintInterface {
+  validate(text: string, args: ValidationArguments) {
+    const maxLength = args.constraints[0] || 30;
+
+    if (text === undefined) return true;
+
+    return text.length <= maxLength;
+  }
+
+  defaultMessage(args: ValidationArguments) {
+    const maxLength = args.constraints[0] || 30;
+    return `about must be shorter than or equal to ${maxLength} characters`;
+  }
+}
+
+export function MinIfNotNull(
+  maxLength?: number,
+  validationOptions?: ValidationOptions,
+) {
+  return function (object: Object, propertyName: string) {
+    registerDecorator({
+      name: 'minIfNotNull',
+      target: object.constructor,
+      propertyName: propertyName,
+      options: validationOptions,
+      constraints: [maxLength],
+      validator: MinIfNotNullValidator,
+    });
+  };
+}
 
 export class CreateUserDto {
   @IsString()
@@ -16,8 +56,7 @@ export class CreateUserDto {
   @IsString()
   lastName: string;
 
-  @IsString()
-  @MaxLength(30)
+  @MinIfNotNull(30)
   about: string;
 
   avatarURL: string;

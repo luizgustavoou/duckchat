@@ -1,5 +1,3 @@
-import "./Signin.css";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -19,6 +17,8 @@ import { authSelector, resetMessage, signin } from "@/slices/auth-slice";
 import { useEffect, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppSelector } from "@/hooks/useAppSelector";
+import { RoutesPath } from "@/utils/routes-path";
+import { Link } from "react-router-dom";
 
 const formSchema = z.object({
   username: z.string().min(3, {
@@ -64,7 +64,6 @@ function Signin() {
 
     const timeout = setTimeout(() => {
       newToast.dismiss();
-      console.log("Olá!");
     }, 2000);
 
     return () => {
@@ -76,15 +75,15 @@ function Signin() {
   return (
     <div className="h-screen flex justify-center items-center ">
       <div
-        className="w-96 rounded-sm bg-secondary text-secondary-foreground"
+        className="w-[480px] max-w-full p-5 flex flex-col justify-center items-center gap-5 rounded-sm bg-secondary text-secondary-foreground"
         ref={refContainer}
       >
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="p-5 space-y-8 "
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8  ">
             <h1 className="text-center font-semibold text-2xl">Login</h1>
+            <p className="text-muted-foreground">
+              Entre para poder desfrutar das funcionalides do sistema
+            </p>
             <FormField
               control={form.control}
               name="username"
@@ -125,6 +124,15 @@ function Signin() {
             </Button>
           </form>
         </Form>
+        <p className="text-muted-foreground">
+          Não tem uma conta?{" "}
+          <Link
+            to={RoutesPath.SIGNUP}
+            className="text-accent-foreground font-semibold underline"
+          >
+            Clique aqui
+          </Link>
+        </p>
       </div>
     </div>
   );
