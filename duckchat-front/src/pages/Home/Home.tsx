@@ -56,7 +56,7 @@ export default function Home() {
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
-          <div>
+          <div className="me-auto">
             <p>{authUser?.firstName}</p>
             <p className="text-sm text-muted-foreground">{authUser?.about}</p>
           </div>
