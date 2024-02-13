@@ -4,6 +4,7 @@ import { IUserApi } from "@/apis/user/user.api";
 import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUser } from "@/entities/IUser";
 import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
+import { IGetNonFriendsUsersBySearch } from "@/interfaces/IGetNonFriendsUsersBySearch";
 
 export interface IUserRepository {
   updateProfile(data: IUpdateProfile): Promise<IUser>;
@@ -11,6 +12,10 @@ export interface IUserRepository {
   getAllUsers(): Promise<IUser[]>;
 
   getAllNonFriendsUsers(): Promise<IUser[]>;
+
+  getNonFriendsUsersBySearch(
+    data: IGetNonFriendsUsersBySearch
+  ): Promise<IUser[]>;
 
   getAllFriendsOfUser(): Promise<IFriendship[]>;
 
@@ -54,6 +59,23 @@ export class UserRepositoryImpl implements IUserRepository {
 
   async getAllNonFriendsUsers(): Promise<IUser[]> {
     const res = await this.userApi.getAllNonFriendsUsers();
+
+    const newRes: IUser[] = res.map((userResponse) => ({
+      id: userResponse.id,
+      username: userResponse.username,
+      firstName: userResponse.firstName,
+      lastName: userResponse.lastName,
+      about: userResponse.about,
+      avatarURL: userResponse.avatarURL,
+    }));
+
+    return newRes;
+  }
+
+  async getNonFriendsUsersBySearch(
+    data: IGetNonFriendsUsersBySearch
+  ): Promise<IUser[]> {
+    const res = await this.userApi.getNonFriendsUsersBySearch(data);
 
     const newRes: IUser[] = res.map((userResponse) => ({
       id: userResponse.id,

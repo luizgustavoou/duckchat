@@ -4,6 +4,7 @@ import { IUserRepository } from "@/repositories/user/user.repository";
 import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUser } from "@/entities/IUser";
 import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
+import { IGetNonFriendsUsersBySearch } from "@/interfaces/IGetNonFriendsUsersBySearch";
 
 export interface IUserService {
   updateProfile(data: IUpdateProfile): Promise<IUser>;
@@ -11,6 +12,10 @@ export interface IUserService {
   getAllUsers(): Promise<IUser[]>;
 
   getAllNonFriendsUsers(): Promise<IUser[]>;
+
+  getNonFriendsUsersBySearch(
+    data: IGetNonFriendsUsersBySearch
+  ): Promise<IUser[]>;
 
   getAllFriendsOfUser(): Promise<IFriendship[]>;
 
@@ -45,6 +50,18 @@ export class UserServiceImpl implements IUserService {
   async getAllNonFriendsUsers(): Promise<IUser[]> {
     try {
       const res = await this.userRepository.getAllNonFriendsUsers();
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getNonFriendsUsersBySearch(
+    data: IGetNonFriendsUsersBySearch
+  ): Promise<IUser[]> {
+    try {
+      const res = await this.userRepository.getNonFriendsUsersBySearch(data);
 
       return res;
     } catch (error) {

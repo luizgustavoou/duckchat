@@ -4,6 +4,7 @@ import { IFriendshipResponse } from "./models/IFriendshipResponse";
 import { IUpdateProfile } from "../../interfaces/IUpdateProfile";
 import { IUserResponse } from "../auth/models/IUserResponse";
 import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
+import { IGetNonFriendsUsersBySearch } from "@/interfaces/IGetNonFriendsUsersBySearch";
 
 export interface IUserApi {
   updateProfile(data: IUpdateProfile): Promise<IUserResponse>;
@@ -11,6 +12,10 @@ export interface IUserApi {
   getAllUsers(): Promise<IUserResponse[]>;
 
   getAllNonFriendsUsers(): Promise<IUserResponse[]>;
+
+  getNonFriendsUsersBySearch(
+    data: IGetNonFriendsUsersBySearch
+  ): Promise<IUserResponse[]>;
 
   getAllFriendsOfUser(): Promise<IFriendshipResponse[]>;
 
@@ -34,6 +39,18 @@ export class UserApiImpl implements IUserApi {
 
   async getAllNonFriendsUsers(): Promise<IUserResponse[]> {
     const res = await api.get<IUserResponse[]>("/users/non-friends");
+
+    return res.data;
+  }
+
+  async getNonFriendsUsersBySearch(
+    data: IGetNonFriendsUsersBySearch
+  ): Promise<IUserResponse[]> {
+    const { searchValue } = data;
+
+    const res = await api.get<IUserResponse[]>(
+      `/users/non-friends/search/${searchValue}`
+    );
 
     return res.data;
   }
