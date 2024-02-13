@@ -13,7 +13,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
-import { authSelector, resetMessage, signin } from "@/slices/auth-slice";
+import {
+  authSelector,
+  resetMessage,
+  signin,
+  signup,
+} from "@/slices/auth-slice";
 import { useEffect, useRef } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { useAppSelector } from "@/hooks/useAppSelector";
@@ -62,6 +67,8 @@ function Signin() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const { firstName, lastName, username, password, confirmPassword } = values;
 
+    await dispatch(signup({ firstName, lastName, username, password }));
+
     setTimeout(() => {
       dispatch(resetMessage());
     }, 2000);
@@ -69,6 +76,7 @@ function Signin() {
 
   useEffect(() => {
     if (authStatus !== "error") return;
+
     const newToast = toast({
       variant: "destructive",
       title: "Erro ao efetuar cadastro",

@@ -30,7 +30,9 @@ export class User {
   @Column({ default: '' })
   about: string;
 
-  @Column()
+  @Column({
+    nullable: true,
+  })
   avatarURL: string;
 
   @CreateDateColumn()

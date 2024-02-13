@@ -8,6 +8,7 @@ import {
   ValidationOptions,
 } from 'class-validator';
 
+// TODO: Mover custom validator para outro arquivo
 @ValidatorConstraint({ name: 'minIfNotNull', async: false })
 export class MinIfNotNullValidator implements ValidatorConstraintInterface {
   validate(text: string, args: ValidationArguments) {

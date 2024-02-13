@@ -4,6 +4,7 @@ import { IAuth } from "@/entities/IAuth";
 import { IUser } from "@/entities/IUser";
 import { HttpError } from "@/exceptions/http-error";
 import { ISignin } from "@/interfaces/ISignin";
+import { ISignup } from "@/interfaces/ISignup";
 import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUserJWT } from "@/interfaces/IUserJwt";
 import {
@@ -47,6 +48,28 @@ export const signin = createAsyncThunk<
 >("auth/signin", async (data, thunkAPI) => {
   try {
     const res = await authService.signin(data);
+
+    return res;
+  } catch (error: any) {
+    let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+    if (error instanceof HttpError) errorMessage = error.message;
+
+    return thunkAPI.rejectWithValue(errorMessage);
+  }
+});
+
+export const signup = createAsyncThunk<
+  IUser,
+  ISignup,
+  {
+    dispatch: AppDispatch;
+    state: RootState;
+    rejectValue: string;
+  }
+>("auth/signup", async (data, thunkAPI) => {
+  try {
+    const res = await authService.signup(data);
 
     return res;
   } catch (error: any) {
@@ -105,6 +128,16 @@ export const authSlice = createSlice({
         state.status = "success";
       })
       .addCase(signin.rejected, (state, action) => {
+        state.status = "error";
+        state.message = action.payload as string;
+      })
+      .addCase(signup.pending, (state, _) => {
+        state.status = "loading";
+      })
+      .addCase(signup.fulfilled, (state, _) => {
+        state.status = "success";
+      })
+      .addCase(signup.rejected, (state, action) => {
         state.status = "error";
         state.message = action.payload as string;
       })

@@ -3,6 +3,6 @@ export class UserProfile {
   username: string;
   firstName: string;
   lastName: string;
-  avatarURL: string;
+  avatarURL?: string;
   about: string;
 }
