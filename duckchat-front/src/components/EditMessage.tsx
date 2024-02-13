@@ -5,6 +5,8 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import { ChangeEvent, ReactNode, useEffect, useState, MouseEvent } from "react";
 import { messageService } from "@/services";
+import { HttpError } from "@/exceptions/http-error";
+import { useToast } from "./ui/use-toast";
 
 export interface EditMessageProps {
   trigger: ReactNode;
@@ -12,6 +14,7 @@ export interface EditMessageProps {
 }
 
 function EditMessage({ message, trigger }: EditMessageProps) {
+  const { toast } = useToast();
   const [messageEdit, setMessageEdit] = useState<string | null>(null);
 
   useEffect(() => {
@@ -23,10 +26,22 @@ function EditMessage({ message, trigger }: EditMessageProps) {
   ) => {
     if (messageEdit === null) return;
 
-    await messageService.updateMessage({
-      messageId: message.id,
-      content: messageEdit,
-    });
+    try {
+      await messageService.updateMessage({
+        messageId: message.id,
+        content: messageEdit,
+      });
+    } catch (error) {
+      let errorMessage = "Ocorreu algum erro. Por favor, tente mais tarde.";
+
+      if (error instanceof HttpError) errorMessage = error.message;
+
+      toast({
+        variant: "destructive",
+        title: "Erro ao editar mensagem.",
+        description: errorMessage,
+      });
+    }
   };
 
   const handleOnChangeEditMessage = (e: ChangeEvent<HTMLInputElement>) => {
