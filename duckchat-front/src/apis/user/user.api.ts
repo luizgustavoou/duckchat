@@ -5,6 +5,7 @@ import { IUpdateProfile } from "../../interfaces/IUpdateProfile";
 import { IUserResponse } from "../auth/models/IUserResponse";
 import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
 import { IGetNonFriendsUsersBySearch } from "@/interfaces/IGetNonFriendsUsersBySearch";
+import { IGetProfileImage } from "@/interfaces/IGetProfileImage";
 
 export interface IUserApi {
   updateProfile(data: IUpdateProfile): Promise<IUserResponse>;
@@ -22,6 +23,8 @@ export interface IUserApi {
   addFriend(data: IAddFriend): Promise<IFriendshipResponse>;
 
   removeFriend(data: IRemoveFriend): Promise<Pick<IFriendshipResponse, "id">>;
+
+  getProfileImage(data: IGetProfileImage): Promise<any>;
 }
 
 export class UserApiImpl implements IUserApi {
@@ -83,6 +86,16 @@ export class UserApiImpl implements IUserApi {
     const res = await api.delete<IFriendshipResponse>(
       `/friendship/${friendshipId}`
     );
+
+    return res.data;
+  }
+
+  async getProfileImage(data: IGetProfileImage): Promise<any> {
+    const { profileImage } = data;
+
+    const res = await api.get(`/uploads/users/${profileImage}`, {
+      responseType: "blob",
+    });
 
     return res.data;
   }

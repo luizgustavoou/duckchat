@@ -5,6 +5,7 @@ import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUser } from "@/entities/IUser";
 import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
 import { IGetNonFriendsUsersBySearch } from "@/interfaces/IGetNonFriendsUsersBySearch";
+import { IGetProfileImage } from "@/interfaces/IGetProfileImage";
 
 export interface IUserRepository {
   updateProfile(data: IUpdateProfile): Promise<IUser>;
@@ -22,6 +23,8 @@ export interface IUserRepository {
   addFriend(addFriendData: IAddFriend): Promise<IFriendship>;
 
   removeFriend(data: IRemoveFriend): Promise<Pick<IFriendship, "id">>;
+
+  getProfileImage(data: IGetProfileImage): Promise<Blob>;
 }
 
 export class UserRepositoryImpl implements IUserRepository {
@@ -133,5 +136,11 @@ export class UserRepositoryImpl implements IUserRepository {
     };
 
     return newRes;
+  }
+
+  async getProfileImage(data: IGetProfileImage): Promise<Blob> {
+    const res = await this.userApi.getProfileImage(data);
+
+    return res;
   }
 }

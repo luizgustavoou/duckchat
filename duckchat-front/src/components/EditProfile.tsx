@@ -9,6 +9,8 @@ import { updateProfile, authSelector } from "@/slices/auth-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { IUpdateProfile } from "../interfaces/IUpdateProfile";
 import AppSheet from "./AppSheet";
+import { userService } from "@/services";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 export interface EditProfileProps {
   trigger: ReactNode;
@@ -17,6 +19,9 @@ export interface EditProfileProps {
 function EditProfile({ trigger }: EditProfileProps) {
   const dispatch = useAppDispatch();
   const { user: authUser, status: authStatus } = useAppSelector(authSelector);
+
+  const [previewImage, setPreviewImage] = useState<Blob | null>(null);
+  const [profileImage, setProfileImage] = useState<Blob | null>(null);
 
   const [username, setUsername] = useState<string | null>(null);
   const [firstName, setFirstName] = useState<string | null>(null);
@@ -64,6 +69,26 @@ function EditProfile({ trigger }: EditProfileProps) {
   }, [authUser]);
 
   const disableActions = authStatus === "loading";
+
+  const handleOnChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target?.files?.item(0);
+  };
+
+  const profileImageUrl = previewImage && URL.createObjectURL(previewImage);
+
+  useEffect(() => {
+    const loadProfileImageUser = async () => {
+      if (!authUser?.avatarURL) return;
+
+      const res = await userService.getProfileImage({
+        profileImage: authUser.avatarURL,
+      });
+
+      setPreviewImage(res);
+    };
+
+    loadProfileImageUser();
+  }, []);
 
   return (
     <AppSheet
@@ -135,7 +160,20 @@ function EditProfile({ trigger }: EditProfileProps) {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="profileImage">Picture</Label>
-            <Input id="profileImage" type="file" className="col-span-3" />
+            <Input
+              id="profileImage"
+              type="file"
+              className="col-span-3"
+              onChange={handleOnChangeFile}
+            />
+          </div>
+          <div className="flex justify-center items-center">
+            {profileImageUrl && (
+              <img
+                className="w-[150px]  rounded-sm"
+                src={profileImageUrl}
+              ></img>
+            )}
           </div>
         </div>
       }

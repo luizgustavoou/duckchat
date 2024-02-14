@@ -5,6 +5,7 @@ import { IUpdateProfile } from "@/interfaces/IUpdateProfile";
 import { IUser } from "@/entities/IUser";
 import { IRemoveFriend } from "@/interfaces/IRemoveFriend";
 import { IGetNonFriendsUsersBySearch } from "@/interfaces/IGetNonFriendsUsersBySearch";
+import { IGetProfileImage } from "@/interfaces/IGetProfileImage";
 
 export interface IUserService {
   updateProfile(data: IUpdateProfile): Promise<IUser>;
@@ -22,6 +23,8 @@ export interface IUserService {
   addFriend(data: IAddFriend): Promise<IFriendship>;
 
   removeFriend(data: IRemoveFriend): Promise<Pick<IFriendship, "id">>;
+
+  getProfileImage(data: IGetProfileImage): Promise<Blob>;
 }
 
 export class UserServiceImpl implements IUserService {
@@ -92,6 +95,16 @@ export class UserServiceImpl implements IUserService {
   async removeFriend(data: IRemoveFriend): Promise<Pick<IFriendship, "id">> {
     try {
       const res = await this.userRepository.removeFriend(data);
+
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  async getProfileImage(data: IGetProfileImage): Promise<Blob> {
+    try {
+      const res = await this.userRepository.getProfileImage(data);
 
       return res;
     } catch (error) {
