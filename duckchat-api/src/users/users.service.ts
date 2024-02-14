@@ -21,7 +21,7 @@ export class UsersService {
 
   async findAll() {
     const users = await this.usersRepository.find({
-      select: ['id', 'username', 'firstName', 'lastName', 'avatarURL'],
+      select: ['id', 'username', 'firstName', 'lastName', 'avatarURL', 'about'],
     });
     return users;
   }

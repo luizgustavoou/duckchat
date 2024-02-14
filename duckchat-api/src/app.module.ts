@@ -8,6 +8,7 @@ import { SessionsModule } from './sessions/sessions.module';
 import { MessageModule } from './message/message.module';
 import { FriendshipModule } from './friendship/friendship.module';
 import { ChatModule } from './chat/chat.module';
+import { MulterModule } from '@nestjs/platform-express';
 
 @Module({
   imports: [

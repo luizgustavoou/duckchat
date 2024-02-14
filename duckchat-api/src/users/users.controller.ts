@@ -9,10 +9,16 @@ import {
   ValidationPipe,
   ParseUUIDPipe,
   Req,
+  UploadedFile,
+  UseInterceptors,
+  ParseFilePipe,
+  FileTypeValidator,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import multerConfig from 'src/files/multer-config';
 
 @Controller('users')
 export class UsersController {
@@ -45,16 +51,46 @@ export class UsersController {
     return await this.usersService.findNonFriendsUsersBySearch(sub, value);
   }
 
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('profileimage', multerConfig))
+  uploadFile(
+    @Body() body: { name: string },
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: /(jpg|jpeg|png)$/ })],
+        fileIsRequired: false,
+      }),
+    )
+    profileimage: Express.Multer.File,
+  ) {
+    console.log({ body });
+    return profileimage;
+  }
+
   @Get(':id')
   async findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.usersService.findOneById(id);
   }
 
   @Patch()
-  async update(@Body() updateUserDto: UpdateUserDto, @Req() req: Request) {
+  @UseInterceptors(FileInterceptor('profileimage', multerConfig))
+  async update(
+    @Body() updateUserDto: UpdateUserDto,
+    @Req() req: Request,
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: /(jpg|jpeg|png)$/ })],
+        fileIsRequired: false,
+      }),
+    )
+    profileimage: Express.Multer.File,
+  ) {
     const { sub } = (<any>req).user;
 
-    return await this.usersService.update(sub, updateUserDto);
+    return await this.usersService.update(sub, {
+      ...updateUserDto,
+      avatarURL: profileimage?.filename,
+    });
   }
 
   @Delete(':id')

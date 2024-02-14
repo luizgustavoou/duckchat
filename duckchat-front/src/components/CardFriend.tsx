@@ -4,17 +4,7 @@ import { MouseEvent } from "react";
 import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { removeFriend } from "@/slices/friends-slice";
 import AppAlertDialog from "./AppAlertDialog";

@@ -26,7 +26,13 @@ export interface IUserApi {
 
 export class UserApiImpl implements IUserApi {
   async updateProfile(data: IUpdateProfile): Promise<IUserResponse> {
-    const res = await api.patch<IUserResponse>(`/users`, data);
+    //OBS: Na própria DOC do axios, não é necessário criar um formData para "Posting data as multipart/form-data"
+
+    const formData = new FormData();
+
+    Object.keys(data).forEach((key) => formData.append(key, (<any>data)[key]));
+
+    const res = await api.patch<IUserResponse>(`/users`, formData);
 
     return res.data;
   }
