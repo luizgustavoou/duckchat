@@ -3,7 +3,14 @@ import { Input } from "@/components/ui/input";
 
 import { Button } from "@/components/ui/button";
 import { Pencil } from "lucide-react";
-import { ChangeEvent, useEffect, useState, MouseEvent, ReactNode } from "react";
+import {
+  ChangeEvent,
+  useEffect,
+  useState,
+  MouseEvent,
+  ReactNode,
+  useMemo,
+} from "react";
 import { useAppSelector } from "@/hooks/useAppSelector";
 import { updateProfile, authSelector } from "@/slices/auth-slice";
 import { useAppDispatch } from "@/hooks/useAppDispatch";
@@ -55,6 +62,7 @@ function EditProfile({ trigger }: EditProfileProps) {
     if (about) dataUpdateProfile.about = about;
     if (firstName) dataUpdateProfile.firstName = firstName;
     if (lastName) dataUpdateProfile.lastName = lastName;
+    if (profileImage) dataUpdateProfile.profileImage = profileImage;
 
     await dispatch(updateProfile(dataUpdateProfile));
   };
@@ -68,13 +76,21 @@ function EditProfile({ trigger }: EditProfileProps) {
     setAbout(authUser.about);
   }, [authUser]);
 
-  const disableActions = authStatus === "loading";
+  const disableActions = useMemo(() => authStatus === "loading", [authStatus]);
 
   const handleOnChangeFile = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.item(0);
+
+    if (!file) return;
+
+    setPreviewImage(file);
+    setProfileImage(file);
   };
 
-  const profileImageUrl = previewImage && URL.createObjectURL(previewImage);
+  const profileImageUrl = useMemo(
+    () => previewImage && URL.createObjectURL(previewImage),
+    [previewImage]
+  );
 
   useEffect(() => {
     const loadProfileImageUser = async () => {

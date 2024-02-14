@@ -73,7 +73,7 @@ export class UsersController {
   }
 
   @Patch()
-  @UseInterceptors(FileInterceptor('profileimage', multerConfig))
+  @UseInterceptors(FileInterceptor('profileImage', multerConfig))
   async update(
     @Body() updateUserDto: UpdateUserDto,
     @Req() req: Request,
@@ -83,13 +83,13 @@ export class UsersController {
         fileIsRequired: false,
       }),
     )
-    profileimage: Express.Multer.File,
+    profileImage: Express.Multer.File,
   ) {
     const { sub } = (<any>req).user;
 
     return await this.usersService.update(sub, {
       ...updateUserDto,
-      avatarURL: profileimage?.filename,
+      avatarURL: profileImage?.filename,
     });
   }
 
