@@ -67,9 +67,7 @@ function EditProfile({ trigger }: EditProfileProps) {
 
   return (
     <AppSheet
-      trigger={
-        trigger
-      }
+      trigger={trigger}
       title="Editar Perfil"
       description="Faça alterações em seu perfil aqui. Clique em salvar quando terminar."
       main={
@@ -134,6 +132,10 @@ function EditProfile({ trigger }: EditProfileProps) {
               className="col-span-3"
               disabled={disableActions}
             />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="profileImage">Picture</Label>
+            <Input id="profileImage" type="file" className="col-span-3" />
           </div>
         </div>
       }

@@ -58,3 +58,4 @@ typings/
 
 #ignore files or folders of project
 /data/
+/duckchat-api/uploads/users/*
