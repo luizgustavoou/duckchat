@@ -17,7 +17,6 @@ import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { IUpdateProfile } from "../interfaces/IUpdateProfile";
 import AppSheet from "./AppSheet";
 import { userService } from "@/services";
-import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 
 export interface EditProfileProps {
   trigger: ReactNode;
