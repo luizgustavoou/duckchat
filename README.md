@@ -27,7 +27,7 @@ https://github.com/luizgustavoou/duckchat/assets/89609312/7964b29d-2c47-4ec2-90b
 * <b>Autenticação</b>;
 * <b>Adicionar amigos</b>;
 * <b>Chat</b>;
-* <b> Criar canais</b>;
+* <b>Editar perfil</b>
 
 # :wrench: Tecnologias utilizadas
 ## Back end
@@ -77,10 +77,17 @@ docker compose up -d
 ```
 
 ## :soon: Implementação futura
+* [FRONT] Acionar efeito sonoro quando chega mensagem nova;
+* [FRONT] Permitir o usuario enviar  imagens nas mensagens de chat;
+* [FRONT] Criar uma tela para admin;
+* [FRONT] Implementar refresh token;
+* [FRONT] Refatorar a exibição do perfil de usuario com foto, nome por meio de um componente; 
+* [BACK] Analisar relacionamento de tabelas para ver se há necesisdade de criar uma tabela de solicitaçao de amizade;
+* [BACK] Brincar com um serviço de E-mail enviando uma mensagem ao criar uma conta com sucesso. Para isso, adicionar uma coluna 'email' na entidade User;
+- [BACK] Validar rotas com base nos papéis de usuários (common/adm).
 
 ## :dart: Status do projeto
-Backend: Finalizado
-Frontend: 90% finalizado
+Finalizado
 
 # Autor
 
