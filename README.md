@@ -6,6 +6,8 @@ A aplicação consiste em uma cópia do Discord, trazendo funcionalidades básic
 
 ## Layout web
 
+![duckchat-sample-signin](https://github.com/luizgustavoou/duckchat/assets/89609312/4551e3e9-7f37-4032-801d-b4496d942c8b)
+![duckhat-sample-signup](https://github.com/luizgustavoou/duckchat/assets/89609312/b8fc6897-8b56-4db3-b23b-c0e9cb198d1d)
 
 https://github.com/luizgustavoou/duckchat/assets/89609312/2af08bc4-c710-420f-8a7c-20e162034e34
 
