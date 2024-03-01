@@ -4,10 +4,10 @@ import { MouseEvent } from "react";
 import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 
-
 import { useAppDispatch } from "@/hooks/useAppDispatch";
 import { removeFriend } from "@/slices/friends-slice";
 import AppAlertDialog from "./AppAlertDialog";
+import { getProfileImageUrl } from "@/utils/get-profile-image-url";
 interface ICardFriendProps {
   friendship: IFriendship;
   handleFriendshipClick: (friendship: IFriendship) => void;
@@ -50,7 +50,7 @@ export default function CardFriend({
       <Avatar>
         <AvatarImage
           className="w-12 rounded-full"
-          src={friendship.friend.avatarURL}
+          src={getProfileImageUrl(friendship.friend.avatarURL)}
         />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>

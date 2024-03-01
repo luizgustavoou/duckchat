@@ -17,6 +17,7 @@ import AppDialog from "./AppDialog";
 import { useDebounce } from "@/hooks/useDebounce";
 import { promise } from "zod";
 import { getNonFriendsUsersBySearch } from "../slices/non-friends-users-slice";
+import { getProfileImageUrl } from "@/utils/get-profile-image-url";
 
 export interface AddFriendProps {
   trigger: ReactNode;
@@ -127,7 +128,7 @@ function AddFriend({ trigger }: AddFriendProps) {
                   <Avatar>
                     <AvatarImage
                       className="w-12  rounded-full"
-                      src={"https://github.com/shadcn.png"}
+                      src={getProfileImageUrl(user.avatarURL)}
                     />
                     <AvatarFallback>CN</AvatarFallback>
                   </Avatar>

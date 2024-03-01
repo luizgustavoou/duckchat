@@ -13,9 +13,10 @@ import { friendsSelector, getAllFriendsOfUser } from "@/slices/friends-slice";
 import AppPopover from "@/components/AppPopover";
 import { MoreHorizontalIcon } from "lucide-react";
 import { useProfileImageUrl } from "@/hooks/useProfileImageUrl";
+import { getProfileImageUrl } from "@/utils/get-profile-image-url";
 
 export default function Home() {
-  const { profileImageUrl } = useProfileImageUrl();
+  // const { profileImageUrl } = useProfileImageUrl();
 
   const { user: authUser } = useAppSelector(authSelector);
   const { friendships, status: friendshipStatus } =
@@ -52,7 +53,10 @@ export default function Home() {
       <div className="flex flex-col border-border border-r-2 overflow-auto">
         <div className="flex gap-3 py-5 px-4 items-center border-b-2">
           <Avatar>
-            <AvatarImage className="w-14 rounded-full" src={profileImageUrl} />
+            <AvatarImage
+              className="w-14 rounded-full"
+              src={getProfileImageUrl(authUser?.avatarURL)}
+            />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 

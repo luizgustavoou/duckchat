@@ -13,6 +13,7 @@ import { toast, useToast } from "./ui/use-toast";
 
 import Message from "./Message";
 import { HttpError } from "@/exceptions/http-error";
+import { getProfileImageUrl } from "@/utils/get-profile-image-url";
 
 export interface ChatProps {
   friendship: IFriendship;
@@ -136,7 +137,7 @@ export default function Chat({ friendship }: ChatProps) {
         <Avatar>
           <AvatarImage
             className="w-12 rounded-full"
-            src={friendship.friend.avatarURL}
+            src={getProfileImageUrl(friendship.friend.avatarURL)}
           />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
