@@ -5,9 +5,21 @@
 A aplicação consiste em uma cópia do Discord, trazendo funcionalidades básicas da plataforma como a conversa por chat.
 
 ## Layout web
-https://github.com/luizgustavoou/duckchat/assets/89609312/11b27c83-bb80-4e04-99cd-1ab25675d098
 
-https://github.com/luizgustavoou/duckchat/assets/89609312/c3a636f4-6264-4514-b9a2-85f954c79ebc
+![duckchat-sample-signin](https://github.com/luizgustavoou/duckchat/assets/89609312/4551e3e9-7f37-4032-801d-b4496d942c8b)
+![duckhat-sample-signup](https://github.com/luizgustavoou/duckchat/assets/89609312/b8fc6897-8b56-4db3-b23b-c0e9cb198d1d)
+
+
+
+https://github.com/luizgustavoou/duckchat/assets/89609312/0e02b24e-82bd-49f3-be7a-289c08783abc
+
+
+
+https://github.com/luizgustavoou/duckchat/assets/89609312/39e02d39-338d-49a8-b35c-279dd7b0c859
+
+
+
+
 
 
 
@@ -21,7 +33,7 @@ https://github.com/luizgustavoou/duckchat/assets/89609312/c3a636f4-6264-4514-b9a
 * <b>Autenticação</b>;
 * <b>Adicionar amigos</b>;
 * <b>Chat</b>;
-* <b> Criar canais</b>;
+* <b>Editar perfil</b>
 
 # :wrench: Tecnologias utilizadas
 ## Back end
@@ -71,10 +83,17 @@ docker compose up -d
 ```
 
 ## :soon: Implementação futura
+* [FRONT] Acionar efeito sonoro quando chega mensagem nova;
+* [FRONT] Permitir o usuario enviar  imagens nas mensagens de chat;
+* [FRONT] Criar uma tela para admin;
+* [FRONT] Implementar refresh token;
+* [FRONT] Refatorar a exibição do perfil de usuario com foto, nome por meio de um componente; 
+* [BACK] Analisar relacionamento de tabelas para ver se há necesisdade de criar uma tabela de solicitaçao de amizade;
+* [BACK] Brincar com um serviço de E-mail enviando uma mensagem ao criar uma conta com sucesso. Para isso, adicionar uma coluna 'email' na entidade User;
+- [BACK] Validar rotas com base nos papéis de usuários (common/adm).
 
 ## :dart: Status do projeto
-Backend: Finalizado
-Frontend: 90% finalizado
+Finalizado
 
 # Autor
 
