@@ -1,3 +1,5 @@
+import "./CardFriend.css";
+
 import { IFriendship } from "@/entities/IFriendship";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { MouseEvent } from "react";
@@ -41,7 +43,7 @@ export default function CardFriend({
 
   return (
     <div
-      className={`relative flex gap-3 py-5 px-4 items-center hover:bg-accent/50 cursor-pointer ${
+      className={`friend-card relative flex gap-3 py-5 px-4 items-center hover:bg-accent/50 cursor-pointer ${
         isSelected(friendship) && "bg-accent/50"
       }`}
       onClick={(_) => handleFriendshipClick(friendship)}
@@ -61,7 +63,7 @@ export default function CardFriend({
           {friendship.friend?.about}
         </p>
       </div>
-      <div className="absolute top-auto right-3 " onClick={handleClick}>
+      <div className="action-teste absolute top-auto right-3 " onClick={handleClick}>
         <AppAlertDialog
           trigger={
             <Button variant="destructive" size="icon">

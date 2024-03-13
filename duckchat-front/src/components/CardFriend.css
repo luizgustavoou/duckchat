@@ -1,0 +1,7 @@
+.action-teste {
+  display: none;
+}
+
+.friend-card:hover .action-teste {
+  display: block;
+}
