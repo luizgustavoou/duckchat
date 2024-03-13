@@ -9,11 +9,15 @@ A aplicação consiste em uma cópia do Discord, trazendo funcionalidades básic
 ![duckchat-sample-signin](https://github.com/luizgustavoou/duckchat/assets/89609312/4551e3e9-7f37-4032-801d-b4496d942c8b)
 ![duckhat-sample-signup](https://github.com/luizgustavoou/duckchat/assets/89609312/b8fc6897-8b56-4db3-b23b-c0e9cb198d1d)
 
-https://github.com/luizgustavoou/duckchat/assets/89609312/2af08bc4-c710-420f-8a7c-20e162034e34
+
+
+https://github.com/luizgustavoou/duckchat/assets/89609312/0e02b24e-82bd-49f3-be7a-289c08783abc
 
 
 
-https://github.com/luizgustavoou/duckchat/assets/89609312/7964b29d-2c47-4ec2-90b2-094ac6e5645a
+https://github.com/luizgustavoou/duckchat/assets/89609312/39e02d39-338d-49a8-b35c-279dd7b0c859
+
+
 
 
 
