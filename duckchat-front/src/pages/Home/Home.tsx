@@ -65,38 +65,36 @@ export default function Home() {
             <p className="text-sm text-muted-foreground">{authUser?.about}</p>
           </div>
 
-          <div className="flex flex-col gap-1">
-            <AppPopover
-              trigger={
-                <MoreHorizontalIcon size={20} className="cursor-pointer" />
-              }
-              content={
-                <div className="flex flex-col ">
-                  <AddFriend
-                    trigger={
-                      <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
-                        Adicionar amigo
-                      </div>
-                    }
-                  />
-                  <EditProfile
-                    trigger={
-                      <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
-                        Editar perfil
-                      </div>
-                    }
-                  />
-                  <div
-                    className="px-5 py-3 hover:bg-black/40 cursor-pointer"
-                    onClick={handleLogout}
-                  >
-                    Sair
-                  </div>
+          <AppPopover
+            trigger={
+              <MoreHorizontalIcon size={20} className="cursor-pointer" />
+            }
+            content={
+              <div className="flex flex-col ">
+                <AddFriend
+                  trigger={
+                    <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                      Adicionar amigo
+                    </div>
+                  }
+                />
+                <EditProfile
+                  trigger={
+                    <div className="px-5 py-3 hover:bg-black/40 cursor-pointer">
+                      Editar perfil
+                    </div>
+                  }
+                />
+                <div
+                  className="px-5 py-3 hover:bg-black/40 cursor-pointer"
+                  onClick={handleLogout}
+                >
+                  Sair
                 </div>
-              }
-              parentContentClassName="w-40 p-0 rounded-none"
-            />
-          </div>
+              </div>
+            }
+            parentContentClassName="w-40 p-0 rounded-none"
+          />
         </div>
 
         <div className="flex-1 flex flex-col">

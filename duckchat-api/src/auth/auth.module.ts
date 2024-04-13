@@ -9,13 +9,18 @@ import { AuthGuard } from './auth.guard';
 import { SessionsModule } from 'src/sessions/sessions.module';
 
 @Module({
-  imports: [SessionsModule, UsersModule, JwtModule.register({ global: true, secret: jwtConstants.secret, })],
-  controllers: [AuthController,],
-  providers: [AuthService,
+  imports: [
+    SessionsModule,
+    UsersModule,
+    JwtModule.register({ global: true, secret: jwtConstants.secret }),
+  ],
+  controllers: [AuthController],
+  providers: [
+    AuthService,
     {
       provide: APP_GUARD,
-      useClass: AuthGuard
-    }
-  ]
+      useClass: AuthGuard,
+    },
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}
