@@ -2,7 +2,7 @@
 <!-- license --> 
 
 ## :memo:  Sobre o projeto
-A aplicação consiste em uma cópia do Discord, trazendo funcionalidades básicas da plataforma como a conversa por chat.
+O projeto é uma aplicação que se inspira no Discord, fornecendo funcionalidades básicas semelhantes à plataforma, como bate-papo em tempo real, utilizando um design que se assemelha ao do Discord.
 
 ## Layout web
 
