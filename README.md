@@ -44,16 +44,16 @@ git clone https://github.com/luizgustavoou/duckchat.git
 # navigate to the project directory
 cd duckchat
 
+# install backend dependencies
 cd duckchat-api/
 
-# install backend dependencies
 npm i
 
 cd ../
 
+# install frontend dependencies
 cd duckchat-front/
 
-# install frontend dependencies
 npm i
 
 cd ../
