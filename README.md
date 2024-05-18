@@ -76,7 +76,5 @@ docker compose up -d
 Completed
 
 ## Author
-
-Luiz Gustavo de Oliveira Umbelino
-[LinkedIn](https://www.linkedin.com/in/luiz-oliveira-802294294/)
-Joab Urbano
+<a href="https://github.com/luizgustavoou">Luiz Gustavo de Oliveira Umbelino</a><br>
+<a href="https://github.com/JoabUrbano">Joab Urbano</a><br>
